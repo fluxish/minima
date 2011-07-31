@@ -1,0 +1,296 @@
+/*------------------------------------------------------------------
+===================
+f!uXish CSS Styles
+===================
+common style sheet
+-------------------
+
+Author: f!uX
+
+[Typography]
+
+Body:		    100% 'Bitstream Vera Sans', 'Liberation Sans', FreeSans, 
+                    Helvetica, Arial, sans-serif;
+Headers:		2em/1em font-family: as body
+Paragraph:      92.5% font-family: as body, justify
+Blockquotes:    100% font-family: as body
+Preformatted:   100% "Bitstream Vera Mono", "Liberation Mono", FreeMono, 
+                    "Lucida Console", Monaco, monospace;
+
+td, th:         0.8em, font-family: as body
+th:             style: italic
+
+ul              type: square
+
+Notes:	decreasing heading by 0.5em with every subsequent heading level
+-----------------------------------------------------------------------*/
+
+html { font-size: 100.01% }
+
+body {
+  	background-color: #7f7f7f;
+	color: black;
+    font-size: 1em;
+	font-family: 'Bitstream Vera Sans', 'Liberation Sans', FreeSans, 
+	    Verdana, Helvetica, sans-serif;
+}
+
+/* === HEADERS TAGS === */
+
+h1 {
+	font-size: 2em;
+	letter-spacing: 1px;
+	margin: 25px 0 15px;
+}
+    /* blog title */
+    h1.title{
+        margin-top: 5px;
+        font-size: 1.8em;
+    }
+    
+    #header h1.title{ color: #ffffff; }
+
+h2 {
+	font-size: 1.5em;
+	margin: 20px 0 10px;
+}
+    /* blog subtitle or description */
+    h2.subtitle{
+        margin-top: 0;
+        font-size: 0.85em;
+        font-weight: normal;
+        font-style: italic;
+    }
+    #rss-menu h2{
+        border-bottom: #ccc solid 1px;
+        color: #000;
+        display: block;
+        font-weight: bold;
+        font-size: 12px;
+        margin-bottom:10px;
+        padding: 6px 0px;
+    }
+
+h3 {
+    font-size: 1.2em;
+	margin: 15px 0 5px;
+}
+
+h4 { 
+    font-size: 1em;
+    margin: 20px 0 2px;
+}
+    /* column widget title*/
+    .column h4, .bar h4{ font-size: 13px; }
+
+/* === PARAGRAPHS === */
+
+p{ font-size: 82.5%; line-height: 1.4em; }
+#main p {margin-top: 1.2em; text-align: justify; }
+
+
+
+/* blog footer description */
+#footer p.description { padding-top: 3px; font-size: 92.5%; }
+
+/* theme footer description*/
+#footer p.theme { margin-top: 10px; }
+
+
+/* === LINKS === */
+
+a:link, a:visited { color: #666666; text-decoration: none;}
+a:hover { color: #d3d3d3; text-decoration: none;}
+
+#header h1.title a:link, #header h1.title a:visited { color: #ffffff; }
+
+#main a:link, #main a:visited { border-bottom-color: #666666; border-bottom: 1px dotted; }
+#main a:hover { border-bottom-color: #d3d3d3; }
+
+#main h3 a:link, #main h3 a:visited {  border-bottom: none;}
+#main h3 a:hover { color: #999999; border-bottom-color: #999999;}
+
+#footer a:link, #footer a:visited{ color: #a8a8a8;	border-bottom: 1px dotted #a8a8a8;}
+#navbar a:link, #navbar a:visited { color: #fafafa; }
+#footer a:hover, #navbar a:hover { color: #fafafa; border-bottom: 1px dotted #fafafa; }
+
+
+/* === BLOCKQUOTE AND CODE TEXT === */
+
+blockquote {
+	width: 90%;
+	margin: 1em;
+	padding: 0 10px;
+	border-left: 5px solid;
+}
+
+pre, code {
+	font-family: "Bitstream Vera Mono", "Liberation Mono", FreeMono, 
+	    "Lucida Console", Monaco, monospace;
+	font-size: 100%;
+}
+
+pre {
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+	
+	overflow: auto;
+	width: 90%;
+	margin: 1em;
+	padding: 5px 10px;
+}
+
+
+/* ===== TABLES ===== */
+
+table { border-collapse: collapse }
+
+td {
+    padding: 4px;
+	border-bottom: #000 solid 1px;
+	font-size: 0.8em;
+	text-align: left;
+}
+
+th {
+    border-bottom: #00 solid 2px;
+	padding: 4px;
+	font: 0.8em/0.8em italic;
+	text-align: left;
+}
+
+/* === LISTS === */
+
+ul { list-style-type: square; }
+ol { list-style-position: inside; }
+
+ul, ol { text-align: justify; font-size: 82.5%; line-height: 1.4em; }
+
+.column ul, .column ol, .bar ul, .bar ol{ font-size: 11px !important; }
+.column ul, .column ol, .bar ul, .bar ol{ font-size: 10px; } /* IE  */
+
+.post .info ul{ list-style-type: none; }
+.post .info ul li{ margin: 0; text-align: right; }
+
+
+
+
+/* ===== DIV CONTAINER ALL ELEMENTS BLOCK ===== */
+
+/* === HEADER === */
+#header { text-align: left; }
+
+/* +++ BODY-COINTAINER +++ */
+#body-container { background: #7f7f7f url('../img/back.jpg') repeat-y center center; }
+
+/* === MAIN === */
+
+#main img { margin: .5em }
+
+/* +++ Entry +++ */
+
+/* entry info */
+#main ul.entry-info{ color: #666666; }
+#main ul.entry-info li {
+    margin: 0; 
+	display: block;
+    line-height: 1.5em;
+    font-size: 92.5%;
+}
+#entry_subheader li{ text-align: left; }
+#entry_footer li{ text-align: right; }
+
+/* [edit] and [delete] */
+.admincontrols { 
+    display: inline;
+    /*font-size: 80%;*/
+    font-weight: bold;
+}
+
+.buttonbar { text-align: center }
+
+.buttonbar input {
+	text-align: center;
+}
+
+h2.date { font-size: 80%; color: #aaa; }
+
+/* date under titles of the entry */
+.date { font-size: 80%; font-style: italic; color: #666666; }
+
+div.entry_date {
+    color: #666;
+    font-size: 82.5%;
+    text-align: center;
+    line-height: 1.6em;
+    padding: 3px;
+    width: 70px;
+    border: 1px dashed #d3d3d3;
+}
+
+    div.entry_date .day{ 
+        font-weight: bold;
+        font-size: 1em;
+        font-style: italic; 
+    }
+    div.entry_date .day_month{
+        font-weight: bold;
+        font-size: 2.5em; 
+    }
+    div.entry_date .month{
+        font-weight: bold;
+        font-size: 1em; 
+    }
+    div.entry_date .year{ 
+        font-weight: bold;
+        font-size: 0.8em; 
+        line-height: 1em;
+    }
+    
+/* +++ Comments +++ */
+
+#comments li.comment-admin strong.comment-name { font-size:140% }
+
+	#comments li {
+		border-top-color: #ddd;
+		border-bottom-color: #ddd;
+		background: #efefef;
+	}
+	
+	#comments li.comment-admin {
+	    background-color: #d3d3d3;
+	    border-top-color: #666666;
+        border-bottom-color: #666666;
+	    padding:1em;
+    }
+
+/* === NAVIGATION === */
+
+.column div, .column p, .column em,
+.bar div, .bar p{ font-size: 11px !important; }
+.column div, .column p, .column em,
+.bar div, .bar p{ font-size: 10px; } /* IE */
+
+.navigation { font-size: 82.5%; }
+
+ul.menu{ list-style-type: none; padding: 5px;}
+ul.menu li{ 
+    float: left; 
+    margin: 0 3px;
+}
+
+#navbar{ color: #fafafa; }
+
+/* === FOOTER === */
+
+#foot {
+    background: #7f7f7f url('../img/footer-back.jpg') repeat-y center bottom;
+	font-size: 100%;
+	text-align: center;
+}
+
+#footer {
+	color: #fff;
+    background: #7f7f7f url('../img/footer.jpg') no-repeat center center; 
+    font-size: 80%;
+}

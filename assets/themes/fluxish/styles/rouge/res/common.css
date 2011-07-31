@@ -1,0 +1,63 @@
+/*
+
+===================
+f!uXish CSS Styles
+===================
+rouge style
+-------------------
+
+Name: f!uXish
+Author: f!uX
+Version: 1.0
+Module: common.css
+
+*/
+
+blockquote {
+	color: #666;
+	border-left: 5px solid #d50000
+}
+
+/* === Form === */
+
+input:hover, input:focus, textarea:hover, textarea:focus {
+	border: 1px solid #d50000;
+	background-color: #fff
+}
+
+
+
+/* ===== LINKS GENERAL ===== */
+
+a:hover {
+	color: #d50000;
+}
+
+#main a:hover {
+	border-bottom: 1px dotted #d50000;
+}
+
+
+/* ===== DIV CONTAINER ALL ELEMENTS BLOCK ===== */
+
+/* ===== HEAD ===== */
+#head {
+    background: #7f7f7f url('../imgs/header-rouge.jpg') no-repeat center top;
+}
+
+#header h1.title { color: white; text-decoration: none; }
+
+	h2.subtitle {
+		color: #ff8888;
+	}
+
+
+/* ===== DIV CONTAINER "MAIN" ===== */
+
+#comments li.comment-admin {
+    background-color: #fefefe;
+    border-top: 2px solid #d50000;
+    border-bottom: 2px solid #d50000;
+    padding: 1em;
+}
+

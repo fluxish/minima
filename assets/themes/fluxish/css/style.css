@@ -1,0 +1,51 @@
+/*------------------------------------------------------------------------------
+===================
+f!uXish CSS Styles
+===================
+
+Author: flux
+
+[Style]
+
+stylesheets list:
+
+reset:          Mayer's reset css: reset browser base settings
+
+layout:         template and layout
+common:         common rules
+column:         sidebars and navigation divs structure
+
+typography:     text blocks style
+colors:         elements colors
+
+forms:          input, textareas and others form elements
+globals:        global elements
+
+plugins list:
+
+960:            960.gs grid layout
+960_fluid:      960.gs fluid grid layout
+
+extras:         site specific element
+utils:          useful css classes
+messages:       formats error, warning, notice and succeess messages
+ie:             useful hacks for IE Browsers
+-------------------------------------------------------------------------------*/
+
+/* reset browsers style settings */
+@import url('plugins/reset/reset.css');
+
+/* template layout */
+@import url('layout.css');
+
+/* imports common style ruleset */
+@import url('common.css');
+@import url('forms.css');
+@import url('acid.css');
+
+/* fonts and colors settings */
+@import url('typography.css');
+
+/* Plugins */
+@import url('plugins/960/960.css');
+

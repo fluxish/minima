@@ -1,0 +1,183 @@
+/*------------------------------------------------------------------
+===================
+#title# CSS Styles
+===================
+#description#
+-------------------
+
+Author:
+
+[Forms]
+
+- Clean form
+- Clean listed form
+
+-------------------------------------------------------------------*/
+
+
+/* === FORMS === */
+
+/* +++ Clean Form +++ */
+
+.clean_form{
+    margin: 10px auto;
+    padding: 14px;
+    
+    border: solid 2px #7f7f7f;
+    background-color: #efefef;
+    width: 400px;
+}
+
+    .clean_form h1 {
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+    .clean_form p{
+        color: #666666;
+        margin-bottom: 20px;
+        border-bottom: solid 1px #7f7f7f;
+        padding-bottom: 10px;
+    }
+    .clean_form label{
+        display: block;
+        font-weight: bold;
+        text-align: right;
+        width: 140px;
+        float: left;
+    }
+    .clean_form .small{
+        color: #666666;
+        display: block;
+        font-size: 11px;
+        font-weight: normal;
+        text-align: right;
+        width: 140px;
+    }
+    .clean_form input{
+        float: left;
+        width: 200px;
+        margin: 2px 0 20px 10px;
+        
+        font-size: 12px;
+        padding:4px 2px;
+        border: solid 1px #7f7f7f;
+        background-color: #fff;
+    }
+    .clean_form button{
+        clear: both;
+        margin-left: 150px;
+        width: 125px;
+        height: 31px;
+        
+        background-color: #7f7f7f;
+        color: #FFFFFF;
+        border: 2px solid #666;
+        text-align: center;
+        line-height: 31px;
+        font-size: 11px;
+        font-weight: bold;
+    }
+    .clean_form .button-link{
+        clear: both;
+        margin-left: 150px;
+        
+        color: #7f7f7f;
+        border: 2px solid #666;
+        text-align: center;
+        line-height: 31px;
+        font-size: 11px;
+        font-weight: bold;
+    }
+    
+/* +++ Clean Listed Form +++ */
+
+.clean_listed_form{
+    margin: 10px auto;
+    padding: 14px;
+    
+}
+
+.clean_listed_form ul, .clean_listed_form li{
+    border:0; margin:0; padding:0; list-style:none;
+}
+
+    .clean_listed_form h1 {
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+    .clean_listed_form p{
+        color: #666666;
+        margin-bottom: 20px;
+        border-bottom: solid 1px #7f7f7f;
+        padding-bottom: 10px;
+    }
+    .clean_listed_form label{
+        display: block;
+        font-weight: bold;
+        width: 140px;
+        margin-top: 10px
+    }
+    .clean_listed_form .small{
+        color: #666666;
+        display: block;
+        font-size: 11px;
+        font-weight: normal;
+        text-align: right;
+        width: 140px;
+    }
+    .clean_listed_form input,
+    .clean_listed_form textarea, 
+    .clean_listed_form select{
+        margin: 5px 0 20px 0;
+        
+        font-size: 12px;
+        padding:4px 2px;
+        border: solid 1px #555555;
+        background-color: #fff;
+    }
+    
+    .clean_listed_form .button-link{
+        margin: 5px 0 20px 0;
+    
+        font-size: 12px;
+        padding: 6px 4px;
+    }
+    
+    .clean_listed_form button,
+    .clean_listed_form input[type="submit"],
+    .clean_listed_form input[type="reset"]{
+        clear: both;
+        
+        border: 2px solid #666666;
+        text-align: center;
+        font-weight: bold;
+        
+        background-color: #7f7f7f;
+        color: #ffffff;
+    }
+    
+    .clean_listed_form button:hover,
+    .clean_listed_form input[type="submit"]:hover,
+    .clean_listed_form input[type="reset"]:hover{
+        color: #555555;
+        background-color: #dadada;
+        cursor: pointer;
+    }
+    
+    .clean_listed_form .button-link:link, .clean_listed_form .button-link:visited{
+        clear: both;
+        
+        /*border: 2px solid #666666;*/
+        text-align: center;
+        font-weight: bold;
+        
+        background-color: #ffffff;
+        color: #7f7f7f;
+    }
+    
+    .clean_listed_form .button-link:hover{
+        color: #b5b5b5;
+        cursor: pointer;
+    }
+    
+    

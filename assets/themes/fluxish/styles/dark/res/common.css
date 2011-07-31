@@ -1,0 +1,64 @@
+/*
+
+===================
+f!uXish CSS Styles
+===================
+dark style
+-------------------
+
+Name: f!uXish
+Author: f!uX
+Version: 1.0
+Module: common.css
+
+*/
+
+blockquote {
+	color: #666;
+	border-left: 5px solid #a0522d
+}
+
+/* === Form === */
+
+input:hover, input:focus, textarea:hover, textarea:focus {
+	border: 1px solid #7f7f7f;
+	background-color: #fff
+}
+
+
+
+/* ===== LINKS GENERAL ===== */
+
+a:hover {
+	color: #bbb;
+	text-decoration: none;
+}
+
+#main a:hover {
+	border-bottom: 1px dotted #bbb;
+}
+
+
+
+/* ===== DIV CONTAINER ALL ELEMENTS BLOCK ===== */
+
+/* ===== HEAD ===== */
+#head {
+    background: #7f7f7f url('../imgs/header-dark.jpg') no-repeat center top;
+}
+
+#header h1.title { color: white; }
+
+	h2.subtitle {
+		color: #7f7f7f;
+	}
+
+
+/* ===== MAIN ===== */
+
+#comments li.comment-admin {
+    background-color: #fafafa;
+    border-top: 2px solid #7f7f7f;
+    border-bottom: 2px solid #7f7f7f;
+    padding: 1em;
+}

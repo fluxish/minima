@@ -1,0 +1,176 @@
+/*-----------------------------------
+===================
+#title# CSS Styles
+===================
+#description#
+-------------------
+
+Author:  
+
+[Layout]
+
+* body
+    * Body container / #body-container
+    * Page / #page .container
+        + Header / #header
+            - Top header / #top_header
+            - Bottom header / #bottom_header
+            
+        + Middle / #middle
+            - Content / #content
+            - Right Sidebar / #right_sidebar in navigation.css
+            - Left Sidebar / #left_sidebar in navigation.css
+            
+        + Footer / #footer
+            - Top footer / #top_footer
+            - Bottom footer / #bottom_footer
+
+Navigation	  #top-mini in navigation.css
+Content header	  h2
+-------------------------------------*/
+
+
+/* === PAGE === */
+
+body{ text-align: center; /* IE Hack*/ }
+
+.container{ padding: 0 15px; text-align: left; }
+
+/* === HEADER === */
+
+#head {
+    height: 230px;
+}
+
+#header {
+	height: 70px;
+	padding-top: 30px;
+}
+
+#sub_header{
+	height: 130px;
+	position: relative;
+}
+
+
+/* === MAIN === */
+
+#main{ min-height: 300px; }
+
+/* ===== SIDES ===== */
+
+.column {
+    margin-bottom: 5px;
+    overflow: hidden;
+}
+
+    .column h4 {
+	    /* Titles of the sections */
+	    margin-bottom: .5em;
+	    padding: 4px 10px;
+	    background: #b0d80f url('../img/header-back.jpg') repeat-x center top;
+    }
+
+    .column div, .column p{ padding: 10px 0; line-height: 1.2em; }
+
+    .column a:link, #column a:visited { color: gray }
+
+    /* === List === */
+
+    .column ul {
+	    list-style-type: none;
+	    margin-right: 5px;
+	    margin-bottom: .5em;
+	    padding-left: 1em;
+    }
+
+    .column fieldset { margin: 0 5px 0 5px }
+
+    .column input[type="text"] {
+        width: 100%;
+    }
+    
+
+/* ===== BARS ===== */
+
+#bottombar { width: 100%; clear: both; }
+    #bottombar div { color: #ffffff }
+    #bottombar h4 { background: none; }
+
+.bar { margin-bottom: 5px; overflow: hidden; }
+
+    .bar h4 {
+	    /* Titles of the sections */
+	    margin-bottom: .5em;
+	    padding: 4px 10px;
+	    background: #b0d80f url('../img/header-back.jpg') repeat-x center top;
+	    text-align: left;
+    }
+
+    .bar p, .bar div { padding: 10px 0; line-height: 1.2em; }
+
+
+    .bar a:link, #column a:visited { color: gray }
+
+    /* === List === */
+
+    .bar ul {
+	    list-style-type: none;
+	    margin-right: 5px;
+	    margin-bottom: .5em;
+	    padding-left: 1em
+    }
+
+    .bar fieldset { margin: 0 5px 0 5px }
+    .bar input[type=text] { width: 100%; }
+
+
+/* === NAVIGATION-BAR (next-prev posts links ) === */
+
+.navigation{ clear: both; margin-bottom: 60px;}
+
+
+/* === TOP-MENU === */
+
+.top-menu{ position: absolute; bottom: 0px;}
+
+.top-menu ul{
+    height: 30px;
+    padding-left: 20px;
+}
+.top-menu li{ 
+    background: url(../img/tab-round.gif) right 30px;
+    /*width: 80px*/ /* only for IE... set a fixed width */
+}
+
+.top-menu li:hover {
+    background: url(../img/tab-round.gif) right 60px;
+}
+
+.top-menu li a:link, .top-menu li a:visited,
+.top-menu li a:hover{
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+}
+
+/* === NAVBAR === */
+#navbar{
+    position: absolute;
+    bottom: 0; right: 0;
+    background-color: #000;
+}
+
+/* === FOOTER === */
+
+#footer {
+    position: relative;
+    clear: both;
+	height: 70px;
+	margin: 0 auto;
+	padding: 0px 50px 0px 50px;
+}
+

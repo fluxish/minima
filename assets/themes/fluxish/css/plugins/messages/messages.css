@@ -1,0 +1,33 @@
+/*------------------------------------------------------------------
+===================
+#title# CSS Styles
+===================
+#description#
+-------------------
+
+Author:
+
+[Messages]
+
+-------------------------------------------------------------------*/
+
+
+/* === ERROR, WARNING, NOTICE, SUCCESS BOXES === */
+
+.error,
+.warning,
+.notice, 
+.success { padding: .8em; margin-bottom: 1em; border: 2px solid #ddd; font-size: 92.5%;}
+
+.error { background: #FBE3E4; color: #8a1f11; border-color: #FBC2C4; }
+.warning { background: #FFF6BF; color: #514721; border-color: #FFD324; }
+.notice { background: #E8EFFB; color: #27408B; border-color: #B9D0F7; }
+.success { background: #E6EFC2; color: #264409; border-color: #C6D880; }
+
+.error a { color: #8a1f11; }
+.warning a { color: #514721; }
+.notice a { color: #27408B; }
+.success a { color: #264409; }
+
+
+/* ===  === */

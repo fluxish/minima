@@ -1,0 +1,28 @@
+/*
+
+===================
+f!uXish CSS Styles
+===================
+dark style
+-------------------
+
+Name: f!uXish
+Author: f!uX
+Version: 1.0
+Module: column.css
+
+*/
+
+/* ===== COLUMN ===== */
+.column h4{ 
+    background: #a0522d url('../imgs/header-back.jpg') no-repeat center top; 
+    color: #fff;    
+}
+
+.column a:hover { color: #a0522d; }
+
+/* ===== BARS ===== */
+
+.bar h4 { background: #a0522d url('../imgs/header-back.jpg') no-repeat center top; }
+
+

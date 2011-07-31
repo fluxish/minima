@@ -1,0 +1,60 @@
+/*
+
+===================
+f!uXish CSS Styles
+===================
+based on Leggero by NoWhereMan & drudo
+-------------------
+
+Name: f!uXish
+Author: f!uX
+Version: 1.0
+Module: common.css
+
+*/
+
+
+blockquote {
+	color: #666;
+	border-left: 5px solid #ff9f40
+}
+
+/* === Form === */
+
+input:hover, input:focus, textarea:hover, textarea:focus {
+	border: 1px solid #ff9f40;
+	background-color: #fff
+}
+
+
+/* ===== LINKS GENERAL ===== */
+
+a:hover {
+	color: #ff9f40;
+}
+
+#main a:hover {
+	border-bottom: 1px dotted #ff9f40;
+}
+
+
+/* ===== DIV CONTAINER ALL ELEMENTS BLOCK ===== */
+
+/* ===== HEAD ===== */
+#head { background: #7f7f7f url('../imgs/header-orange.jpg') no-repeat center top; }
+
+#header h1.title { color: white; }
+
+	h2.subtitle {
+		color: #ff9f40;
+	}
+
+
+/* ===== DIV CONTAINER "MAIN" ===== */
+
+#comments li.comment-admin {
+    background-color: #ffd380;
+    border-top: 2px solid #ff9f40;
+    border-bottom: 2px solid #ff9f40;
+    padding: 1em;
+}

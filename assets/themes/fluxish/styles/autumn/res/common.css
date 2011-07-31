@@ -1,0 +1,67 @@
+/*
+
+===================
+f!uXish CSS Styles
+===================
+autumn style
+-------------------
+
+Name: f!uXish
+Author: f!uX
+Version: 1.0
+Module: common.css
+
+*/
+
+
+blockquote {
+	color: #666;
+	border-left: 5px solid #a0522d
+}
+
+/* === Form === */
+
+input:hover, input:focus, textarea:hover, textarea:focus {
+	border: 1px solid #a0522d;
+	background-color: #fff
+}
+
+
+
+/* ===== LINKS GENERAL ===== */
+
+a:hover {
+	color: #a0522d;
+}
+
+#main a:hover {
+	border-bottom: 1px dotted #a0522d;
+}
+
+
+/* ===== DIV CONTAINER ALL ELEMENTS BLOCK ===== */
+
+/* +++ HEAD +++ */
+#head {
+    background: #7f7f7f url('../imgs/header-autumn.jpg') no-repeat center top;
+}
+
+#header {
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Bitstream Vera Sans", 
+	    Verdana, Arial, sans-serif;
+}
+
+#header h1.title { color: white; }
+
+	h2.subtitle {
+		color: #c37c5a;
+	}
+
+
+/* +++ MAIN +++ */
+
+#comments li.comment-admin {
+    background-color: #fafafa;
+    border-top: 2px solid #a0522d;
+    border-bottom: 2px solid #a0522d;
+}

@@ -1,0 +1,98 @@
+/*
+
+===================
+f!uXish CSS Styles
+===================
+orange style
+-------------------
+
+Name: f!uXish
+Author: f!uX
+Version: 1.0
+Module: admin.css
+
+*/
+@import url(../../common/res/admin.css);
+@import url(common.css);
+@import url(globals.css);
+
+
+/* ===== LINKS GENERAL ===== */
+
+#admin-content a:hover {
+    color: #ff9f40;
+	border-bottom: 1px dotted #ff9f40;
+}
+
+/* ===== TAB MENU ===== */
+
+ul#admin-tabmenu li a {
+	color: #222;
+}
+
+ul#admin-tabmenu li a:hover {
+	color: #000;
+	background-color: #ddd
+}
+
+ul#admin-tabmenu a#admin-tab-current {
+	background-color: #ff9f40;
+	color: #000;    
+}
+
+
+/* ===== submenu ====== */
+
+#admin-submenu {
+	/*background: #eee; */
+}
+
+#admin-submenu li { }
+
+#admin-submenu li a {
+	color: #000;
+	border-top: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;  
+}
+
+#admin-submenu li a:hover {
+	background: #fff;
+	border-bottom: 1px solid #fff;
+	border-top: 3px solid #ccc;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;  
+}
+
+#admin-submenu li a.active {
+	color: #000;
+	background: #ff9f40 url(../imgs/header-back.jpg) repeat-x center top;
+	font-weight: bold;
+	border-top: 3px solid #666;
+	border-left: 1px solid #bbb;
+	border-right: 1px solid #bbb;
+}
+
+
+/* ===== WIDGET PANEL ====== */
+
+.admin-widgetset h3 {
+	margin-bottom: 1em;
+	padding: .3em;
+	border: 1px solid #ddd;
+	background: #ff9f40 url(../imgs/header-back.jpg) repeat-x center top;
+	color: #666;
+}
+
+.widget-instance .textinput:hover {
+	border: #ff9f40 2px solid;
+	background-color:#ff9f40;
+}
+
+
+.widget-instance .textinput:focus {
+	font-style: normal;
+	border: #ff9f40 2px solid;
+	background-color:#ff9f40;
+	text-align: left;
+}
