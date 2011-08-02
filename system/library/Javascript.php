@@ -13,7 +13,15 @@
  
 class Javascript
 {
+    /**
+     * Array of all added scripts
+     * @var array
+     */
     private $_scripts = array();
+    
+    /**
+     * @var Config
+     */
     private $_config;
     
     public function __construct()
@@ -21,119 +29,47 @@ class Javascript
         $this->_config = Loader::get_instance()->library('config');
     }
     
-    public function add_script($script, $output = false)
+    /**
+     * Add a script to the container
+     * @param string $script
+     */
+    public function add_script($script)
     {
-        $script = "$(document).ready(function(){\n".$script."});\n";
         $this->_scripts[] = $script;
-        if($output) return $script;
     }
     
+    /**
+     * Generate the tag <script> for all javascript libraries
+     * @return string
+     */
     public function output_libraries()
     {
         $libraries = '';
-        foreach($this->_config->item('javascript', 'files') as $lib){
-            $libraries .= '<script type="text/javascript" src="'.$this->_config->item('base_url').$lib."\"></script>\n";
+        foreach($this->_config->item('javascript', 'libraries') as $lib){
+            $libraries .= '<script type="text/javascript" src="'.
+                $this->_config->item('base_url').$lib."\"></script>\n";
         }
         
         return $libraries;
     }
     
-    public function output_scripts()
+    /**
+     * Generate a tag <script> that contains all scripts added in the container
+     * @param boolean $onload set true to load the scripts when all 
+     *      the page is loaded (default: true)
+     * @return string
+     */
+    public function output_scripts($onload = true)
     {
-        $script = "<script type=\"text/javascript\">\n";
         foreach($this->_scripts as $s){
-            $script .= $s;
+            $script .= $s . "\n";
         }
-        $script .= "\n</script>\n";
+        
+        if($onload) $script = "$(document).ready(function(){\n".$script."});\n";
+        
+        $script = "<script type=\"text/javascript\">\n".$script."\n</script>\n";
+        
         return $script;
-    }
-    
-    
-    
-    
-    public function in_place_edit($selector, $field, $action)
-    {
-        // add in-place textbox
-        $s_on_click = "
-        var content;
-        var id;
-        $('$selector').bind('click', function(event){
-            if(!$(this).hasClass('ui-editing')){
-                $(this).removeClass('ui-editable');
-                $(this).addClass('ui-editing');
-                content = $(this).html();
-                $(this).empty();
-                
-                var input = document.createElement('input');
-                input.name = '$field';
-                input.type = 'text';
-                $(input).val(content);
-                $(this).append(input);
-            }
-        })";
-        
-        // remove in-place textbox and show edited text
-        $s_on_keypress = "
-        var val;
-        $('$selector').bind('keypress', function(event){
-            if($(this).hasClass('ui-editing') && event.keyCode == 13 && event.ctrlKey == true){
-                $(this).addClass('ui-editable');
-                $(this).removeClass('ui-editing');
-                val = $('$selector input').val();
-                
-                /* ajax call */
-                $.post('$action', {'$field': val, '_method': 'put'},
-                    function(data){},
-                    'html'
-                );
-                
-                $(this).empty();
-                $(this).html(val);
-            }
-        })";
-        
-        $this->add_script($s_on_click);
-        $this->add_script($s_on_keypress);
-    }
-    
-    public function in_place_editor($selector, $field, $action)
-    {
-        $editor = Loader::get_instance()->plugin('CKEditor');
-        
-        // remove in-place textbox and show edited text
-        $s_on_keypress = "
-        var val;
-        if(event.keyCode == 13 && event.ctrlKey == true){
-            $('$selector').addClass('ui-editable');
-            $('$selector').removeClass('ui-editing');
-            val = ".$editor->content($selector)."
-            
-            /* ajax call */
-            $.post('$action', {'$field': val, '_method': 'put'},
-                function(data){},
-                'html'
-            );
-            
-            $('$selector').html(val);
-            ".$editor->remove($selector)."
-        }";
-        
-        // add in-place textbox
-        $s_on_click = "
-        var content;
-        var id;
-        $('$selector').bind('click', function(event){
-            if(!$(this).hasClass('ui-editing')){
-                $(this).removeClass('ui-editable');
-                $(this).addClass('ui-editing');
-                
-                ".$editor->replace($selector)."
-                ".$editor->add_event($selector, 'keypress',$s_on_keypress)."
-            }
-        })";
-        
-        
-        $this->add_script($s_on_click);
     }
     
 }
