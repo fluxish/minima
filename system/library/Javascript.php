@@ -45,8 +45,9 @@ class Javascript
     public function output_libraries()
     {
         $libraries = '';
-        foreach($this->_config->item('javascript', 'files') as $lib){
-            $libraries .= '<script type="text/javascript" src="'.$this->_config->item('base_url').$lib."\"></script>\n";
+        foreach($this->_config->item('javascript', 'libraries') as $lib){
+            $libraries .= '<script type="text/javascript" src="'.
+                $this->_config->item('base_url').$lib."\"></script>\n";
         }
         
         return $libraries;
