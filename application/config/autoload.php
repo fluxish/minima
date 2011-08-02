@@ -1,6 +1,6 @@
 <?php
 
-$config['configs'] = array('environment', 'interface', 'site');
+$config['configs'] = array('site');
 
 $config['libraries'] = array('language');
 
