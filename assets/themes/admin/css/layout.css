@@ -5,44 +5,86 @@
 #description#
 -------------------
 
-Author: Luigi Marco Simonetti
+Author:  
 
 [Layout]
 
 * body
     * Page / #page .container
-        + Header / header#header
-            - Top header / div#top_header
-            - Bottom header / div#bottom_header
+        + Header / #header
+            - Top header / #top_header
+            - Bottom header / #bottom_header
             
-        + Middle / div#middle
-            - column_1 / div#column_1
-            - column_2 / div#column_2
+        + Middle / #middle
+            - Content / #content
+            - Right Sidebar / #right_sidebar in navigation.css
+            - Left Sidebar / #left_sidebar in navigation.css
             
-        + Footer / footer#footer
+        + Footer / #footer
 
 -------------------------------------*/
 
 body{ height: 100.01%; }
 
-/* === PAGE === */
+/* === CONTAINER === */
 
-.container{max-width: 1440px; min-width: 960px; }
+.container{ width: 82%; margin: 0 auto; min-width: 960px; }
 
 /* === HEADER === */
-header{ height: 80px; }
-#top_header{ height: 30px; }
-#bottom_header{ height: 50px; position: relative; }
 
-#searchbox{ float: right; }
+#header{ }
 
-/* === MIDDLE === */
+#top_header{ height: 8px; }
 
-#middle{ min-height: 400px; margin-bottom: 40px; padding-bottom:20px;}
+#bottom_header{ height: 40px; position: relative; }
+
+    #logo_bar{ 
+        position: absolute;
+        float: left; 
+        width: 240px; 
+        height: 80px; 
+    }
+
+    #nav_bar{ margin-left: 260px; position: relative; height: 40px; }
+
+
+/* === CONTENT === */
+
+#page{ 
+    margin-left: 260px;
+    position: relative
+}
+ 
+    #page_container{
+        padding: 10px;
+        margin-bottom: 40px;
+        min-height: 400px;
+    }
+    
+    #notice_container{
+        position: absolute;
+        text-align: center;
+        width: 100%;
+    }
+
+/* === SIDEBARS === */
+
+#sidebar{ 
+    float: left; 
+    width: 240px;
+    margin-top: 40px;
+}
+
+    #sidebar_container{
+        min-height: 100px;
+    }
+
+.column{ overflow: hidden; }
+
 
 /* === FOOTER === */
 
-footer{    
+#footer{    
     height: 40px;
     margin-bottom: 20px;
     
