@@ -13,7 +13,15 @@
  
 class Javascript
 {
+    /**
+     * Array of all added scripts
+     * @var array
+     */
     private $_scripts = array();
+    
+    /**
+     * @var Config
+     */
     private $_config;
     
     public function __construct()
@@ -21,13 +29,19 @@ class Javascript
         $this->_config = Loader::get_instance()->library('config');
     }
     
-    public function add_script($script, $output = false)
+    /**
+     * Add a script to the container
+     * @param string $script
+     */
+    public function add_script($script)
     {
-        $script = "$(document).ready(function(){\n".$script."});\n";
         $this->_scripts[] = $script;
-        if($output) return $script;
     }
     
+    /**
+     * Generate the tag <script> for all javascript libraries
+     * @return string
+     */
     public function output_libraries()
     {
         $libraries = '';
@@ -38,15 +52,25 @@ class Javascript
         return $libraries;
     }
     
-    public function output_scripts()
+    /**
+     * Generate a tag <script> that contains all scripts added in the container
+     * @param boolean $onload set true to load the scripts when all 
+     *      the page is loaded (default: true)
+     * @return string
+     */
+    public function output_scripts($onload = true)
     {
-        $script = "<script type=\"text/javascript\">\n";
         foreach($this->_scripts as $s){
-            $script .= $s;
+            $script .= $s . "\n";
         }
-        $script .= "\n</script>\n";
+        
+        if($onload) $script = "$(document).ready(function(){\n".$script."});\n";
+        
+        $script = "<script type=\"text/javascript\">\n".$script."\n</script>\n";
+        
         return $script;
     }
+    
 }
  
 /* End of file Javascript.php */
