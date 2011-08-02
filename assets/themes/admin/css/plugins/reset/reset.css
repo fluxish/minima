@@ -51,9 +51,3 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-
-/* HTML5 tags */
-header, section, footer,
-aside, nav, article, figure {
-	display: block;
-}
