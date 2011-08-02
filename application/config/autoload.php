@@ -1,10 +1,10 @@
 <?php
 
-$config['configs'] = array();
+$config['configs'] = array('site');
 
-$config['libraries'] = array();
+$config['libraries'] = array('language');
 
-$config['helpers'] = array();
+$config['helpers'] = array('language');
 
 $config['languages'] = array('it', 'en');
 

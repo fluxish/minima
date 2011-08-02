@@ -2,12 +2,82 @@
 
 require_once(APPLICATION.DS.'config'.DS.'database.php');
 
-$config['base_dir'] = '/kaili';
+/**
+ *  base_url
+ *  URL to the framework root
+ *  @var string
+ */
+$config['base_url'] = 'http://'.$_SERVER['HTTP_HOST'].'/kaili/';
 
-$config['base_url'] = 'http://'.$_SERVER['HTTP_HOST'].$config['base_dir'];
-
+/**
+ *  language
+ *  The default language
+ *  @var string
+ */
 $config['language'] = 'it';
 
+
+/**
+ * ASSETS DIRECTORIES
+ */
+
+/**
+ *  images_directory
+ *  Path to the directory of the images
+ *  @var string
+ */
+$config['images_directory'] = ASSETS.DS.'images';
+
+/**
+ *  thumbs_directory
+ *  Path to the directory of the thumbnails of the images
+ *  @var string
+ */
+$config['thumbs_directory'] = ASSETS.DS.'images'.DS.'thumbs';
+
+/**
+ *  files_directory
+ *  Path to the directory of the uploaded files
+ *  @var string
+ */
+$config['files_directory'] = ASSETS.DS.'files';
+
+
+/**
+ * INTERFACE
+ */
+
+/**
+ *  interface_theme
+ *  Name of the default theme
+ *  @var string
+ */
+$config['interface_theme'] = 'admin';
+
+/**
+ *  main_template
+ *  Name of the main template (default main.php, so it is 'main')
+ *  @var string
+ */
+$config['main_template'] = 'main';
+
+
+/**
+ *  ENVIRONMENT
+ */
+ 
+/**
+ *  development_environment
+ *  Set true if the environment is in a development state (default: false)
+ *  @var boolean
+ */
+$config['development_environment'] = true;
+
+/**
+ *  environment infos
+ */
+$config['environment_name'] = 'Kaili Framework';
+$config['environment_version'] = '0.1';
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */
