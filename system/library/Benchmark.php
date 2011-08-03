@@ -13,9 +13,16 @@
 
 class Benchmark
 {
+    /**
+     * Time of start() method
+     * @var float
+     */
     private $_time_start;
+    
+    /**
+     * Array of checkpoints
+     */
     private $_checkpoints;
-    private static $_instance = null;
     
     /**
      * Create new Benchmark object
@@ -43,8 +50,8 @@ class Benchmark
     }
     
     /**
-     * Returns elapsed time betwen two checkpoints. Start and end checkpoints are optional,
-     * if start is null, is considered the forst checkpoint, if end is null, a new 
+     * Returns elapsed time between two checkpoints. Start and end checkpoints are optional,
+     * if start is null, is considered the first checkpoint, if end is null, a new 
      * checkpoint is created and considered as end checkpoint.
      * 
      * @param string name of start checkpoint
@@ -63,24 +70,30 @@ class Benchmark
     }
     
     /**
+     * Returns elapsed time from the request time. The end checkpoint is optional,
+     * if end is null, a new checkpoint is created and considered as end checkpoint.
+     * 
+     * @param string name of end checkpoint
+     * @return int elapsed time, in microseconds
+     */
+    function elapsed_time_from_request($end = null)
+    {
+        $t_start = (float) $_SERVER['REQUEST_TIME'];
+        
+        if($end == null) $t_end = $this->timestamp();
+        else $t_end = $this->_checkpoints[$end];
+
+        return round($t_end - $t_start, 3);
+    }
+    
+    /**
      * Return the current timestamp
      * 
-     * @return the current timestamp, in milliseconds
+     * @return the current timestamp, in microseconds
      */
     private function timestamp()
     {
-        date_default_timezone_set('Europe/Rome');
-        $timeofday = gettimeofday();
-        $ms = 1000*($timeofday['sec'] + ($timeofday['usec'] / 1000000));
-        return $ms;
-    }
-    
-    static function get_instance()
-    {
-        if(self::$_instance == null){
-            self::$_instance = new Benchmark();
-        }
-        return self::$_instance;
+        return microtime(true);
     }
 }
 
