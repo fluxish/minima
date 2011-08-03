@@ -69,13 +69,15 @@ function __autoload($className)
 }
 
 spl_autoload_register('__autoload');
-
 setReporting();
 
 Loader::get_instance()->autoload();
-//Loader::get_instance()->library('benchmark')->start();
+
+Loader::get_instance()->library('benchmark')->start();
 
 callHook();
+
+var_dump(Loader::get_instance()->library('benchmark')->elapsed_time_from_request());
 
 
 /* End of file bootstrap.php */
