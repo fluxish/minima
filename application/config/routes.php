@@ -10,7 +10,7 @@
 $route['default_controller'] = 'core';
 $route['default_action'] = 'index';
 
-$route[':controller/:action/:id'] = array();
+$route[':controller/:action'] = array();
 
 
 /* End of file routes.php */

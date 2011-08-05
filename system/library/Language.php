@@ -47,7 +47,10 @@
         $this->_input = Loader::get_instance()->library('input');
         
         $this->_autoload();
-        $this->_items = &$this->_languages[$this->_config->item('language')];
+        if($lang = $this->_input->get('l')) 
+            $this->_items = &$this->_languages[$lang];
+        else
+            $this->_items = &$this->_languages[$this->_config->item('language')];
     }
     
     /**
