@@ -7,11 +7,31 @@
  *
  */
 
+/**
+ * default_controller
+ * Set the controller class, if it is not explicit
+ */
 $route['default_controller'] = 'core';
+
+/**
+ * default_action
+ * Set the action method, if it is not explicit
+ */
 $route['default_action'] = 'index';
 
-$route[':controller/:action'] = array();
 
+/**
+ * ROUTES
+ *
+ * Special keys:
+ * :controller - controller class
+ * :action - action method
+ * :params - list of all params (/key/value)
+ * :format - output format (default: html)
+ */
+
+//$route[':controller/:action'] = array();
+$route[':controller/:action/:params.:format'] = array();
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
