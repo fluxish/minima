@@ -47,7 +47,12 @@
         $this->_input = Loader::get_instance()->library('input');
         
         $this->_autoload();
-        $this->_items = &$this->_languages[$this->_config->item('language')];
+        if($lang = $this->_input->get('l')) 
+            // select the current language by the url with the key 'l'
+            // (es. http://www.example.com/controller/action/l/en/key1/val1/.../keyN/valN)
+            $this->_items = &$this->_languages[$lang];
+        else
+            $this->_items = &$this->_languages[$this->_config->item('language')];
     }
     
     /**
