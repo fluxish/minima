@@ -32,9 +32,17 @@ class Logger
      * @param string $name the name of the logger
      * @param Logger_Interface $logger the logger
      */
-    public function add($name, Logger_Interface $logger)
+    public function add($name, Logger_Interface $logger = null)
     {
-        $this->_loggers[$name] = $logger;
+        if($logger != null)
+            $this->_loggers[$name] = $logger;
+        else{
+            // create a new logger
+            $loggers = Logger::get_instance()->library('config')->item('loggers');
+            $logger = 'Logger_'.ucwords($loggers[$name]['type']);
+            $this->_loggers[$name] = new $logger($loggers[$name]);
+        }
+        
     }
     
     /**
