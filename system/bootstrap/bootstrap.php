@@ -77,7 +77,7 @@ Loader::get_instance()->library('benchmark')->start();
 
 callHook();
 
-var_dump(Loader::get_instance()->library('benchmark')->elapsed_time_from_request());
+//var_dump(Loader::get_instance()->library('benchmark')->elapsed_time_from_request());
 
 
 /* End of file bootstrap.php */
