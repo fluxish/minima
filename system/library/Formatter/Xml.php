@@ -22,7 +22,6 @@ class Formatter_Xml
 
     public function format($data)
     {
-        var_dump($data);
         //Set action as root name
         if($data instanceof SimpleXMLElement){
             $xml = $data;
@@ -46,7 +45,7 @@ class Formatter_Xml
         if(is_object($data)) $data = get_object_vars($data);
         foreach($data as $k=>$v){
             if(is_numeric($k)){
-                $k = singular($xml->getName());
+                $k = '_'.$k;
             }
             if(is_object($v) || is_array($v)){
                 $el = $xml->addChild($k);
