@@ -39,8 +39,8 @@ class Router
         {
             $var_names = $this->var_names($patt);
             $patt = str_replace('/', '\/?', $patt);
+            $patt = str_replace('.', '\.?', $patt);
             $patt = preg_replace('/'.$this->_var_name_patt.'/',$this->_var_patt, $patt);
-            var_dump($patt);
             
             if(preg_match('/^'.$patt.'/', $uri, $matches))
             {
@@ -79,7 +79,7 @@ class Router
 				}
                 				
 				$_GET = array_merge($_GET, $vars);
-			    var_dump($vars);
+			    //var_dump($vars);
 				return $this->_params;
 			}
         }

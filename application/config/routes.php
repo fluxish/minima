@@ -31,7 +31,7 @@ $route['default_action'] = 'index';
  */
 
 //$route[':controller/:action'] = array();
-$route[':controller/:action/:params.:format'] = array();
+$route[':controller/:action.:format'] = array();
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
