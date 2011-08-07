@@ -51,7 +51,7 @@ class Logger
      * @param mixed $data
      * @param string $logger the name of the logger to use
      */
-    public function log($data, $logger = null)
+    public function log($data, $type = Logger::INFO, $logger = null)
     {
         // select the provided logger, or the current if $logger is null
         if($logger != null)
@@ -59,7 +59,7 @@ class Logger
         else
             $logger = current($this->_loggers);
         
-        $logger->log($data, $marker);
+        $logger->log($data, $this->_generate_marker($type));
     }
     
     public function __destruct()
@@ -67,11 +67,16 @@ class Logger
         unset($this->_logger);
     }
     
-    private function _generate_marker()
+    private function _generate_marker($type)
     {
         $timestamp = date(DATE_W3C);
         return $timestamp.' ['.$type.']: ';
     }
+    
+    const INFO = 'INFO';
+    const WARNING = 'WARNING';
+    const ERROR = 'ERROR';
+    const SUCCESS ='SUCCESS';
 }
 
 /* End of file Logger.php */

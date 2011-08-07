@@ -34,7 +34,7 @@ class Logger_File implements Logger_Interface
      */
     public function log($data, $marker)
     {
-        return fprintf($this->_file, '%s%s', $marker, $data);
+        return fprintf($this->_file, "%s%s\n", $marker, $data);
     }
 }
 
