@@ -16,8 +16,9 @@ interface Logger_Interface
     /**
      * Save data with the logger
      * @param mixed $data
+     * @param string $marker 
      */
-    public function log($data);
+    public function log($data, $marker);
 }
 
 /* End of file Interface.php */

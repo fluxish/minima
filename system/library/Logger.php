@@ -25,6 +25,7 @@ class Logger
     public function __construct()
     {
         $this->_loggers = array();
+        Loader::get_instance()->library('config')->load('logger');
     }
     
     /**
@@ -38,7 +39,7 @@ class Logger
             $this->_loggers[$name] = $logger;
         else{
             // create a new logger
-            $loggers = Logger::get_instance()->library('config')->item('loggers');
+            $loggers = Loader::get_instance()->library('config')->item('loggers');
             $logger = 'Logger_'.ucwords($loggers[$name]['type']);
             $this->_loggers[$name] = new $logger($loggers[$name]);
         }
@@ -52,18 +53,24 @@ class Logger
      */
     public function log($data, $logger = null)
     {
-        // select the provided logger, or the first if $logger is null
+        // select the provided logger, or the current if $logger is null
         if($logger != null)
             $logger = $this->_loggers[$logger];
         else
-            $logger = $this->_loggers[0];
+            $logger = current($this->_loggers);
         
-        $logger->log($data);
+        $logger->log($data, $marker);
     }
     
     public function __destruct()
     {
         unset($this->_logger);
+    }
+    
+    private function _generate_marker()
+    {
+        $timestamp = date(DATE_W3C);
+        return $timestamp.' ['.$type.']: ';
     }
 }
 

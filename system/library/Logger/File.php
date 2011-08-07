@@ -18,7 +18,7 @@ class Logger_File implements Logger_Interface
     
     public function __construct($logger_data)
     {
-        $this->_file = fopen($logger_data['file'], 'w');   
+        $this->_file = fopen($logger_data['file'], 'a');   
     }
     
     public function __destruct()
@@ -30,10 +30,11 @@ class Logger_File implements Logger_Interface
     /**
      * Save data with the logger
      * @param mixed $data
+     * @param string $marker 
      */
-    public function log($data)
+    public function log($data, $marker)
     {
-        return fprintf($this->_file, '%s', $data);
+        return fprintf($this->_file, '%s%s', $marker, $data);
     }
 }
 
