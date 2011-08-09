@@ -16,12 +16,12 @@ class Controller
     /**
      * @var View
      */
-    public $view;
+    protected $view;
 
     /**
      * @var Loader
      */
-    public $_load;
+    protected $_load;
     
     function __construct()
     {
