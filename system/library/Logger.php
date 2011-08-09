@@ -57,8 +57,7 @@ class Logger
         if($logger != null)
             $logger = $this->_loggers[$logger];
         else{
-            reset($this->_loggers);
-            $logger = current($this->_loggers);
+            $logger = reset($this->_loggers);
         }
         
         $logger->log($data, $this->_generate_marker($type));
