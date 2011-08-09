@@ -31,6 +31,7 @@ class Loader
     private $_config;
     
     /**
+     * Array of default loaded libraries
      * @var array
      */
     private $_internal_autoload = array('input', 'output');
@@ -50,7 +51,7 @@ class Loader
      * 
      * @param string $helper the unique name of the helper 
      */
-    function helper($helper)
+    public function helper($helper)
     {
         include_once(SYSTEM.DS.'helpers'.DS.$helper.'.helper.php');
     }
@@ -60,7 +61,7 @@ class Loader
      * 
      * @param string $lib the name of the class
      */
-    function library($lib)
+    public function library($lib)
     {
         if(!array_key_exists($lib, $this->_loaded_libraries)){
             $libName = ucwords($lib);
@@ -77,7 +78,7 @@ class Loader
      * @param string $action the name of controller's action called 
      * @param array $url_segments an array of parameters give from the url
      */
-    function controller($controller, $action, $url_segments = array())
+    public function controller($controller, $action, $url_segments = array())
     {
         $controller_name = $controller;
         $action_name = strtolower($action);
@@ -119,28 +120,11 @@ class Loader
         $this->library('benchmark')->start();
         $this->library('logger')->add('log1');
         
-	    
+	    // call requested controller
 	    $controller = $this->library('input')->get('controller');
 	    $action = $this->library('input')->get('action');
 	
-    #	//ACL
-    #	$acl = Loader::get_instance()->library('acl');
-    #	$acl->add_role('admin');
-    #	$acl->add_role('guest');
-    #	$acl->allow('guest','home');
-    #	$acl->allow('admin');
-    #	
-    #	$session = Loader::get_instance()->library('session');
-    #	
-    #	// manage controller
-    #	if($session->data('identity') === false) $role = 'guest';
-    #	else {
-    #        $user = $session->data('identity');	
-    #        $role = $user['role'];
-    #	}
-    #	
-    #	if($acl->is_allowed($role, $controller, $action))
-	    $this->controller($controller, $action, $_GET);
+	    $this->controller($controller, $action, $this->library('input')->get());
 	
 	    // output all buffer
 	    $this->library('output')->display();
@@ -179,7 +163,7 @@ class Loader
      * 
      * @return Loader
      */
-    static function get_instance()
+    public static function get_instance()
     {
         if(self::$_instance == null){
             self::$_instance = new Loader();
@@ -191,7 +175,7 @@ class Loader
      * Autoload any classes that are required
      * @param string $className the name of required class
      */
-    static function __autoload($className) 
+    public static function __autoload($className) 
     {
         // create the path from the name of the class
         $path = str_replace('_', DS, $className);
