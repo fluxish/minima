@@ -1,7 +1,7 @@
 <?php  if (!defined('ROOT')) exit('No direct script access allowed');
 
 /**
- * HTML Helpers
+ * Inflector Helpers
  *
  * @package		Kaili
  * @subpackage	Helpers
@@ -9,13 +9,14 @@
  * @author		Luigi Marco Simonetti
  */
 
-/**
- * Transform a word from plural to singular form
- * @param string $str a word
- * @return string
- */
+
 if(!function_exists('singular'))
 {
+    /**
+     * Transform a word from plural to singular form
+     * @param string $str a word
+     * @return string
+     */
     function singular($str)
     {
         $str = strtolower($str);
@@ -33,13 +34,14 @@ if(!function_exists('singular'))
     }
 }
 
-/**
- * Transform a word from singular to plural form
- * @param string $str a word
- * @return string
- */
+
 if(!function_exists('plural'))
 {
+    /**
+     * Transform a word from singular to plural form
+     * @param string $str a word
+     * @return string
+     */
     function plural($str)
     {
         $str = strtolower($str);
@@ -61,3 +63,6 @@ if(!function_exists('plural'))
         }
     }
 }
+
+/* End of file inflector.helper.php */
+/* Location: ./system/helpers/inflector.helper.php */
