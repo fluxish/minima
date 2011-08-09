@@ -47,7 +47,7 @@ class Logger
     }
     
     /**
-     * Save data with a logger
+     * Log a message with a logger
      * @param mixed $data
      * @param string $logger the name of the logger to use
      */
@@ -62,20 +62,84 @@ class Logger
         $logger->log($data, $this->_generate_marker($type));
     }
     
+    /**
+     * Log an info message with a logger
+     * @param mixed $data
+     * @param string $logger the name of the logger to use
+     */
+    public function info($data, $logger = null)
+    {
+        $this->log($data, Logger::INFO, $logger);
+    }
+    
+    /**
+     * Log a warning message with a logger
+     * @param mixed $data
+     * @param string $logger the name of the logger to use
+     */
+    public function warning($data, $logger = null)
+    {
+        $this->log($data, Logger::WARNING, $logger);
+    }
+    
+    /**
+     * Log an error message with a logger
+     * @param mixed $data
+     * @param string $logger the name of the logger to use
+     */
+    public function error($data, $logger = null)
+    {
+        $this->log($data, Logger::ERROR, $logger);
+    }
+    
+    /**
+     * Log a success message with a logger
+     * @param mixed $data
+     * @param string $logger the name of the logger to use
+     */
+    public function success($data, $logger = null)
+    {
+        $this->log($data, Logger::SUCCESS, $logger);
+    }
+    
     public function __destruct()
     {
         unset($this->_logger);
     }
     
+    /**
+     * Generate a marker for a log message
+     * @param string $type the type of the message
+     * @return string
+     */
     private function _generate_marker($type)
     {
         $timestamp = date(DATE_W3C);
         return $timestamp.' ['.$type.']: ';
     }
     
+    /**
+     * Type of information message
+     * @var string
+     */
     const INFO = 'INFO';
+    
+    /**
+     * Type of warning message
+     * @var string
+     */
     const WARNING = 'WARNING';
+    
+    /**
+     * Type of error message
+     * @var string
+     */
     const ERROR = 'ERROR';
+    
+    /**
+     * Type of success message
+     * @var string
+     */
     const SUCCESS ='SUCCESS';
 }
 
