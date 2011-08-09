@@ -21,7 +21,7 @@ class Controller
     /**
      * @var Loader
      */
-    protected $load
+    protected $load;
     protected $_load;
     
     function __construct()
@@ -53,7 +53,7 @@ class Controller
      */
     function __get($lib)
     {
-        return $this->_load->library($lib);
+        return $this->load->library($lib);
     }
 }
 
