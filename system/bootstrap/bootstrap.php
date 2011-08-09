@@ -73,16 +73,12 @@ setReporting();
 
 Loader::get_instance()->autoload();
 
-Loader::get_instance()->library('benchmark')->start();
+//Loader::get_instance()->library('benchmark')->start();
 Loader::get_instance()->library('logger')->add('log1');
 
 callHook();
 
-<<<<<<< HEAD
-//var_dump(Loader::get_instance()->library('benchmark')->elapsed_time_from_request());
-=======
-$elapsed = Loader::get_instance()->library('benchmark')->elapsed_time_from_request();
->>>>>>> f_logger
+//$elapsed = Loader::get_instance()->library('benchmark')->elapsed_time_from_request();
 
 
 /* End of file bootstrap.php */
