@@ -7,9 +7,6 @@ define('APPLICATION',ROOT.DS.'application');
 define('ASSETS',ROOT.DS.'assets');
 define('EXT', '.php');
 
-$url = $_GET['url'];
-
-require_once (ROOT.DS.'system'.DS.'bootstrap'.DS.'bootstrap.php');
-
-
+require_once (ROOT.DS.'system'.DS.'library'.DS.'Loader.php');
+Loader::get_instance()->start();
 

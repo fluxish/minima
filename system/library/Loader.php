@@ -41,9 +41,7 @@ class Loader
      */
     private function __construct()
     {
-        //spl_autoload_register('Loader::__autoload');
-        //$this->set_reporting();
-        //$this->autoload();
+        spl_autoload_register('Loader::__autoload');
         $this->_config = $this->library('config');
     }
     
@@ -69,27 +67,6 @@ class Loader
             $this->_loaded_libraries[$lib] = new $libName();
         }
         return $this->_loaded_libraries[$lib];
-    }
-    
-    /**
-     * Autoload all classes selected in the config file autoload.php
-     */
-    function autoload()
-    {
-        // autoload internal libraries
-        foreach($this->_internal_autoload as $lib){
-            $this->library($lib);
-        }
-        
-        // autoload libraries in autoload config file
-        foreach($this->_config->item('libraries') as $lib){
-            $this->library($lib);
-        }
-        
-        // autoload helpers
-        foreach($this->_config->item('helpers') as $help){
-            $this->helper($help);
-        }
     }
     
     /**
@@ -136,7 +113,10 @@ class Loader
     
     public function start() 
     {
-        //$this->library('benchmark')->start();
+        $this->set_reporting();
+        $this->_autoload();
+        
+        $this->library('benchmark')->start();
         $this->library('logger')->add('log1');
         
 	    
@@ -165,7 +145,33 @@ class Loader
 	    // output all buffer
 	    $this->library('output')->display();
 	    
-	    //$elapsed = $this->library('benchmark')->elapsed_time_from_request();
+#	    $elapsed = $this->library('benchmark')->elapsed_time_from_request();
+#	    Loader::get_instance()->library('logger')->info($elapsed);
+    }
+    
+    /**
+     * Autoload all classes selected in the config file autoload.php
+     */
+    private function _autoload()
+    {
+        // autoload internal libraries
+        foreach($this->_internal_autoload as $lib){
+            $this->library($lib);
+        }
+        
+        // autoload libraries in autoload config file
+        $libraries = $this->_config->item('libraries');
+        foreach($libraries as $lib){
+            $this->library($lib);
+        }
+        unset($libraries, $lib);
+        
+        // autoload helpers
+        $helpers = $this->_config->item('helpers');
+        foreach($helpers as $help){
+            $this->helper($help);
+        }
+        unset($helpers, $help);
     }
     
     /**
@@ -191,7 +197,6 @@ class Loader
         $path = str_replace('_', DS, $className);
         
 	    if(file_exists(SYSTEM.DS.'library'.DS.$path.EXT)) {
-	        var_dump('dsada');
 		    require_once(SYSTEM.DS.'library'.DS.$path.EXT);
 	    }
         else if(file_exists(APPLICATION.DS.'controllers'.DS.$className.EXT)) {
