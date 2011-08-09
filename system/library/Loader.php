@@ -37,6 +37,7 @@ class Loader
     private $_internal_autoload = array('input', 'output');
     
     
+    
     /**
      * Create the loader for all classes 
      */
@@ -48,7 +49,6 @@ class Loader
     
     /**
      * Load an helper
-     * 
      * @param string $helper the unique name of the helper 
      */
     public function helper($helper)
@@ -58,7 +58,6 @@ class Loader
     
     /**
      * Load a class from the framework's library
-     * 
      * @param string $lib the name of the class
      */
     public function library($lib)
@@ -72,7 +71,6 @@ class Loader
     
     /**
      * Load an MVC controller
-     * 
      * @param string $controller the name of the controller (for convention,
      *        in plural form)  
      * @param string $action the name of controller's action called 
@@ -112,13 +110,18 @@ class Loader
         }
     }
     
-    public function start($pre_call = null, $post_call = null) 
+    /**
+     * Prepare the framework to the requests
+     * @param function $pre_controller a closure to call before controller
+     * @param function $post_controller a closure to call after controller
+     */
+    public function start($pre_controller = null, $post_controller = null) 
     {
         $this->set_reporting();
         $this->_autoload();
         
         // execute a pre-controller call function
-        if(is_callable($pre_call)) $pre_call();
+        if(is_callable($pre_controller)) $pre_controller();
         
 	    // call requested controller
 	    $controller = $this->library('input')->get('controller');
@@ -126,7 +129,7 @@ class Loader
 	    $this->controller($controller, $action, $this->library('input')->get());
 	    
 	    // execute a post-controller call function
-	    if(is_callable($post_call)) $post_call();
+	    if(is_callable($post_controller)) $post_controller();
 	    
 	    // output all buffer
 	    $this->library('output')->display();
@@ -159,7 +162,6 @@ class Loader
     
     /**
      * Returns the singleton instance of the loader
-     * 
      * @return Loader
      */
     public static function get_instance()
