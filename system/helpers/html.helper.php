@@ -57,7 +57,37 @@ if(!function_exists('head_link'))
     }
 }
 
-
+if(!function_exists('anchor'))
+{
+    /**
+     * Create an anchor link
+     * @param string $url
+     * @param string $content
+     * @param string $title the text of the link
+     * @param array $attributes an array of all other attributes of the input tag
+     * @param string $method the request method (get (default), post, put, delete)
+     * @return string 
+     */
+    function anchor($url, $content, $title = null, $attributes = array(), $method = 'get')
+    {
+        // return a custom input text
+        $attributes['href'] = $url;
+               
+        if($title == null) $attributes['title'] = $content;
+        else $attributes['title'] = $title;
+        
+        if($method == 'get'){ 
+            return tag_open('a', $attributes).$content.'</a>';
+        }
+        else{
+            $attributes .= ' style="background:transparent;border:none;border-bottom:1px solid #00F;color:#00F;display:inline;cursor:pointer;margin:0;padding:0;height:1.3em"';
+            return '<form method="post" action="'.$url.'">'
+                ."\n".'<input type="hidden" name="_method" value="'.$method.'"/>'
+                ."\n".'<input type="submit" value="'.$title.'" '.$title_tag.$attributes.'/>'
+                ."\n</form>";
+        }
+    }
+}
 
 /**
  * Return one or more breking tag
@@ -264,8 +294,9 @@ if(!function_exists('form_password'))
 /**
  * Return a textarea field
  * @param mixed name of the textarea field (given also as id), or an array of all attributes
- * @param string an initial value
- * @param string $label a label
+ * @param string $value an initial value
+ * @param string $label a label for the input field
+ * @param array $attributes an array of all other attributes of the input tag
  * @return string
  */
 if(!function_exists('form_textarea'))
