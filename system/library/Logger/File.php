@@ -11,7 +11,7 @@
  * @author      Luigi Marco Simonetti
  */
 
-class Logger_File implements Logger_Interface
+class Logger_File extends Logger
 {
     private $_file;
     
@@ -32,8 +32,9 @@ class Logger_File implements Logger_Interface
      * @param mixed $data
      * @param string $marker 
      */
-    public function log($data, $marker)
+    public function log($data, $type)
     {
+        $marker = $this->_generate_marker($type)
         return fprintf($this->_file, "%s%s\n", $marker, $data);
     }
 }
