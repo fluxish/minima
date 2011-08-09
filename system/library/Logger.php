@@ -11,39 +11,19 @@
  * @author      Luigi Marco Simonetti
  */
 
-class Logger
+abstract class Logger
 {
     /**
      * Array of all added loggers
      * @var array
      */
-    private $_loggers;
+    private static $_loggers = array();
     
     /**
      * Create a new loggers container
      */
-    public function __construct()
+    private function __construct()
     {
-        $this->_loggers = array();
-        Loader::get_instance()->library('config')->load('logger');
-    }
-    
-    /**
-     * Add a logger to the container
-     * @param string $name the name of the logger
-     * @param Logger_Interface $logger the logger
-     */
-    public function add($name, Logger_Interface $logger = null)
-    {
-        if($logger != null)
-            $this->_loggers[$name] = $logger;
-        else{
-            // create a new logger
-            $loggers = Loader::get_instance()->library('config')->item('loggers');
-            $logger = 'Logger_'.ucwords($loggers[$name]['type']);
-            $this->_loggers[$name] = new $logger($loggers[$name]);
-        }
-        
     }
     
     /**
@@ -51,26 +31,16 @@ class Logger
      * @param mixed $data
      * @param string $logger the name of the logger to use
      */
-    public function log($data, $type = Logger::INFO, $logger = null)
-    {
-        // select the provided logger, or the current if $logger is null
-        if($logger != null)
-            $logger = $this->_loggers[$logger];
-        else{
-            $logger = reset($this->_loggers);
-        }
-        
-        $logger->log($data, $this->_generate_marker($type));
-    }
+    public abstract function log($data, $type = Logger::INFO);
     
     /**
      * Log an info message with a logger
      * @param mixed $data
      * @param string $logger the name of the logger to use
      */
-    public function info($data, $logger = null)
+    public function info($data)
     {
-        $this->log($data, Logger::INFO, $logger);
+        $this->log($data, Logger::INFO);
     }
     
     /**
@@ -78,9 +48,9 @@ class Logger
      * @param mixed $data
      * @param string $logger the name of the logger to use
      */
-    public function warning($data, $logger = null)
+    public function warning($data)
     {
-        $this->log($data, Logger::WARNING, $logger);
+        $this->log($data, Logger::WARNING);
     }
     
     /**
@@ -88,9 +58,9 @@ class Logger
      * @param mixed $data
      * @param string $logger the name of the logger to use
      */
-    public function error($data, $logger = null)
+    public function error($data)
     {
-        $this->log($data, Logger::ERROR, $logger);
+        $this->log($data, Logger::ERROR);
     }
     
     /**
@@ -98,9 +68,9 @@ class Logger
      * @param mixed $data
      * @param string $logger the name of the logger to use
      */
-    public function success($data, $logger = null)
+    public function success($data)
     {
-        $this->log($data, Logger::SUCCESS, $logger);
+        $this->log($data, Logger::SUCCESS);
     }
     
     public function __destruct()
@@ -113,10 +83,44 @@ class Logger
      * @param string $type the type of the message
      * @return string
      */
-    private function _generate_marker($type)
+    protected function _generate_marker($type)
     {
         $timestamp = date(DATE_W3C);
         return $timestamp.' ['.$type.']: ';
+    }
+    
+    /**
+     * Add a logger to the container
+     * @param string $name the name of the logger
+     * @param Logger_Interface $logger the logger
+     */
+    public static function add($name, Logger_Interface $logger = null)
+    {
+        Loader::get_instance()->library('config')->load('logger');
+        
+        if($logger != null)
+            $this->_loggers[$name] = $logger;
+        else{
+            // create a new logger
+            $loggers = Loader::get_instance()->library('config')->item('loggers');
+            $logger = 'Logger_'.ucwords($loggers[$name]['type']);
+            $this->_loggers[$name] = new $logger($loggers[$name]);
+        }
+        
+    }
+    
+    /**
+     * Returns a particular named logger
+     * 
+     * @return Logger
+     */
+    public static function get($name)
+    {
+        $logger = self::$_loggers[$name];
+        if(isset($logger)){
+            return $logger;
+        }
+        else throw new Logger_Exception('Logger "'.$name.'" doesn\'t exists.');
     }
     
     /**
