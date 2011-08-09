@@ -2,7 +2,7 @@
 
 $config['configs'] = array('site');
 
-$config['libraries'] = array('language', 'logger');
+$config['libraries'] = array('language');
 
 $config['helpers'] = array('language');
 
