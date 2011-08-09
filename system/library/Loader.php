@@ -13,21 +13,19 @@
 class Loader
 {
     /**
+     * Singleton instance of Loader
      * @var Loader
      */   
     private static $_instance = null;
     
     /**
+     * Array of loaded libraries
      * @var array
      */
     private $_loaded_libraries = array();
     
     /**
-     * @var array
-     */
-    private $_loaded_plugins = array();
-    
-    /**
+     * Instance of Config class
      * @var Config
      */
     private $_config;
@@ -43,6 +41,9 @@ class Loader
      */
     private function __construct()
     {
+        //spl_autoload_register('Loader::__autoload');
+        //$this->set_reporting();
+        //$this->autoload();
         $this->_config = $this->library('config');
     }
     
@@ -54,31 +55,6 @@ class Loader
     function helper($helper)
     {
         include_once(SYSTEM.DS.'helpers'.DS.$helper.'.helper.php');
-    }
-    
-    /**
-     * Load an MVC controller
-     * 
-     * @param string $controller the name of the controller (for convention,
-     *        in plural form)  
-     * @param string $action the name of controller's action called 
-     * @param array $url_segments an array of parameters give from the url
-     * @param boolean $with_template TRUE (default) if the template is required, 
-     *        FALSE otherwise
-     */
-    function controller($controller, $action, $url_segments = array())
-    {
-        $controller_name = $controller;
-        $action_name = strtolower($action);
-        
-        // creation of controller
-        $controller = ucwords($controller_name);
-	    $controller = new $controller();
-	    
-        // call action of the controller
-	    if ((int)method_exists($controller_name, $action_name)) {
-		    call_user_func_array(array($controller, $action_name), array_values($url_segments));
-	    } 
     }
     
     /**
@@ -117,6 +93,82 @@ class Loader
     }
     
     /**
+     * Load an MVC controller
+     * 
+     * @param string $controller the name of the controller (for convention,
+     *        in plural form)  
+     * @param string $action the name of controller's action called 
+     * @param array $url_segments an array of parameters give from the url
+     */
+    function controller($controller, $action, $url_segments = array())
+    {
+        $controller_name = $controller;
+        $action_name = strtolower($action);
+        
+        // creation of controller
+        $controller = ucwords($controller_name);
+	    $controller = new $controller();
+	    
+        // call action of the controller
+	    if ((int)method_exists($controller_name, $action_name)) {
+		    call_user_func_array(array($controller, $action_name), array_values($url_segments));
+	    } 
+    }
+    
+    /** 
+     * Check if environment is development and display errors 
+     */
+    public function set_reporting() 
+    {
+        if($this->_config->item('development_environment') == true)
+        {
+            error_reporting(E_ALL);
+            ini_set('display_errors','On');
+            ini_set('html_errors', 'On');
+        } 
+        else{
+            error_reporting(E_ALL & ~E_DEPRECATED);
+            ini_set('display_errors','Off');
+            ini_set('log_errors', 'On');
+            ini_set('error_log', ROOT.DS.'system'.DS.'tmp'.DS.'logs'.DS.'error.log');
+        }
+    }
+    
+    public function start() 
+    {
+        //$this->library('benchmark')->start();
+        $this->library('logger')->add('log1');
+        
+	    
+	    $controller = $this->library('input')->get('controller');
+	    $action = $this->library('input')->get('action');
+	
+    #	//ACL
+    #	$acl = Loader::get_instance()->library('acl');
+    #	$acl->add_role('admin');
+    #	$acl->add_role('guest');
+    #	$acl->allow('guest','home');
+    #	$acl->allow('admin');
+    #	
+    #	$session = Loader::get_instance()->library('session');
+    #	
+    #	// manage controller
+    #	if($session->data('identity') === false) $role = 'guest';
+    #	else {
+    #        $user = $session->data('identity');	
+    #        $role = $user['role'];
+    #	}
+    #	
+    #	if($acl->is_allowed($role, $controller, $action))
+	    $this->controller($controller, $action, $_GET);
+	
+	    // output all buffer
+	    $this->library('output')->display();
+	    
+	    //$elapsed = $this->library('benchmark')->elapsed_time_from_request();
+    }
+    
+    /**
      * Returns the singleton instance of the loader
      * 
      * @return Loader
@@ -127,6 +179,27 @@ class Loader
             self::$_instance = new Loader();
         }
         return self::$_instance;
+    }
+    
+    /** 
+     * Autoload any classes that are required
+     * @param string $className the name of required class
+     */
+    static function __autoload($className) 
+    {
+        // create the path from the name of the class
+        $path = str_replace('_', DS, $className);
+        
+	    if(file_exists(SYSTEM.DS.'library'.DS.$path.EXT)) {
+	        var_dump('dsada');
+		    require_once(SYSTEM.DS.'library'.DS.$path.EXT);
+	    }
+        else if(file_exists(APPLICATION.DS.'controllers'.DS.$className.EXT)) {
+		    require_once(APPLICATION.DS.'controllers'.DS.$className.EXT);
+	    } 
+	    else if(file_exists(APPLICATION.DS.'models'.DS.$className.EXT)) {
+		    require_once(APPLICATION.DS.'models'.DS.$className.EXT);
+	    } 
     }
 }
 
