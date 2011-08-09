@@ -21,11 +21,13 @@ class Controller
     /**
      * @var Loader
      */
+    protected $load
     protected $_load;
     
     function __construct()
     {
-        $this->_load = Loader::get_instance();
+        $this->load = Loader::get_instance();
+        $this->_load = $this->load;
         
         $this->view = new View();
     }
