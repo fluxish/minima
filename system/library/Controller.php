@@ -21,7 +21,7 @@ class Controller
     /**
      * @var Loader
      */
-    protected $load
+    protected $load;
     protected $_load;
     
     function __construct()
