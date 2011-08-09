@@ -112,25 +112,24 @@ class Loader
         }
     }
     
-    public function start() 
+    public function start($pre_call = null, $post_call = null) 
     {
         $this->set_reporting();
         $this->_autoload();
         
-        $this->library('benchmark')->start();
-        $this->library('logger')->add('log1');
+        // execute a pre-controller call function
+        if(is_callable($pre_call)) $pre_call();
         
 	    // call requested controller
 	    $controller = $this->library('input')->get('controller');
 	    $action = $this->library('input')->get('action');
-	
 	    $this->controller($controller, $action, $this->library('input')->get());
-	
+	    
+	    // execute a post-controller call function
+	    if(is_callable($post_call)) $post_call();
+	    
 	    // output all buffer
 	    $this->library('output')->display();
-	    
-#	    $elapsed = $this->library('benchmark')->elapsed_time_from_request();
-#	    Loader::get_instance()->library('logger')->info($elapsed);
     }
     
     /**
