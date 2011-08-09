@@ -53,7 +53,7 @@ class Controller
      */
     function __get($lib)
     {
-        return $this->_load->library($lib);
+        return $this->load->library($lib);
     }
 }
 
