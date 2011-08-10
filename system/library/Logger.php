@@ -104,7 +104,7 @@ abstract class Logger
             // create a new logger
             $loggers = Loader::get_instance()->library('config')->item('loggers');
             $logger = 'Logger_'.ucwords($loggers[$name]['type']);
-            $this->_loggers[$name] = new $logger($loggers[$name]);
+            self::$_loggers[$name] = new $logger($loggers[$name]);
         }
         
     }

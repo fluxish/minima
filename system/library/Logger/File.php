@@ -32,9 +32,9 @@ class Logger_File extends Logger
      * @param mixed $data
      * @param string $marker 
      */
-    public function log($data, $type)
+    public function log($data, $type = Logger::INFO)
     {
-        $marker = $this->_generate_marker($type)
+        $marker = $this->_generate_marker($type);
         return fprintf($this->_file, "%s%s\n", $marker, $data);
     }
 }
