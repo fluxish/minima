@@ -12,7 +12,7 @@
 $config['loggers'] = array(
     'log1' => array(
         'type' => 'file',
-        'file' => SYSTEM.DS.'tmp'.DS.'logs'.DS.'file1.log'
+        'file' => APPLICATION.DS.'tmp'.DS.'logs'.DS.'file1.log'
     )
 );
 
