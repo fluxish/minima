@@ -13,10 +13,17 @@
 
 class Router
 {
-    protected $_route;
+    /**
+     * Array of routes in routes.php config file
+     * @var array
+     */
+    private $_route;
+    
+    /**
+     * Array of all paramaters in the url
+     * @var array
+     */
     private $_params;
-    private $_var_patt = '([\w]*)';
-    private $_var_name_patt = '\:(\w+)';
 
     function __construct()
     {
@@ -40,7 +47,7 @@ class Router
             $var_names = $this->var_names($patt);
             $patt = str_replace('/', '\/?', $patt);
             $patt = str_replace('.', '\.?', $patt);
-            $patt = preg_replace('/'.$this->_var_name_patt.'/',$this->_var_patt, $patt);
+            $patt = preg_replace('/'.Router::REGEX_PARAM_NAME.'/', Router::REGEX_PARAM, $patt);
             
             if(preg_match('/^'.$patt.'/', $uri, $matches))
             {
@@ -68,7 +75,7 @@ class Router
 				// parse other variables in the url
 				$other = substr($uri, strlen($matches[0])+1);
 				if(strlen($other) > 0){
-				    preg_match_all('/'.$this->_var_patt.'\/'.$this->_var_patt.'\/?/', $other, $matches);
+				    preg_match_all('/'.Router::REGEX_PARAM.'\/'.Router::REGEX_PARAM.'\/?/', $other, $matches);
 				    
 				    for($i=0; $i<count($matches[2]); $i++)
 				    {
@@ -88,9 +95,21 @@ class Router
     public function var_names($str)
     {
         $matches = array();
-        preg_match_all('/'.$this->_var_name_patt.'/', $str, $matches);
+        preg_match_all('/'.Router::REGEX_PARAM_NAME.'/', $str, $matches);
         return $matches[1];
     } 
+    
+    /**
+     * Regex of a parameter
+     * @var string
+     */
+    const REGEX_PARAM = '([\w]*)';
+    
+    /** 
+     * Regex of a parameter name
+     * @var string
+     */
+    const REGEX_PARAM_NAME = '\:(\w+)';
 }
 
 /* End of file Router.php */
