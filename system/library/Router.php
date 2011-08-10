@@ -25,7 +25,7 @@ class Router
      */
     private $_params;
 
-    function __construct()
+    public function __construct()
     {
         $route = array();
         include_once(APPLICATION.DS.'config'.DS.'routes.php');
@@ -39,12 +39,12 @@ class Router
      * @param string $uri
      * @return array of route's and others detected params
      */
-    function parse_route($uri)
+    public function parse_route($uri)
     {
         // extract format output (html default)
         foreach($this->_route as $patt=>$vars)
         {
-            $var_names = $this->var_names($patt);
+            $param_names = $this->_get_param_names($patt);
             $patt = str_replace('/', '\/?', $patt);
             $patt = str_replace('.', '\.?', $patt);
             $patt = preg_replace('/'.Router::REGEX_PARAM_NAME.'/', Router::REGEX_PARAM, $patt);
@@ -52,7 +52,7 @@ class Router
             if(preg_match('/^'.$patt.'/', $uri, $matches))
             {
                 // parse variables in route
-                foreach($var_names as $k=>$key){
+                foreach($param_names as $k=>$key){
 				    if(!strlen($matches[$k+1]) == 0){
 				        $vars[$key] = $matches[$k+1];
 				    }
@@ -92,7 +92,7 @@ class Router
         }
     }
     
-    public function var_names($str)
+    private function _get_param_names($str)
     {
         $matches = array();
         preg_match_all('/'.Router::REGEX_PARAM_NAME.'/', $str, $matches);
