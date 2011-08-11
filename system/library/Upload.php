@@ -14,9 +14,14 @@
 class Upload
 {
 
+    /**
+     * @var Config
+     */
+    private $_config;
+
     function __construct()
     {
-        
+        $this->_config = Loader::get_instance()->library('config');
     }
 }
 
