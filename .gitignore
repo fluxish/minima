@@ -1,0 +1,12 @@
+
+# Application paths and files
+
+/application/controllers/
+/application/language/
+/application/logs/
+/application/models/
+/application/views/
+
+
+# Other development files
+/.nbproject/
