@@ -16,16 +16,18 @@ class Controller
     /**
      * @var View
      */
-    public $view;
+    protected $view;
 
     /**
      * @var Loader
      */
-    public $_load;
+    protected $load;
+    protected $_load;
     
     function __construct()
     {
-        $this->_load = Loader::get_instance();
+        $this->load = Loader::get_instance();
+        $this->_load = $this->load;
         
         $this->view = new View();
     }
@@ -51,7 +53,7 @@ class Controller
      */
     function __get($lib)
     {
-        return $this->_load->library($lib);
+        return $this->load->library($lib);
     }
 }
 

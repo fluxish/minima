@@ -1,4 +1,4 @@
 
-            <footer id="footer">
-                <p>Kaili Framework</p>
-            </footer>
+            <div id="footer">
+                <p>Risk Management System</p>
+            </div>

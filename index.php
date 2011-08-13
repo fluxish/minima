@@ -7,9 +7,19 @@ define('APPLICATION',ROOT.DS.'application');
 define('ASSETS',ROOT.DS.'assets');
 define('EXT', '.php');
 
-$url = $_GET['url'];
+require_once (ROOT.DS.'system'.DS.'library'.DS.'Loader.php');
 
-require_once (ROOT.DS.'system'.DS.'bootstrap'.DS.'bootstrap.php');
+$pre_call = function(){
+    $loader = Loader::get_instance();
+    $loader->library('benchmark')->start();
+    Logger::add('log1');
+};
 
+$post_call = function(){
+    $loader = Loader::get_instance();
+#    $elapsed = $loader->library('benchmark')->elapsed_time_from_request();
+#    Logger::get('log1')->info($elapsed);
+};
 
+Loader::get_instance()->start($pre_call, $post_call);
 

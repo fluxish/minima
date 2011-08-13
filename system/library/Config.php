@@ -64,13 +64,15 @@
      */
     function load($file)
     {
+        // check in application dir
         $file = APPLICATION.DS.'config'.DS.$file.EXT;
-        if(file_exists($file)){
-            $config = array();
-            include($file);
-            $this->_config = array_merge((array)$this->_config, (array)$config);
-        }
-        else throw new Exception('Config file '.$file.'not found.');
+        if(!file_exists($file))
+            throw new Exception('Config file "'.$file.'" not found.');
+        
+        $config = array();
+        include_once($file);
+        $this->_config = array_merge((array)$this->_config, (array)$config);
+        unset($config);
     }
     
     /**

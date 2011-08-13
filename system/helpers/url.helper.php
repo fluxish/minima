@@ -89,40 +89,6 @@ if(!function_exists('path_to_url'))
     }
 }
 
-if(!function_exists('anchor'))
-{
-    /**
-     * Create an anchor link
-     * @param string $url
-     * @param string $content
-     * @param string $title the text of the link
-     * @param array $attrs html attributes
-     * @param string $method the request method (get (default), post, put, delete)
-     * @return string the html code of the anchor link
-     */
-    function anchor($url, $content, $title = null, $attrs = array(), $method = 'get')
-    {
-        
-        if($title == null){
-            $title = $content;
-        }
-        $title_tag = ' title="'.$title.'"';
-        
-        $attributes = '';
-        foreach($attrs as $key=>$value)
-        {
-            $attributes .= ' '.$key.'="'.$value.'"';
-        }
-        
-        if($method == 'get'){ 
-            return '<a href="'.$url.'"'.$title_tag.$attributes.'>'.$content.'</a>';
-        }
-        else{
-            $attributes .= ' style="background:transparent;border:none;border-bottom:1px solid #00F;color:#00F;display:inline;cursor:pointer;margin:0;padding:0;height:1.3em"';
-            return '<form method="post" action="'.$url.'">'
-                ."\n".'<input type="hidden" name="_method" value="'.$method.'"/>'
-                ."\n".'<input type="submit" value="'.$title.'" '.$title_tag.$attributes.'/>'
-                ."\n</form>";
-        }
-    }
-}
+/* End of file url.helper.php */
+/* Location: ./system/helpers/url.helper.php */
+

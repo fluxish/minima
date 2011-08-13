@@ -39,7 +39,6 @@ class XmlData
     public function __construct()
     {
         $this->_load = Loader::get_instance();
-        $this->_load->helper('security');
         $this->_load->helper('utils');
     }
     
@@ -75,7 +74,7 @@ class XmlData
         if(is_string($elem)){
             $elem = $this->_root->addChild($elem);
         }
-        $id = uniqueid();
+        $id = $this->_uniqueid();
         $elem->addAttribute('id', $id);
         
         foreach($data as $k=>$v){
@@ -191,6 +190,15 @@ class XmlData
         $dom->preserveWhiteSpace = false;
         $dom->loadXML($this->_root->asXML());
         return $dom->save($this->_file_path) > 0;
+    }
+    
+    /**
+     * Generate a unique ID
+     * @return string
+     */
+    private function _uniqueid()
+    {
+        return md5(uniqid(mt_rand(0, mt_getrandmax()), true));
     }
  }
  

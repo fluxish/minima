@@ -45,14 +45,16 @@ Author:
 }
 
 .h_mini_menu li{
-    float: left;
+    display: inline;
 }
 
-.h_mini_menu a{
+.h_mini_menu li:first-child{ margin-left: 0; }
+.h_mini_menu li.floatRight{margin-right: 0;}
+
+.h_mini_menu a, .h_mini_menu span{
     padding: 5px;
     
     border-style: none;
-    font-size: 0.65em;
 	text-decoration: none;
 	outline: none;
 }
@@ -70,12 +72,13 @@ Author:
     margin: 0 5px;
     display: inline;
 }
+.h_basic_menu li:first-child{ margin-left: 0; }
+.h_basic_menu li.floatRight{margin-right: 0;}
 
-.h_basic_menu a{
+.h_basic_menu a, .h_basic_menu span{
     padding: 5px;
 	
 	background-position: left center;
-	font-size: 0.875em;
 	text-decoration: none;
 	outline: none;
 }
@@ -192,7 +195,8 @@ Author:
 	} /* IE6 */
 	
 	.v_simple_menu li span.head_menu a { }
-	.v_simple_menu li span.head_menu a:hover {  }    
+	.v_simple_menu li span.head_menu a:hover {  }
+    
 	.v_simple_menu li span.active a { }
 	.v_simple_menu li span.active a:hover { text-decoration:none; }	
 	
@@ -300,7 +304,7 @@ Author:
     
     .simple-squared-pagination a:link,
     .simple-squared-pagination a:visited{
-        padding: 3px 3px 3px 8px;
+        padding: 3px 6px;
     }
 
     .simple-squared-pagination a:hover{
@@ -310,7 +314,7 @@ Author:
     }
 
     .simple-squared-pagination li.active{
-        padding: 3px 3px 3px 8px;
+        padding: 3px 6px;
         font-weight: bold;
     }
 
@@ -321,7 +325,7 @@ Author:
 
     .simple-squared-pagination li span.disabled{
         margin: 0 1.5px;
-        padding: 3px 8px 3px 8px;
+        padding: 3px 6px;
         
         border: solid 1px #eaeaea; 
         color: #eaeaea;

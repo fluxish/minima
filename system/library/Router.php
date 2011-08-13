@@ -15,9 +15,8 @@ class Router
 {
     protected $_route;
     private $_params;
-    private $_var_patt = '([^\\/]*)';
-    private $_var_name_patt = '\\:([^\\/\\\\:]+)';
-    private $_output_format_patt = '[\w\W]*\.([a-z0-9]*)';
+    private $_var_patt = '([\w]*)';
+    private $_var_name_patt = '\:(\w+)';
 
     function __construct()
     {
@@ -36,11 +35,11 @@ class Router
     function parse_route($uri)
     {
         // extract format output (html default)
-        $format = $this->output_format($uri);
         foreach($this->_route as $patt=>$vars)
         {
             $var_names = $this->var_names($patt);
             $patt = str_replace('/', '\/?', $patt);
+            $patt = str_replace('.', '\.?', $patt);
             $patt = preg_replace('/'.$this->_var_name_patt.'/',$this->_var_patt, $patt);
             
             if(preg_match('/^'.$patt.'/', $uri, $matches))
@@ -78,9 +77,6 @@ class Router
 				            $this->_params['others'][$matches[1][$i]] = $matches[2][$i];
 				    }
 				}
-
-                // add format
-                $vars['format'] = $format;
                 				
 				$_GET = array_merge($_GET, $vars);
 			    //var_dump($vars);
@@ -94,18 +90,7 @@ class Router
         $matches = array();
         preg_match_all('/'.$this->_var_name_patt.'/', $str, $matches);
         return $matches[1];
-    }
-    
-    public function output_format(&$uri)
-    {
-        $matches = array();
-        if(preg_match('/'.$this->_output_format_patt.'/', $uri, $matches) != 0){
-            $uri = substr($uri, 0, -(strlen($matches[1])+1));
-            return $matches[1];
-        }
-        else
-            return 'html';
-    }
+    } 
 }
 
 /* End of file Router.php */

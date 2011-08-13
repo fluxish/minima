@@ -1,10 +1,6 @@
-<div id="sidebar" class="grid_4 column">
-    <div id="sidebar_container">
-        <div id="functions">
-            <h3>Date</h3>
-            <ul>
-                <?php echo $place_date ?>
-            </ul>
-        </div>
-    </div>
-</div>
+                    <div id="sidebar">
+                        <div id="sidebar_container">
+                            <?php echo @$place_areas_tree ?>
+                            <?php echo @$place_common_sidebar ?>
+                        </div>
+                    </div>

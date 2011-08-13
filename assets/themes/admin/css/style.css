@@ -24,13 +24,9 @@ colors:         elements colors
 
 plugins list:
 
-960:            960.gs grid layout
-
-extras:         extra styles for menu, paginations ant other.
 forms:          extra styles for forms
 
 utils:          useful css classes
-messages:       formats error, warning, notice and succeess messages
 ie              useful hacks for IE Browsers
 -------------------------------------------------------------------------------*/
 
@@ -49,9 +45,7 @@ ie              useful hacks for IE Browsers
 @import url('typography.css');
 
 /* Plugins */
-
-    @import url('plugins/960/960_fluid.css');
-    @import url('plugins/extras/extras.css');
+    
     @import url('plugins/extras/forms.css');
     @import url('plugins/utils/utils.css');
-    @import url('plugins/messages/messages.css');
+    @import url('plugins/ie/ie.css');
