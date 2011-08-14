@@ -45,9 +45,10 @@ class Router
         foreach($this->_route as $patt=>$vars)
         {
             $param_names = $this->_get_param_names($patt);
-            $patt = str_replace('/', '\/?', $patt);
-            $patt = str_replace('.', '\.?', $patt);
-            $patt = preg_replace('/'.Router::REGEX_PARAM_NAME.'/', Router::REGEX_PARAM, $patt);
+            $patt = strtr($patt, array('/'=>'\/?', '.'=>'\.?'));
+            
+            var_dump($patt);
+            $patt = preg_replace('/'.Router::ROUTE_WILDCARD.'/', Router::ROUTE_SEGMENT, $patt);
             
             if(preg_match('/^'.$patt.'/', $uri, $matches))
             {
@@ -75,7 +76,7 @@ class Router
 				// parse other variables in the url
 				$other = substr($uri, strlen($matches[0])+1);
 				if(strlen($other) > 0){
-				    preg_match_all('/'.Router::REGEX_PARAM.'\/'.Router::REGEX_PARAM.'\/?/', $other, $matches);
+				    preg_match_all('/'.Router::ROUTE_SEGMENT.'\/'.Router::ROUTE_SEGMENT.'\/?/', $other, $matches);
 				    
 				    for($i=0; $i<count($matches[2]); $i++)
 				    {
@@ -95,21 +96,27 @@ class Router
     private function _get_param_names($str)
     {
         $matches = array();
-        preg_match_all('/'.Router::REGEX_PARAM_NAME.'/', $str, $matches);
+        preg_match_all('/'.Router::ROUTE_WILDCARD.'/', $str, $matches);
         return $matches[1];
     } 
     
     /**
-     * Regex of a parameter
+     * ROUTE of a parameter
      * @var string
      */
-    const REGEX_PARAM = '([\w]*)';
+    const ROUTE_SEGMENT = '(\w*)';
+    
+    /**
+     * ROUTE of a parameter
+     * @var string
+     */
+    const ROUTE_PARAMS = '(\w*\/)';
     
     /** 
-     * Regex of a parameter name
+     * ROUTE of a parameter name
      * @var string
      */
-    const REGEX_PARAM_NAME = '\:(\w+)';
+    const ROUTE_WILDCARD = '\:(\w+)';
 }
 
 /* End of file Router.php */
