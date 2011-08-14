@@ -46,8 +46,6 @@ class Router
         {
             $param_names = $this->_get_param_names($patt);
             $patt = strtr($patt, array('/'=>'\/?', '.'=>'\.?'));
-            
-            var_dump($patt);
             $patt = preg_replace('/'.Router::ROUTE_WILDCARD.'/', Router::ROUTE_SEGMENT, $patt);
             
             if(preg_match('/^'.$patt.'/', $uri, $matches))
