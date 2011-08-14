@@ -5,6 +5,7 @@
 /application/language/
 /application/logs/
 /application/models/
+/application/tmp
 /application/views/
 
 
