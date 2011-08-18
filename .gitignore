@@ -9,5 +9,13 @@
 /application/views/
 
 
-# Other development files
-/.nbproject/
+# Other files
+
+*~
+*.bak
+Thumbs.db
+.DS_Store
+.buildpath
+.project
+.settings
+.nbproject/
