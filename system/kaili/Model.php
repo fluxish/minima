@@ -16,7 +16,7 @@ class Model
     
     public function __construct()
     {
-        $this->db = Loader::get_instance()->library('db');
+        $this->db = Loader::get_instance()->load('db');
     }
     
     public function get_table()

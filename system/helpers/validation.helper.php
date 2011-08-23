@@ -18,7 +18,7 @@ if(!function_exists('validation_errors'))
     function validation_errors($start, $end)
     {
         $errs = array();
-        $errors = Loader::get_instance()->library('session')
+        $errors = Loader::get_instance()->load('session')
             ->weak_data('validation_errors');
         if(!$errors) return '';
             
@@ -40,7 +40,7 @@ if(!function_exists('validation_error'))
 {
     function validation_error($name, $start, $end)
     {
-        $errors = Loader::get_instance()->library('session')
+        $errors = Loader::get_instance()->load('session')
             ->weak_data('validation_errors');
         return isset($errors[$name]) ? $start."\n".ul($errors[$name]).$end."\n" : '';
     }

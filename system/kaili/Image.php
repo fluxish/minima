@@ -17,7 +17,7 @@
     
     function __construct()
     {
-        $this->_config = Loader::get_instance()->library('config');
+        $this->_config = Loader::get_instance()->load('config');
     }   
     /**
      * Crop an image

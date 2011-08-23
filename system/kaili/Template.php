@@ -53,10 +53,10 @@ class Template
     public function __construct()
     {
         $this->_load = Loader::get_instance();
-        $this->_config = $this->_load->library('config');
+        $this->_config = $this->_load->load('config');
         
-        $this->_controller = $this->_load->library('input')->get('controller');
-        $this->_action = $this->_load->library('input')->get('action');
+        $this->_controller = $this->_load->load('input')->get('controller');
+        $this->_action = $this->_load->load('input')->get('action');
     }
     
 
@@ -99,7 +99,7 @@ class Template
         }
         else{
             // else, search the view in the tp directory of default theme, and render founded view
-            $theme = Loader::get_instance()->library('config')->item('interface_theme');
+            $theme = Loader::get_instance()->load('config')->item('interface_theme');
             $view = ASSETS.DS.'themes'.DS.$theme.DS.'tp'.DS.$view;
         }
         $this->_render_place($place_name, $vars, $view);
@@ -137,7 +137,7 @@ class Template
      */
     public function place_action($place_name, $path = array())
     {
-        if(Loader::get_instance()->library('input')->get('format') == 'html'){
+        if(Loader::get_instance()->load('input')->get('format') == 'html'){
             $route = array();
             include(APPLICATION.DS.'config'.DS.'routes.php');
             
@@ -171,7 +171,7 @@ class Template
      */
     public function __get($lib)
     {
-        return $this->_load->library($lib);
+        return $this->_load->load($lib);
     }
     
     private function _render_place($place_name, $vars, $view)

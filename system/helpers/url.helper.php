@@ -20,7 +20,7 @@ if(!function_exists('url'))
     function url($url, $reset = true)
     {
         if(is_array($url)){
-            $input = Loader::get_instance()->library('input');
+            $input = Loader::get_instance()->load('input');
             $params = $input->url_parameters();
             
             if($reset) {
@@ -39,7 +39,7 @@ if(!function_exists('url'))
             }
             unset($vars, $params);
         } 
-        $base = Loader::get_instance()->library('config')->item('base_url');
+        $base = Loader::get_instance()->load('config')->item('base_url');
         return ltrim($base.'/'.$url, '/');
     }
 }
@@ -84,7 +84,7 @@ if(!function_exists('path_to_url'))
      */
     function path_to_url($path)
     {
-        $base_url = Loader::get_instance()->library('config')->item('base_url');
+        $base_url = Loader::get_instance()->load('config')->item('base_url');
         return str_replace($_SERVER['DOCUMENT_ROOT'].$_SERVER['PHP_SELF'], $base_url, $path);
     }
 }

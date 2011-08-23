@@ -31,7 +31,7 @@ class Auth
      */
     public function authenticate($identity, $pwd)
     {
-        if($this->_load->library('session')->data('identity') != false){
+        if($this->_load->load('session')->data('identity') != false){
             return self::FAILURE_IDENTITY_ALREADY_AUTH;
         }
               
@@ -39,7 +39,7 @@ class Auth
         $user = $users->check_identity($identity, $pwd);
         
         if($user != false){
-            $this->_load->library('session')->data('identity', $user);
+            $this->_load->load('session')->data('identity', $user);
             return self::SUCCESS;
         } else if($user == false){
             return self::FAILURE_CREDENTIAL_INVALID;
@@ -53,7 +53,7 @@ class Auth
      */
     public function is_authenticated()
     {
-        return ($this->_load->library('session')->data('identity') !== false);
+        return ($this->_load->load('session')->data('identity') !== false);
     }
     
     /**
@@ -62,8 +62,8 @@ class Auth
      */
     public function revoke_authentication()
     {
-        if($this->_load->library('session')->data('identity') != false){
-            $this->_load->library('session')->remove_data('identity');
+        if($this->_load->load('session')->data('identity') != false){
+            $this->_load->load('session')->remove_data('identity');
             return self::SUCCESS;
         }
         return self::FAILURE_IDENTITY_NOT_AUTH;

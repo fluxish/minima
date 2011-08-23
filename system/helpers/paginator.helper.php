@@ -20,10 +20,10 @@ if(!function_exists('paginator'))
         $paginator = array();
         
         // load input library
-        $input = Loader::get_instance()->library('input');
+        $input = Loader::get_instance()->load('input');
     
         // load config library
-        $config = Loader::get_instance()->library('config');
+        $config = Loader::get_instance()->load('config');
         $config->load('paginator');
         $route = $config->item('paginator_route');
         $max_items = $config->item('paginator_max_items');
@@ -86,13 +86,13 @@ if(!function_exists('paginator_params'))
     function paginator_params()
     {
         // load config library
-        $config = Loader::get_instance()->library('config');
+        $config = Loader::get_instance()->load('config');
         $config->load('paginator');
         $route = $config->item('paginator_route');
         $max_items = $config->item('paginator_max_items');
         
         // load input library
-        $input = Loader::get_instance()->library('input');
+        $input = Loader::get_instance()->load('input');
         
         $page = $input->get($route);
         if(!$page) $page = 1;

@@ -11,8 +11,8 @@
                             
                             <div class="group right">
                             
-                                <?php if($this->_load->library('session')->data('identity')): ?>
-                                <li><span class="user item"><?php $user = $this->_load->library('session')->data('identity'); echo $user['username'] ?></span></li>
+                                <?php if($this->_load->load('session')->data('identity')): ?>
+                                <li><span class="user item"><?php $user = $this->_load->load('session')->data('identity'); echo $user['username'] ?></span></li>
                                 <li><?php echo anchor(url(array('controller'=>'home','action'=>'logout')), 'Logout', 'Logout', array('class' => 'item icon-text logout-mini')) ?></li>
                                 <?php else: ?>
                                 <li><?php echo anchor(url(array('controller'=>'home','action'=>'login')), 'Login', 'Login', array('class' => 'item icon-text login-mini')) ?></li>

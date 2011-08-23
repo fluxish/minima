@@ -13,6 +13,6 @@ if(!function_exists('lang'))
 {
     function lang($item)
     {
-        return Loader::get_instance()->library('language')->item($item);
+        return Loader::get_instance()->load('language')->item($item);
     }
 }

@@ -11,7 +11,7 @@ require_once (ROOT.DS.'system'.DS.'library'.DS.'Loader.php');
 
 $pre_call = function(){
     $loader = Loader::get_instance();
-    $loader->library('benchmark')->start();
+    $loader->load('benchmark')->start();
     Logger::add('log1');
 };
 

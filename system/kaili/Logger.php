@@ -96,13 +96,13 @@ abstract class Logger
      */
     public static function add($name, Logger_Interface $logger = null)
     {
-        Loader::get_instance()->library('config')->load('logger');
+        Loader::get_instance()->load('config')->load('logger');
         
         if($logger != null)
             $this->_loggers[$name] = $logger;
         else{
             // create a new logger
-            $loggers = Loader::get_instance()->library('config')->item('loggers');
+            $loggers = Loader::get_instance()->load('config')->item('loggers');
             $logger = 'Logger_'.ucwords($loggers[$name]['type']);
             self::$_loggers[$name] = new $logger($loggers[$name]);
         }

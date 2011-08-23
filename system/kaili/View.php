@@ -51,13 +51,13 @@ class View
      */
     public function __construct($with_template = true)
     {
-        $this->_input = Loader::get_instance()->library('input');
-        $this->_output = Loader::get_instance()->library('output');
+        $this->_input = Loader::get_instance()->load('input');
+        $this->_output = Loader::get_instance()->load('output');
         
         $this->_controller = $this->_input->get('controller');
         $this->_action = $this->_input->get('action');
         if($with_template){
-            $this->_template = Loader::get_instance()->library('template');
+            $this->_template = Loader::get_instance()->load('template');
         }
     }
     
@@ -93,7 +93,7 @@ class View
             }
             else{
                 // else, search the view in the tp directory of default theme, and render it
-                $theme = Loader::get_instance()->library('config')->item('interface_theme');
+                $theme = Loader::get_instance()->load('config')->item('interface_theme');
                 $view = ASSETS.DS.'themes'.DS.$theme.DS.'tp'.DS.$view;
             }
         

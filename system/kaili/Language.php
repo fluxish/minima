@@ -43,8 +43,8 @@
      */
     function __construct()
     {
-        $this->_config = Loader::get_instance()->library('config');
-        $this->_input = Loader::get_instance()->library('input');
+        $this->_config = Loader::get_instance()->load('config');
+        $this->_input = Loader::get_instance()->load('input');
         
         $this->_autoload();
         if($lang = $this->_input->get('l')) 

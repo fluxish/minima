@@ -1,8 +1,5 @@
 <?php
 
-if(!defined('ROOT'))
-    exit('No direct script access allowed');
-
 namespace Kaili;
 
 /**
@@ -61,7 +58,7 @@ class Loader
      *
      * @var array
      */
-    private $_loaded_libraries = array();
+    private $_loaded_classes = array();
 
     /**
      * Instance of Config class
@@ -83,7 +80,7 @@ class Loader
     private function __construct()
     {
         spl_autoload_register('Loader::__autoload');
-        $this->_config = $this->library('config');
+        $this->_config = $this->load('config');
     }
 
     /**
@@ -96,16 +93,16 @@ class Loader
     }
 
     /**
-     * Load a class from the framework's library
-     * @param string $lib the name of the class
+     * Load a class
+     * @param string $class the name of the class
      */
-    public function library($lib)
+    public function load($class)
     {
-        if(!array_key_exists($lib, $this->_loaded_libraries)) {
-            $libName = ucwords($lib);
-            $this->_loaded_libraries[$lib] = new $libName();
+        if(!array_key_exists($class, $this->_loaded_classes)) {
+            $class_name = ucwords($class);
+            $this->_loaded_classes[$class] = new $class_name();
         }
-        return $this->_loaded_libraries[$lib];
+        return $this->_loaded_classes[$class];
     }
 
     /**
@@ -163,16 +160,16 @@ class Loader
             $pre_controller();
 
         // call requested controller
-        $controller = $this->library('input')->get('controller');
-        $action = $this->library('input')->get('action');
-        $this->controller($controller, $action, $this->library('input')->get());
+        $controller = $this->load('input')->get('controller');
+        $action = $this->load('input')->get('action');
+        $this->controller($controller, $action, $this->load('input')->get());
 
         // execute a post-controller call function
         if(is_callable($post_controller))
             $post_controller();
 
         // output all buffer
-        $this->library('output')->display();
+        $this->load('output')->display();
     }
 
     /**
@@ -182,13 +179,13 @@ class Loader
     {
         // autoload internal libraries
         foreach($this->_internal_autoload as $lib) {
-            $this->library($lib);
+            $this->load($lib);
         }
 
         // autoload libraries in autoload config file
         $libraries = $this->_config->item('libraries');
         foreach($libraries as $lib) {
-            $this->library($lib);
+            $this->load($lib);
         }
         unset($libraries, $lib);
 

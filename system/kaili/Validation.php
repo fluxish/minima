@@ -28,10 +28,10 @@ class Validation
     public function __construct() 
     {
         // Load validation.lang
-        Loader::get_instance()->library('language')->load('validation');
+        Loader::get_instance()->load('language')->load('validation');
         Loader::get_instance()->helper('validation');
         
-        $this->_config = Loader::get_instance()->library('config');
+        $this->_config = Loader::get_instance()->load('config');
         $this->_fields = array();
     }
     
@@ -68,7 +68,7 @@ class Validation
      */
     public function validate()
     {
-        $input = Loader::get_instance()->library('input');
+        $input = Loader::get_instance()->load('input');
         $valid = true;
         
         foreach($this->_fields as $field_name=>&$field)
@@ -91,8 +91,8 @@ class Validation
     private function _generate_errors()
     {
         $errors = array();
-        $language = Loader::get_instance()->library('language');
-        $session = Loader::get_instance()->library('session');
+        $language = Loader::get_instance()->load('language');
+        $session = Loader::get_instance()->load('session');
         
         foreach($this->_fields as $field_name=>$field)
         {
@@ -299,7 +299,7 @@ class Validation
      */
     public function matches($str, $field)
     {
-        $field = Loader::get_instance()->library('input')->post($field);
+        $field = Loader::get_instance()->load('input')->post($field);
         if($field && $str === $field) return true;
         return false;
     }
