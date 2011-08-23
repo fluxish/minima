@@ -1,5 +1,7 @@
 <?php  if ( ! defined('ROOT')) exit('No direct script access allowed');
 
+namespace Kaili;
+
 /**
  * Kaili Loader Class
  *
@@ -176,12 +178,12 @@ class Loader
      * Autoload any classes that are required
      * @param string $className the name of required class
      */
-    public static function __autoload($className) 
+    public static function __autoload($class) 
     {
         // create the path from the name of the class
-        $path = str_replace('_', DS, $className);
+        $class = str_replace('\\', DS, $class);
         
-	    if(file_exists(SYSTEM.DS.'library'.DS.$path.EXT)) {
+	    if(file_exists(SYSTEM.DS.$class.EXT)) {
 		    require_once(SYSTEM.DS.'library'.DS.$path.EXT);
 	    }
         else if(file_exists(APPLICATION.DS.'controllers'.DS.$className.EXT)) {
