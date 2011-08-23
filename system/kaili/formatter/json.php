@@ -1,4 +1,6 @@
-<?php  if ( ! defined('ROOT')) exit('No direct script access allowed');
+<?php 
+
+namespace Kaili\Formatter;
 
 /**
  * Kaili Formatter Class
@@ -6,12 +8,10 @@
  * This class generate an output in json format
  *
  * @package		Kaili
- * @subpackage	Libraries/Formatter/Object
- * @category	Libraries/Formatter
- * @author		Luigi Marco Simonetti
+ * @subpackage	Formatter
  */
  
-class Formatter_Json
+class Json
 {
     public function format($data)
     {

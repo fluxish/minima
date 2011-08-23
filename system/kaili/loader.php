@@ -40,7 +40,7 @@ class Loader
     public static function __autoload($class)
     {
         // create the path from the name of the class
-        $class = str_replace('\\', DS, $class);
+        $class = strtolower(str_replace('\\', DS, $class));
 
         if(file_exists(SYSTEM.DS.$class.EXT)) {
             // namespaced classes
@@ -82,7 +82,7 @@ class Loader
      */
     private function __construct()
     {
-        spl_autoload_register('Loader::__autoload');
+        spl_autoload_register('Kaili\Loader::__autoload');
         $this->_config = $this->load('config');
     }
 
@@ -102,7 +102,7 @@ class Loader
     public function load($class)
     {
         if(!array_key_exists($class, $this->_loaded_classes)) {
-            $class_name = ucwords($class);
+            $class_name = '\\Kaili\\'.ucwords($class);
             $this->_loaded_classes[$class] = new $class_name();
         }
         return $this->_loaded_classes[$class];

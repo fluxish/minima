@@ -1,14 +1,13 @@
-<?php  if (!defined('ROOT')) exit('No direct script access allowed');
+<?php  
+
+namespace Kaili;
 
 /**
  * Kaili Logger Class
  *
  * Class to log messages
  *
- * @package     Kaili
- * @subpackage  Library
- * @category    Library
- * @author      Luigi Marco Simonetti
+ * @package Kaili
  */
 
 abstract class Logger
@@ -103,7 +102,7 @@ abstract class Logger
         else{
             // create a new logger
             $loggers = Loader::get_instance()->load('config')->item('loggers');
-            $logger = 'Logger_'.ucwords($loggers[$name]['type']);
+            $logger = 'Kaili\\Logger\\'.ucwords($loggers[$name]['type']);
             self::$_loggers[$name] = new $logger($loggers[$name]);
         }
         
@@ -120,7 +119,7 @@ abstract class Logger
         if(isset($logger)){
             return $logger;
         }
-        else throw new Logger_Exception('Logger "'.$name.'" doesn\'t exists.');
+        else throw new Logger\Exception('Logger "'.$name.'" doesn\'t exists.');
     }
     
     /**

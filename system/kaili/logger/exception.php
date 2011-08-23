@@ -1,4 +1,6 @@
-<?php  if (!defined('ROOT')) exit('No direct script access allowed');
+<?php 
+
+namespace Kaili\Logger;
 
 /**
  * Kaili Logger_Exception Class
@@ -7,11 +9,9 @@
  *
  * @package     Kaili
  * @subpackage  Logger
- * @category    Exception
- * @author      Luigi Marco Simonetti
  */
 
-class Formatter_Exception extends Exception
+class Exception extends \Exception
 {
     
 }

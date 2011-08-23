@@ -1,4 +1,6 @@
-<?php  if ( ! defined('ROOT')) exit('No direct script access allowed');
+<?php  
+
+namespace Kaili\Formatter;
 
 /**
  * Kaili Formatter_Xml Class
@@ -6,12 +8,10 @@
  * This class generate an output in xml format
  *
  * @package	Kaili
- * @subpackage	Libraries/Formatter/Object
- * @category	Libraries/Formatter
- * @author		Luigi Marco Simonetti
+ * @subpackage Formatter
  */
  
-class Formatter_Xml
+class Xml
 {
     
     public function __construct()

@@ -1,4 +1,6 @@
-<?php  if (!defined('ROOT')) exit('No direct script access allowed');
+<?php  
+
+namespace Kaili\Logger;
 
 /**
  * Kaili Logger_File Class
@@ -7,11 +9,9 @@
  *
  * @package     Kaili
  * @subpackage  Logger
- * @category    Library
- * @author      Luigi Marco Simonetti
  */
 
-class Logger_File extends Logger
+class File extends \Kaili\Logger
 {
     private $_file;
     
