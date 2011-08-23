@@ -3,45 +3,80 @@
 namespace Kaili;
 
 /**
- * Kaili Loader Class
+ * Loader class
+ * The Loader class is used to bootstrap entire framework and to load all classes
+ * and other resource of Kaili
  *
- *
- * @package		Kaili
- * @subpackage	Libraries
- * @category	Libraries
- * @author		Luigi Marco Simonetti
+ * @package	Kaili
  */
  
 class Loader
 {
     /**
      * Singleton instance of Loader
+     *
      * @var Loader
      */   
     private static $_instance = null;
     
     /**
+     * Returns the singleton instance of the loader
+     *
+     * @return Loader
+     */
+    public static function get_instance()
+    {
+        if(self::$_instance == null){
+            self::$_instance = new Loader();
+        }
+        return self::$_instance;
+    }
+    
+    /** 
+     * Autoload any classes that are required
+     *
+     * @param string $className the name of required class
+     */
+    public static function __autoload($class) 
+    {
+        // create the path from the name of the class
+        $class = str_replace('\\', DS, $class);
+        
+	    if(file_exists(SYSTEM.DS.$class.EXT)) {
+		    require_once(SYSTEM.DS.'library'.DS.$path.EXT);
+	    }
+        else if(file_exists(APPLICATION.DS.'controllers'.DS.$className.EXT)) {
+		    require_once(APPLICATION.DS.'controllers'.DS.$className.EXT);
+	    } 
+	    else if(file_exists(APPLICATION.DS.'models'.DS.$className.EXT)) {
+		    require_once(APPLICATION.DS.'models'.DS.$className.EXT);
+	    } 
+    }
+    
+    
+    /**
      * Array of loaded libraries
+     *
      * @var array
      */
     private $_loaded_libraries = array();
     
     /**
      * Instance of Config class
+     *
      * @var Config
      */
     private $_config;
     
     /**
      * Array of default loaded libraries
+     *
      * @var array
      */
     private $_internal_autoload = array('input', 'output');
     
-    
-    
     /**
-     * Create the loader for all classes 
+     * Create the Loader
      */
     private function __construct()
     {
@@ -160,38 +195,6 @@ class Loader
             $this->helper($help);
         }
         unset($helpers, $help);
-    }
-    
-    /**
-     * Returns the singleton instance of the loader
-     * @return Loader
-     */
-    public static function get_instance()
-    {
-        if(self::$_instance == null){
-            self::$_instance = new Loader();
-        }
-        return self::$_instance;
-    }
-    
-    /** 
-     * Autoload any classes that are required
-     * @param string $className the name of required class
-     */
-    public static function __autoload($class) 
-    {
-        // create the path from the name of the class
-        $class = str_replace('\\', DS, $class);
-        
-	    if(file_exists(SYSTEM.DS.$class.EXT)) {
-		    require_once(SYSTEM.DS.'library'.DS.$path.EXT);
-	    }
-        else if(file_exists(APPLICATION.DS.'controllers'.DS.$className.EXT)) {
-		    require_once(APPLICATION.DS.'controllers'.DS.$className.EXT);
-	    } 
-	    else if(file_exists(APPLICATION.DS.'models'.DS.$className.EXT)) {
-		    require_once(APPLICATION.DS.'models'.DS.$className.EXT);
-	    } 
     }
 }
 
