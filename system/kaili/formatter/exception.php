@@ -15,6 +15,3 @@ class Formatter_Exception extends Exception
 {
     
 }
-
-/* End of file Exception.php */
-/* Location: ./system/library/Formatter/Exception.php */

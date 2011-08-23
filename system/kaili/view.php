@@ -157,5 +157,3 @@ class View
 
 }
 
-/* End of file View.php */
-/* Location: ./system/library/View.php */

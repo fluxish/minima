@@ -156,5 +156,3 @@ class Db extends PDO
     }
 }
 
-/* End of file Db.php */
-/* Location: ./system/library/Db.php */

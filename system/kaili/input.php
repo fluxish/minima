@@ -196,5 +196,3 @@ class Input
 
 }
 
-/* End of file Input.php */
-/* Location: ./system/library/Input.php */

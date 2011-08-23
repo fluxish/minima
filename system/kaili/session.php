@@ -283,5 +283,3 @@ class Session
     }
 }
 
-/* End of file Session.php */
-/* Location: ./system/library/Session.php */

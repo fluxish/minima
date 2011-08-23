@@ -21,5 +21,3 @@ interface Logger_Interface
     public function log($data, $marker);
 }
 
-/* End of file Interface.php */
-/* Location: ./system/library/Logger/Interface.php */

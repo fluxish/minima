@@ -58,5 +58,3 @@ class Formatter_Xml
     } 
 }
 
-/* End of file Xml.php */
-/* Location: ./system/library/Formatter/Xml.php */

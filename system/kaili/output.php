@@ -77,5 +77,3 @@ class Output
 
 }
 
-/* End of file Output.php */
-/* Location: ./system/library/Outputter.php */

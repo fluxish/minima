@@ -100,5 +100,3 @@ class Auth
     const FAILURE_IDENTITY_NOT_AUTH = -4;
 }
 
-/* End of file Auth.php */
-/* Location: ./system/library/Auth.php */

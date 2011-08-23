@@ -16,5 +16,3 @@ class Formatter_Exception extends Exception
     
 }
 
-/* End of file Logger.php */
-/* Location: ./system/library/Logger/Exception.php */

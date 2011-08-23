@@ -341,5 +341,3 @@ class Validation
     }
 }
 
-/* End of file Validation.php */
-/* Location: ./system/library/Validation.php */

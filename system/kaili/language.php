@@ -148,6 +148,4 @@
         } 
     }
  }
- 
-/* End of file Language.php */
-/* Location: ./system/library/Language.php */
+

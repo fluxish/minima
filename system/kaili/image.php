@@ -186,6 +186,4 @@
         imagedestroy($wat); 
     }
  }
- 
-/* End of file Image.php */
-/* Location: ./system/library/Image.php */
+

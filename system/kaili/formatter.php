@@ -44,5 +44,3 @@ class Formatter
     }
 }
 
-/* End of file Formatter.php */
-/* Location: ./system/library/Formatter.php */

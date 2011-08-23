@@ -97,5 +97,3 @@ class Benchmark
     }
 }
 
-/* End of file Benchmark.php */
-/* Location: ./system/library/Benchmark.php */

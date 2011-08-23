@@ -193,5 +193,3 @@ class Rss
     }
 }
 
-/* End of file Rss.php */
-/* Location: ./system/library/Rss.php */

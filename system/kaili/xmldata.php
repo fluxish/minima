@@ -11,7 +11,7 @@
  * @author		Luigi Marco Simonetti
  */
  
-class XmlData
+class Xmldata
 {
     /**
      * @var SimpleXMLElement
@@ -201,6 +201,4 @@ class XmlData
         return md5(uniqid(mt_rand(0, mt_getrandmax()), true));
     }
  }
- 
-/* End of file XmlData.php */
-/* Location: ./system/library/XmlData.php */
+

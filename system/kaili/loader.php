@@ -202,5 +202,3 @@ class Loader
 
 }
 
-/* End of file Loader.php */
-/* Location: ./system/library/Loader.php */

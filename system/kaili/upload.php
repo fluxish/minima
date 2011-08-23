@@ -25,5 +25,3 @@ class Upload
     }
 }
 
-/* End of file Upload.php */
-/* Location: ./system/library/Upload.php */

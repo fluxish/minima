@@ -148,5 +148,3 @@ abstract class Logger
     const SUCCESS ='SUCCESS';
 }
 
-/* End of file Logger.php */
-/* Location: ./system/library/Logger.php */

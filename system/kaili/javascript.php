@@ -73,6 +73,4 @@ class Javascript
     }
     
 }
- 
-/* End of file Javascript.php */
-/* Location: ./system/library/Javascript.php */
+

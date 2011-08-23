@@ -164,5 +164,3 @@ class Acl
     }
 }
 
-/* End of file Acl.php */
-/* Location: ./system/library/Acl.php */

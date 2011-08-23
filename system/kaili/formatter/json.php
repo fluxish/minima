@@ -19,5 +19,3 @@ class Formatter_Json
     }
 }
 
-/* End of file Json.php */
-/* Location: ./system/library/Formatter/Json.php */

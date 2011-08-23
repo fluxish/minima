@@ -39,5 +39,3 @@ class Logger_File extends Logger
     }
 }
 
-/* End of file Interface.php */
-/* Location: ./system/library/Logger/Interface.php */

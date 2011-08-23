@@ -84,6 +84,4 @@ namespace Kaili;
         }
     }
  }
- 
-/* End of file Config.php */
-/* Location: ./system/library/Config.php */
+

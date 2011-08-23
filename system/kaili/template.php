@@ -194,5 +194,3 @@ class Template
     }
 }
 
-/* End of file Template.php */
-/* Location: ./system/library/Template.php */

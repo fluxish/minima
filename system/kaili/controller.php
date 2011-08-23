@@ -57,5 +57,3 @@ class Controller
     }
 }
 
-/* End of file Controller.php */
-/* Location: ./system/library/Controller.php */

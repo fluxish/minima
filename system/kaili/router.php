@@ -117,5 +117,3 @@ class Router
     const ROUTE_WILDCARD = '\:(\w+)';
 }
 
-/* End of file Router.php */
-/* Location: ./system/library/Router.php */
