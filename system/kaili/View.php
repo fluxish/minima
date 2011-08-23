@@ -1,4 +1,6 @@
-<?php  if ( ! defined('ROOT')) exit('No direct script access allowed');
+<?php
+
+namespace Kaili;
 
 /**
  * Kaili View Class
@@ -6,38 +8,35 @@
  * This class display an action view
  *
  * @package		Kaili
- * @subpackage	Libraries
- * @category	Libraries
- * @author		Luigi Marco Simonetti
  */
- 
-class View 
+class View
 {
+
     /**
      * @var Template
      */
     public $_template = null;
-    
+
     /**
      * @var string
      */
     private $_controller;
-    
+
     /**
      * @var string
      */
     private $_action;
-    
+
     /**
      * @var boolean
      */
     private $_rendered = false;
-    
+
     /**
      * @var Input
      */
     private $_input;
-    
+
     /**
      * @var Output
      */
@@ -53,14 +52,13 @@ class View
     {
         $this->_input = Loader::get_instance()->load('input');
         $this->_output = Loader::get_instance()->load('output');
-        
+
         $this->_controller = $this->_input->get('controller');
         $this->_action = $this->_input->get('action');
-        if($with_template){
+        if($with_template) {
             $this->_template = Loader::get_instance()->load('template');
         }
     }
-    
 
     /**
      * Render an action view
@@ -75,30 +73,29 @@ class View
     public function render($vars = array(), $view = null, $as_data = false, $with_template = true)
     {
         $format = $this->_input->get('format');
-        
+
         // set view to render
-        if(!$format || $format == 'html')
-        {
-            if($view == null){
+        if(!$format || $format == 'html') {
+            if($view == null) {
                 // if view is null and format is html, set view to default action view
                 $view = APPLICATION.DS.'views'.DS.$this->_controller.DS.$this->_action;
             }
-            else if(file_exists(APPLICATION.DS.'views'.DS.$this->_controller.DS.$view.EXT)){
+            else if(file_exists(APPLICATION.DS.'views'.DS.$this->_controller.DS.$view.EXT)) {
                 // else, set view to another view of the same controller, if this view exists
                 $view = APPLICATION.DS.'views'.DS.$this->_controller.DS.$view;
             }
-            else if(file_exists(APPLICATION.DS.'views'.DS.$view.EXT)){
+            else if(file_exists(APPLICATION.DS.'views'.DS.$view.EXT)) {
                 // else, set view to another view, if exists
                 $view = APPLICATION.DS.'views'.DS.$view;
             }
-            else{
+            else {
                 // else, search the view in the tp directory of default theme, and render it
                 $theme = Loader::get_instance()->load('config')->item('interface_theme');
                 $view = ASSETS.DS.'themes'.DS.$theme.DS.'tp'.DS.$view;
             }
-        
+
             // if template is null or with_template is false, render view without template
-            if($this->_template != null && $with_template){
+            if($this->_template != null && $with_template) {
                 $this->_output->set_header('Content-Type: text/html');
                 ob_start();
                 $this->_template->place_view('content', $vars, $view);
@@ -106,24 +103,24 @@ class View
                 $this->_output->append(ob_get_contents());
                 ob_end_clean();
             }
-            else{
+            else {
                 $this->_output->set_header('Content-Type: text/html');
                 extract($vars);
                 include($view.EXT);
             }
-            
+
             // if as_data is true, save rendered view in a variable and return it
-            if($as_data){
+            if($as_data) {
                 ob_start();
                 extract($vars);
                 include($view.EXT);
                 $data = ob_get_contents();
                 ob_end_clean();
-                
+
                 return $data;
             }
         }
-        else{
+        else {
             // other formats
             $this->_output->set_header('Content-Type: text/'.$format);
             $formatter = new Formatter($format);
@@ -131,7 +128,7 @@ class View
         }
         $this->_rendered = true;
     }
-    
+
     /**
      * Check if the action view is rendered.
      * @return boolean true if the action view is really rendered, false otherwise.
@@ -148,7 +145,7 @@ class View
     {
         $this->_rendered = true;
     }
-    
+
     /**
      * Set a template object
      * @param Template $template a Template object
@@ -157,6 +154,7 @@ class View
     {
         $this->_template = $template;
     }
+
 }
 
 /* End of file View.php */

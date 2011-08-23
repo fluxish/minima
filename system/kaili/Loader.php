@@ -35,7 +35,7 @@ class Loader
     /**
      * Autoload any classes that are required
      *
-     * @param string $className the name of required class
+     * @param string $class the name of required class
      */
     public static function __autoload($class)
     {
@@ -43,13 +43,16 @@ class Loader
         $class = str_replace('\\', DS, $class);
 
         if(file_exists(SYSTEM.DS.$class.EXT)) {
-            require_once(SYSTEM.DS.'library'.DS.$path.EXT);
+            // namespaced classes
+            require_once(SYSTEM.DS.$class.EXT);
         }
-        else if(file_exists(APPLICATION.DS.'controllers'.DS.$className.EXT)) {
-            require_once(APPLICATION.DS.'controllers'.DS.$className.EXT);
+        else if(file_exists(APPLICATION.DS.'controllers'.DS.$class.EXT)) {
+            // controllers (generally in /application/controllers)
+            require_once(APPLICATION.DS.'controllers'.DS.$class.EXT);
         }
-        else if(file_exists(APPLICATION.DS.'models'.DS.$className.EXT)) {
-            require_once(APPLICATION.DS.'models'.DS.$className.EXT);
+        else if(file_exists(APPLICATION.DS.'models'.DS.$class.EXT)) {
+            // models (generally in /application/models)
+            require_once(APPLICATION.DS.'models'.DS.$class.EXT);
         }
     }
 

@@ -1,4 +1,6 @@
-<?php  if (!defined('ROOT')) exit('No direct script access allowed');
+<?php
+
+namespace Kaili;
 
 /**
  * Kaili Config Class
@@ -6,9 +8,6 @@
  * Class to manage config files
  *
  * @package		Kaili
- * @subpackage	Library
- * @category	Library
- * @author		Luigi Marco Simonetti
  */
  
  class Config

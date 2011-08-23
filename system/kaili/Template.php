@@ -1,4 +1,6 @@
-<?php  if ( ! defined('ROOT')) exit('No direct script access allowed');
+<?php  
+
+namespace Kaili;
 
 /**
  * Kaili Template Class
@@ -6,9 +8,6 @@
  * This class manage the template system
  *
  * @package		Kaili
- * @subpackage	Libraries
- * @category	Libraries
- * @author		Luigi Marco Simonetti
  */
  
 class Template 
