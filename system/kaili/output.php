@@ -67,7 +67,7 @@ class Output
 
     public function redirect_to($url)
     {
-        $this->set_header('Location: '.url($url));
+        $this->set_header('Location: '.abs($url));
     }
 
     public function redirect_to_referer()

@@ -5,7 +5,7 @@
                             <li class="active">
                             <?php else: ?>
                             <li>
-                            <?php endif; echo anchor(url(array('controller'=>'home','action'=>'index')),
+                            <?php endif; echo anchor(abs(array('controller'=>'home','action'=>'index')),
                                 lang('process_home_title'), lang('process_home_title'), array('class' => 'item icon-text home-mini')) ?></li>
             
                             
@@ -13,9 +13,9 @@
                             
                                 <?php if($this->_load->load('session')->data('identity')): ?>
                                 <li><span class="user item"><?php $user = $this->_load->load('session')->data('identity'); echo $user['username'] ?></span></li>
-                                <li><?php echo anchor(url(array('controller'=>'home','action'=>'logout')), 'Logout', 'Logout', array('class' => 'item icon-text logout-mini')) ?></li>
+                                <li><?php echo anchor(abs(array('controller'=>'home','action'=>'logout')), 'Logout', 'Logout', array('class' => 'item icon-text logout-mini')) ?></li>
                                 <?php else: ?>
-                                <li><?php echo anchor(url(array('controller'=>'home','action'=>'login')), 'Login', 'Login', array('class' => 'item icon-text login-mini')) ?></li>
+                                <li><?php echo anchor(abs(array('controller'=>'home','action'=>'login')), 'Login', 'Login', array('class' => 'item icon-text login-mini')) ?></li>
                                 <?php endif; ?>
                             </div>
                         </ul>

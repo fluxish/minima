@@ -1,5 +1,5 @@
 <h1><?php echo $title ?></h1>
-<?php echo form_open(url($action)) ?>
+<?php echo form_open(abs($action)) ?>
     <table class="items">
         <thead>
             <div><tr>
@@ -26,7 +26,7 @@
             <?php foreach($list as $item): ?>   
             <tr>
                 <td><?php echo form_checkbox('ids[]',$item['id'],'') ?></td>
-                <td><?php echo anchor(url($this->input->get('controller').'/show/id/'.$item['id']), $item[$field_show], lang('form_show')) ?></td>
+                <td><?php echo anchor(abs($this->input->get('controller').'/show/id/'.$item['id']), $item[$field_show], lang('form_show')) ?></td>
                 <?php foreach($fields as $f=>$f_name): ?>   
                 <td><?php echo $item[$f] ?></td>
                 <?php endforeach;?>
@@ -43,7 +43,7 @@
             <?php echo form_hidden('target', $target) ?>
             <?php echo form_hidden('tab', $this->input->get('tab')) ?>
             <?php echo form_submit('submit', lang('form_submit')) ?>
-            <?php echo anchor(url($cancel), lang('form_cancel'), lang('form_cancel')) ?>
+            <?php echo anchor(abs($cancel), lang('form_cancel'), lang('form_cancel')) ?>
         </li>
     </ul>
 </form>

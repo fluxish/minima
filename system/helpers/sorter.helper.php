@@ -31,17 +31,17 @@ if(!function_exists('sorter'))
         // create links for all fields
         $sorter['fields'] = array();
         foreach($fields as $field=>$title){
-            $sorter['fields'][$field] = url(array($asc=>$field, $desc=>''), false);
+            $sorter['fields'][$field] = abs(array($asc=>$field, $desc=>''), false);
         }
         
         // set current field
         if($curr_field = $input->get($asc)){
-            $sorter['fields'][$curr_field] = url(array($desc=>$curr_field, $asc=>''), false);
+            $sorter['fields'][$curr_field] = abs(array($desc=>$curr_field, $asc=>''), false);
             $sorter['current_field'] = $curr_field;
             $sorter['current_order'] = $asc;
         }
         else if($curr_field = $input->get($desc)){
-            $sorter['fields'][$curr_field] = url(array($asc=>$curr_field, $desc=>''), false);
+            $sorter['fields'][$curr_field] = abs(array($asc=>$curr_field, $desc=>''), false);
             $sorter['current_field'] = $curr_field;
             $sorter['current_order'] = $desc;
         }

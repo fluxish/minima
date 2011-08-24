@@ -34,8 +34,8 @@ if(!function_exists('paginator'))
         if($paginator['count'] <= 1) return false;
         
         // assign first and last pages
-        $paginator['first'] = url(array($route=>1), false);
-        $paginator['last'] = url(array($route=>$paginator['count']), false);
+        $paginator['first'] = abs(array($route=>1), false);
+        $paginator['last'] = abs(array($route=>$paginator['count']), false);
         $window = min($window, $paginator['count']);
         
         
@@ -43,18 +43,18 @@ if(!function_exists('paginator'))
         if($paginator['current'] = $input->get($config->item('paginator_route')))
         {
             if($paginator['current'] == 1) {
-                $paginator['next'] = url(array($route=>$paginator['current']+1), false);
+                $paginator['next'] = abs(array($route=>$paginator['current']+1), false);
             } 
             else if($paginator['current'] == $paginator['count']){
-                $paginator['previous'] = url(array($route=>$paginator['current']-1), false);
+                $paginator['previous'] = abs(array($route=>$paginator['current']-1), false);
             } 
             else {
-                $paginator['next'] = url(array($route=>$paginator['current']+1), false);
-                $paginator['previous'] = url(array($route=>$paginator['current']-1), false);
+                $paginator['next'] = abs(array($route=>$paginator['current']+1), false);
+                $paginator['previous'] = abs(array($route=>$paginator['current']-1), false);
             }
         } else {
             $paginator['current'] = 1;
-            $paginator['next'] = url(array($route=>$paginator['current']+1), false);
+            $paginator['next'] = abs(array($route=>$paginator['current']+1), false);
         }
         
         // create $pages array
@@ -69,7 +69,7 @@ if(!function_exists('paginator'))
         
         $paginator['pages'] = array();
         for($i=$start; $i<=$end; $i++){
-            $paginator['pages'][$i] = url(array($route=>$i), false);
+            $paginator['pages'][$i] = abs(array($route=>$i), false);
         }
         
         return $paginator;

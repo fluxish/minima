@@ -25,7 +25,7 @@
         <?php else: ?>
         <?php foreach($list as $item): ?>   
         <tr>
-            <td><?php echo anchor(url(array('controller'=>$this->input->get('controller'),'action'=>'show','id'=>$item['id'],'tab'=>$this->input->get('tab'))), $item[$field_show], lang('form_show')) ?></td>
+            <td><?php echo anchor(abs(array('controller'=>$this->input->get('controller'),'action'=>'show','id'=>$item['id'],'tab'=>$this->input->get('tab'))), $item[$field_show], lang('form_show')) ?></td>
             <?php foreach($fields as $f=>$f_name): ?>   
             <td><?php echo $item[$f] ?></td>
             <?php endforeach;?>

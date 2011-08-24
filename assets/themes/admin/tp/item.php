@@ -15,7 +15,7 @@
             <td colspan="2">
                 <ul class="menu h_basic_menu">
                     <li>
-                        <?php echo anchor(url(array('controller'=>$this->input->get('controller'),'action'=>'delete','id'=>$item['data']['id'],'tab'=>$this->input->get('tab'))), lang('form_remove'), lang('form_remove'), 
+                        <?php echo anchor(abs(array('controller'=>$this->input->get('controller'),'action'=>'delete','id'=>$item['data']['id'],'tab'=>$this->input->get('tab'))), lang('form_remove'), lang('form_remove'), 
                         array('class'=>'item confirm-link', 'onclick'=>'javascript:return confirm(\''.lang($this->input->get('controller').'_delete_confirm').'\')')); ?>
                     </li>
                 </ul>
@@ -55,13 +55,13 @@
         <?php else: ?>
         <?php foreach($section['data'] as $section_item): ?>   
         <tr>
-            <td><?php echo anchor(url(array('controller'=>$section_name,'action'=>'show','id'=>$section_item['id'])), 
+            <td><?php echo anchor(abs(array('controller'=>$section_name,'action'=>'show','id'=>$section_item['id'])), 
                 $section_item[$section['field_show']], lang('form_show')) ?></td>
             <?php foreach($section['fields'] as $field=>$field_title): ?>   
             <td><?php echo $section_item[$field] ?></td>
             <?php endforeach;?>
             
-            <td><?php echo anchor(url(array('controller'=>$this->input->get('controller'),'action'=>'remove_'.$section_name,'id'=>$section_item['id'],'target'=>$item['data']['id'],'tab'=>$this->input->get('tab'))), lang('form_remove'), lang('form_remove'), 
+            <td><?php echo anchor(abs(array('controller'=>$this->input->get('controller'),'action'=>'remove_'.$section_name,'id'=>$section_item['id'],'target'=>$item['data']['id'],'tab'=>$this->input->get('tab'))), lang('form_remove'), lang('form_remove'), 
                         array('class'=>'item confirm-link floatRight', 'onclick'=>'javascript:return confirm(\''
                         .lang($this->input->get('controller').'_remove_'.$section_name.'_confirm').'\')')); ?></td>
         </tr>
@@ -87,7 +87,7 @@
             <td colspan="2">
                 <ul class="menu h_basic_menu">
                     <li>
-                        <?php echo anchor(url($this->input->get('controller').'/delete/id/'.$section['data']['id']), lang('form_remove'), lang('form_remove'), 
+                        <?php echo anchor(abs($this->input->get('controller').'/delete/id/'.$section['data']['id']), lang('form_remove'), lang('form_remove'), 
                         array('class'=>'item confirm-link', 'onclick'=>'javascript:return confirm(\''.lang($this->input->get('controller').'_delete_confirm').'\')')); ?>
                     </li>
                 </ul>

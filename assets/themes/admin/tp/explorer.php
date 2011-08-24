@@ -24,7 +24,7 @@
         
         <?php foreach($inners as $inner): ?>   
         <tr>
-            <td><?php echo anchor(url(array('controller'=>$this->input->get('controller'), 
+            <td><?php echo anchor(abs(array('controller'=>$this->input->get('controller'), 
                 'action'=>'explore', 'area'=>$inner['id'])), $inner[$field_show], $inner[$field_show],
                 array('class'=>'icon-text areas-mini')) ?></td>
             <?php foreach($fields as $f=>$f_name): ?>   
@@ -36,7 +36,7 @@
         
         <?php foreach($leaves as $leaf): ?>   
         <tr>
-            <td><?php echo anchor(url(array('controller'=>$this->input->get('controller'), 
+            <td><?php echo anchor(abs(array('controller'=>$this->input->get('controller'), 
                 'action'=>'show', 'id'=>$leaf['id'])), $leaf[$field_show], $leaf[$field_show],
                 array('class'=>'icon-text risks-mini')) ?></td>
             <?php foreach($fields as $f=>$f_name): ?>   

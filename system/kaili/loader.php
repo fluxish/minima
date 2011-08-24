@@ -92,7 +92,7 @@ class Loader
      */
     public function helper($helper)
     {
-        include_once(SYSTEM.DS.'helpers'.DS.$helper.'.helper.php');
+        include_once(SYSTEM.DS.'kaili'.DS.$helper.EXT);
     }
 
     /**
@@ -101,9 +101,12 @@ class Loader
      */
     public function load($class)
     {
+        if(!strpos($class, '\\')){
+            $class = '\\Kaili\\'.ucwords($class);
+        }
+        
         if(!array_key_exists($class, $this->_loaded_classes)) {
-            $class_name = '\\Kaili\\'.ucwords($class);
-            $this->_loaded_classes[$class] = new $class_name();
+            $this->_loaded_classes[$class] = new $class();
         }
         return $this->_loaded_classes[$class];
     }
@@ -191,13 +194,6 @@ class Loader
             $this->load($lib);
         }
         unset($libraries, $lib);
-
-        // autoload helpers
-        $helpers = $this->_config->item('helpers');
-        foreach($helpers as $help) {
-            $this->helper($help);
-        }
-        unset($helpers, $help);
     }
 
 }

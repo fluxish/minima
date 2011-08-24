@@ -151,3 +151,10 @@ class Language
 
 }
 
+namespace Kaili\Language;
+
+function lang($item)
+{
+    return \Kaili\Loader::get_instance()->load('language')->item($item);
+}
+
