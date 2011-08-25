@@ -1,20 +1,20 @@
-<?php
+<?php if (!defined('ROOT')) die('No direct script access allowed');
 
 /**
- * Url Helpers
+ * Url class
  *
  * @package Kaili
- * @subpackage	Url
  */
-
-namespace Kaili\Url {
+class Url
+{
     
     /**
      * Generate an URL according to the route
+     * 
      * @param mixed $url an URL or an array of parameters
      * @return string the generated URL
      */
-    function abs($url, $reset = true)
+    public static function abs($url, $reset = true)
     {
         if(is_array($url)) {
             $input = Loader::get_instance()->load('input');
@@ -44,12 +44,13 @@ namespace Kaili\Url {
 
     /**
      * Generate a tiny url from a long url
+     * 
      * @param string $url the long url
      * @param string $provider a tinyurl web service (default: is.gd)
      * @param array $parameters provider's parameters
      * @return string the tiny url generated
      */
-    function tiny($url, $provider = null, $parameters = array())
+    public static function tiny($url, $provider = null, $parameters = array())
     {
         $timeout = 5;
         $cs = curl_init();
@@ -72,10 +73,11 @@ namespace Kaili\Url {
 
     /**
      * Convert a local path to url
+     * 
      * @param string $path local path
      * @return string the converted url
      */
-    function path_to($path)
+    public static function from_path($path)
     {
         $base_url = Loader::get_instance()->load('config')->item('base_url');
         return str_replace($_SERVER['DOCUMENT_ROOT'].$_SERVER['PHP_SELF'], $base_url, $path);
