@@ -45,7 +45,7 @@ class Language
         $this->_config = Loader::get_instance()->load('config');
         $this->_input = Loader::get_instance()->load('input');
 
-        $this->_autoload();
+        $this->_preload();
         if($lang = $this->_input->get('l'))
         // select the current language by the url with the key 'l'
         // (es. http://www.example.com/controller/action/l/en/key1/val1/.../keyN/valN)
@@ -55,7 +55,7 @@ class Language
     }
 
     /**
-     * Returns a config item
+     * Returns a language item
      * 
      * @param string $item the item's name.
      * @return the value of the item, or <code>false</code> if item doesn't exist
@@ -136,7 +136,7 @@ class Language
     /**
      * Autoload languages setted in application/config/autoload.php
      */
-    private function _autoload()
+    private function _preload()
     {
         // autoload languages
         foreach($this->_config->item('languages') as $lang) {
@@ -148,13 +148,17 @@ class Language
             $this->load($file);
         }
     }
-
-}
-
-namespace Kaili\Language;
-
-function lang($item)
-{
-    return \Kaili\Loader::get_instance()->load('language')->item($item);
+    
+    
+    /**
+     * Return a language item
+     * 
+     * @param string $item the name of the language item
+     * @return string the value of the item, or <code>false</code> if item doesn't exist
+     */
+    public static function lang($item)
+    {
+        return \Kaili\Loader::get_instance()->load('language')->item($item);
+    }
 }
 
