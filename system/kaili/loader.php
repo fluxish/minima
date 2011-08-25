@@ -78,8 +78,7 @@ class Loader
     public function load($class)
     {
         // namespaced
-        $class = '\\Kaili\\'.ucwords($class);
-
+        $class = '\\Kaili\\'.ucfirst($class);
         if(class_exists($class)) {
             if(!array_key_exists($class, $this->_loaded_classes)) {
                 $this->_loaded_classes[$class] = new $class();
@@ -104,7 +103,7 @@ class Loader
         $action_name = strtolower($action);
 
         // creation of controller
-        $controller = ucwords($controller_name);
+        $controller = ucfirst($controller_name);
         $controller = new $controller();
 
         // call action of the controller
@@ -165,13 +164,18 @@ class Loader
      */
     private function _autoload($class)
     {
-        
         // create the path from the name of the class
         $class = strtolower(str_replace('\\', DS, $class));
-
+        
         if(file_exists(SYSTEM.DS.$class.EXT)) {
             // namespaced classes
             require_once(SYSTEM.DS.$class.EXT);
+        }
+        else if(file_exists(SYSTEM.DS.'kaili'.DS.$class.EXT)) {
+            require_once(SYSTEM.DS.'kaili'.DS.$class.EXT);
+            
+            $class_name = ucfirst($class);
+            class_alias('\\Kaili\\'.$class_name, $class_name);
         }
         else if(file_exists(APPLICATION.DS.'controllers'.DS.$class.EXT)) {
             // controllers (generally in /application/controllers)
