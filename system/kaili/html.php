@@ -51,7 +51,7 @@ class Html
             $attributes['href'] = $href;
         }
 
-        return $label.tag_open('link', $attributes, true);
+        return $label.static::tag_open('link', $attributes, true);
     }
 
     /**
@@ -74,7 +74,7 @@ class Html
             $attributes['title'] = $title;
 
         if($method == 'get') {
-            return tag_open('a', $attributes).$content.'</a>';
+            return static::tag_open('a', $attributes).$content.'</a>';
         }
         else {
             $attributes .= ' style="background:transparent;border:none;border-bottom:1px solid #00F;color:#00F;display:inline;cursor:pointer;margin:0;padding:0;height:1.3em"';
@@ -113,7 +113,7 @@ class Html
      */
     public static function ul($items, $attributes = array())
     {
-        $ul = tag_open('ul', $attributes);
+        $ul = static::tag_open('ul', $attributes);
         $lis = array();
         foreach($items as $item) {
             if(is_array($item)) {
@@ -136,7 +136,7 @@ class Html
      */
     public static function ol($items, $attributes = array())
     {
-        $ul = tag_open('ol', $attributes);
+        $ul = static::tag_open('ol', $attributes);
         $lis = array();
         foreach($items as $item) {
             if(is_array($val)) {
@@ -161,20 +161,20 @@ class Html
     {
 
 
-// add action
+        // add action
         $attributes['action'] = $action;
 
-// set method to 'post' if not is setted
+        // set method to 'post' if not is setted
         if(!isset($attributes['method'])) {
             $attributes['method'] = 'post';
         }
 
-// add enctype, if multipart or if not setted between attributes
+        // add enctype, if multipart or if not setted between attributes
         if($multipart) {
             $attributes['enctype'] = 'multipart/form-data';
         }
 
-        return tag_open('form', $attributes);
+        return static::tag_open('form', $attributes);
     }
 
     /**
@@ -197,28 +197,28 @@ class Html
      */
     public static function form_input($type, $name, $value = "", $label = "", $attributes = array())
     {
-// return a custom input text
+        // return a custom input text
         $attributes['name'] = $name;
         $attributes['type'] = $type;
         $attributes['value'] = $value;
 
-// if not setted, set id with same value of name
+        // if not setted, set id with same value of name
         if(!isset($attributes['id']) && isset($attributes['name'])) {
             $attributes['id'] = $attributes['name'];
         }
 
 
-// add label
+        // add label
         if(!empty($label)) {
             $label = form_label($label, $attributes['name'])."<br/>\n";
         }
-        else if(function_exists('lang')) {
+        else if(method_exists('Language', 'lang')) {
             $label = lang('form_'.$name);
-//if(!$label) $label = $name; 
-//form_label($label, $attributes['name']).$sep."\n"; 
+            //if(!$label) $label = $name; 
+            //form_label($label, $attributes['name']).$sep."\n"; 
         }
 
-        return $label.tag_open('input', $attributes, true);
+        return $label.static::tag_open('input', $attributes, true);
     }
 
     /**
@@ -231,7 +231,7 @@ class Html
      */
     public static function form_text($name, $value, $label, $attributes = array())
     {
-        return form_input('text', $name, $value, $label, $attributes);
+        return static::form_input('text', $name, $value, $label, $attributes);
     }
 
     /**
@@ -242,7 +242,7 @@ class Html
      */
     public static function form_hidden($name, $value)
     {
-        return form_input('hidden', $name, $value);
+        return static::form_input('hidden', $name, $value);
     }
 
     /**
@@ -255,7 +255,7 @@ class Html
      */
     public static function form_password($name, $value, $label, $attributes = array())
     {
-        return form_input('password', $name, $value, $label, $attributes);
+        return static::form_input('password', $name, $value, $label, $attributes);
     }
 
     /**
@@ -269,25 +269,25 @@ class Html
     public static function form_textarea($name, $value = '', $label = '', $attributes = array())
     {
 
-// return a custom textarea
+        // return a custom textarea
         $attributes['name'] = $name;
 
-// if not setted, set id with same value of name
+        // if not setted, set id with same value of name
         if(!isset($attributes['id']) && isset($attributes['name'])) {
             $attributes['id'] = $attributes['name'];
         }
 
-// add label
+        // add label
         if(!empty($label)) {
             $label = form_label($label, $attributes['name'])."<br/>\n";
         }
-        else if(function_exists('lang')) {
+        else if(method_exists('Language', 'lang')) {
             $label = lang('form_'.$name);
-#            if(!$label) $label = $name; 
-#            form_label($label, $attributes['name'])."<br/>\n"; 
+            //if(!$label) $label = $name; 
+            //form_label($label, $attributes['name'])."<br/>\n"; 
         }
 
-        return $label.tag_open('textarea', $attributes).$value.tag_close('textarea');
+        return $label.static::tag_open('textarea', $attributes).$value.tag_close('textarea');
     }
 
     /**
@@ -308,7 +308,7 @@ class Html
             unset($attributes['checked']);
         }
 
-        return form_input('checkbox', $name, $value, $label, $attributes);
+        return static::form_input('checkbox', $name, $value, $label, $attributes);
     }
 
     /**
@@ -329,7 +329,7 @@ class Html
             unset($attributes['checked']);
         }
 
-        return form_input('radio', $name, $value, $label, $attributes);
+        return static::form_input('radio', $name, $value, $label, $attributes);
     }
 
     /**
@@ -342,7 +342,7 @@ class Html
      */
     public static function form_file($name, $value, $label, $attributes = array())
     {
-        return form_input('file', $name, $value, $label, $attributes);
+        return static::form_input('file', $name, $value, $label, $attributes);
     }
 
     /**
@@ -354,7 +354,7 @@ class Html
      */
     public static function form_submit($name, $value, $attributes = array())
     {
-        return form_input_button('submit', $name, $value, '', $attributes);
+        return static::form_input_button('submit', $name, $value, '', $attributes);
     }
 
     /**
@@ -366,7 +366,7 @@ class Html
      */
     public static function form_reset($name, $value, $attributes = array())
     {
-        return form_input_button('reset', $name, $value, '', $attributes);
+        return static::form_input_button('reset', $name, $value, '', $attributes);
     }
 
     /**
@@ -379,7 +379,7 @@ class Html
      */
     public static function form_input_button($type, $name, $value = '', $attributes = array())
     {
-        if(empty($value) && function_exists('lang')) {
+        if(empty($value) && method_exists('Language', 'lang')) {
             $value = lang('form_'.$name);
             if(!$value)
                 $value = $name;
@@ -390,7 +390,7 @@ class Html
         $attributes['type'] = $type;
         $attributes['value'] = $value;
 
-        return tag_open('input', $attributes, true);
+        return static::tag_open('input', $attributes, true);
     }
 
     /**
@@ -407,7 +407,7 @@ class Html
             $attributes['src'] = $src;
         }
 
-        return form_input('image', $name, $value, '', $attributes);
+        return static::form_input('image', $name, $value, '', $attributes);
     }
 
     /**
@@ -420,12 +420,12 @@ class Html
      */
     public static function form_button($type, $name, $content = '', $attributes = array())
     {
-// if $name is a string, return simple input text with id, name and value
+        // if $name is a string, return simple input text with id, name and value
         $attributes['id'] = $name;
         $attributes['name'] = $name;
         $attributes['type'] = $type;
 
-        return tag_open('button', $attributes).$content.'</button>';
+        return static::tag_open('button', $attributes).$content.'</button>';
     }
 
     /**
@@ -440,7 +440,7 @@ class Html
         if(!empty($for)) {
             $attributes['for'] = $for;
         }
-        return tag_open('label', $attributes).$label.'</label>';
+        return static::tag_open('label', $attributes).$label.'</label>';
     }
 
     /**
@@ -463,13 +463,13 @@ class Html
             $selected = array($selected);
         }
 
-// open select tag
+        // open select tag
         if(!empty($label)) {
             $label = form_label($label, $name['name'])."<br/>\n";
         }
-        $select = $label.tag_open('select', $attributes, $name);
+        $select = $label.static::tag_open('select', $attributes, $name);
 
-// create option tags
+        // create option tags
         $opts = array();
         foreach($options as $opt_val => $opt_content) {
             if(is_array($opt_val)) {
@@ -486,7 +486,7 @@ class Html
             }
         }
 
-// close select tag and return
+        // close select tag and return
         $select .= implode("\n", $opts)."\n</select>";
         unset($opts);
 
@@ -502,7 +502,7 @@ class Html
      */
     public static function tag_open($tag, $attributes = array(), $close = false)
     {
-// add attributes
+        // add attributes
         $attrs = array();
         if(!empty($attributes)) {
             foreach($attributes as $attr => $val) {
