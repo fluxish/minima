@@ -33,7 +33,7 @@ class Form
             $attributes['enctype'] = 'multipart/form-data';
         }
 
-        return static::tag_open('form', $attributes);
+        return Html::tag_open('form', $attributes);
     }
 
     /**
@@ -77,7 +77,7 @@ class Form
             //form_label($label, $attributes['name']).$sep."\n"; 
         }
 
-        return $label.static::tag_open('input', $attributes, true);
+        return $label.Html::tag_open('input', $attributes, true);
     }
 
     /**
@@ -146,7 +146,7 @@ class Form
             //form_label($label, $attributes['name'])."<br/>\n"; 
         }
 
-        return $label.static::tag_open('textarea', $attributes).$value.tag_close('textarea');
+        return $label.Html::tag_open('textarea', $attributes).$value.tag_close('textarea');
     }
 
     /**
@@ -249,7 +249,7 @@ class Form
         $attributes['type'] = $type;
         $attributes['value'] = $value;
 
-        return static::tag_open('input', $attributes, true);
+        return Html::tag_open('input', $attributes, true);
     }
 
     /**
@@ -284,7 +284,7 @@ class Form
         $attributes['name'] = $name;
         $attributes['type'] = $type;
 
-        return static::tag_open('button', $attributes).$content.'</button>';
+        return Html::tag_open('button', $attributes).$content.'</button>';
     }
 
     /**
@@ -299,7 +299,7 @@ class Form
         if(!empty($for)) {
             $attributes['for'] = $for;
         }
-        return static::tag_open('label', $attributes).$label.'</label>';
+        return Html::tag_open('label', $attributes).$label.'</label>';
     }
 
     /**
@@ -326,7 +326,7 @@ class Form
         if(!empty($label)) {
             $label = form_label($label, $name['name'])."<br/>\n";
         }
-        $select = $label.static::tag_open('select', $attributes, $name);
+        $select = $label.Html::tag_open('select', $attributes, $name);
 
         // create option tags
         $opts = array();
@@ -350,40 +350,6 @@ class Form
         unset($opts);
 
         return $select;
-    }
-
-    /**
-     * Create any tag
-     * @param string name of the tag
-     * @param array attributes of the tag
-     * @param boolean true if tag must be close (/>), otherwise false
-     * @return string
-     */
-    public static function tag_open($tag, $attributes = array(), $close = false)
-    {
-        // add attributes
-        $attrs = array();
-        if(!empty($attributes)) {
-            foreach($attributes as $attr => $val) {
-                $attrs[] = $attr.'="'.$val.'"';
-            }
-        }
-
-        if($close) {
-            return '<'.$tag.' '.implode(" ", $attrs)."/>\n";
-        }
-
-        return '<'.$tag.' '.implode(" ", $attrs).">\n";
-    }
-
-    /**
-     * Create any closing tag
-     * @param string name of the tag
-     * @return string
-     */
-    public static function tag_close($tag)
-    {
-        return '</'.$tag.'>';
     }
 
 }
