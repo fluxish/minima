@@ -1,23 +1,21 @@
-<?php  if (!defined('ROOT')) exit('No direct script access allowed');
+<?php if(!defined('ROOT')) die('No direct script access allowed');
+
+namespace Kaili;
 
 /**
- * Inflector Helpers
+ * Inflector class
  *
- * @package		Kaili
- * @subpackage	Helpers
- * @category	Helpers
- * @author		Luigi Marco Simonetti
+ * @package Kaili
  */
-
-
-if(!function_exists('singular'))
+class Inflector
 {
+
     /**
      * Transform a word from plural to singular form
      * @param string $str a word
      * @return string
      */
-    function singular($str)
+    public static function singular($str)
     {
         $str = strtolower($str);
         $last_letters = substr($str, -3);
@@ -25,44 +23,37 @@ if(!function_exists('singular'))
             return substr($str, 0, -3).'y';
         else if($last_letters == 'ses')
             return substr($str, 0, -2);
-        else{
+        else {
             $last_letters = substr($str, -1);
             if($last_letters == 's')
-                return substr($str, 0, -1);            
+                return substr($str, 0, -1);
         }
         return $str;
     }
-}
 
-
-if(!function_exists('plural'))
-{
     /**
      * Transform a word from singular to plural form
      * @param string $str a word
      * @return string
      */
-    function plural($str)
+    public static function plural($str)
     {
         $str = strtolower($str);
         $last_letter = substr($str, -1);
-        switch($last_letter)
-        {
+        switch($last_letter) {
             case 'y':
-                $vowels = array('a','e','i','o','u');
+                $vowels = array('a', 'e', 'i', 'o', 'u');
                 if(in_array(substr($str, -2, 1), $vowels))
                     return $str.'s';
                 else
-                    return substr($str,0,-1).'ies';
+                    return substr($str, 0, -1).'ies';
                 break;
             case 's':
                 return $str.'es';
                 break;
             default:
-                return $str.'s';            
+                return $str.'s';
         }
     }
-}
 
-/* End of file inflector.helper.php */
-/* Location: ./system/helpers/inflector.helper.php */
+}
