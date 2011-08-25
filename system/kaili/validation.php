@@ -1,7 +1,6 @@
 <?php
 
-if(!defined('ROOT'))
-    exit('No direct script access allowed');
+namespace Kaili;
 
 /**
  * Kaili Validation Class

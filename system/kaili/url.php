@@ -1,4 +1,6 @@
-<?php if (!defined('ROOT')) die('No direct script access allowed');
+<?php
+
+namespace Kaili;
 
 /**
  * Url class
@@ -7,7 +9,7 @@
  */
 class Url
 {
-    
+
     /**
      * Generate an URL according to the route
      * 

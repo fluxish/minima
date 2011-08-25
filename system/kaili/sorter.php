@@ -1,4 +1,4 @@
-<?php if(!defined('ROOT')) die('No direct script access allowed');
+<?php
 
 namespace Kaili;
 
