@@ -3,13 +3,12 @@
 namespace Kaili;
 
 /**
- * Kaili Input Class
- *
- * Provides various functions to get input parameters and manage input checking and security.
- *
- * @package		Kaili
+ * Request Class
+ * The Request class handles all the request from a client
+ * 
+ * @package Kaili
  */
-class Input
+class Request
 {
 
     private $_params;
