@@ -28,9 +28,9 @@ class Language
     private $_items;
 
     /**
-     * @var Input
+     * @var Request
      */
-    private $_input;
+    private $_request;
 
     /**
      * @var Config
@@ -43,10 +43,11 @@ class Language
     function __construct()
     {
         $this->_config = Loader::get_instance()->load('config');
-        $this->_input = Loader::get_instance()->load('input');
+        $this->_request = Loader::get_instance()->load('request');
 
         $this->_preload();
-        if($lang = $this->_input->get('l'))
+        $lang = $this->_request->get('l');
+        if($lang)
         // select the current language by the url with the key 'l'
         // (es. http://www.example.com/controller/action/l/en/key1/val1/.../keyN/valN)
             $this->_items = &$this->_languages[$lang];
@@ -63,20 +64,20 @@ class Language
     function item($item)
     {
         // find item by controller_action
-        if(isset($this->_items[$this->_input->get('controller').'_'.
-                        $this->_input->get('action').'_'.$item])) {
-            return $this->_items[$this->_input->get('controller').'_'.
-                    $this->_input->get('action').'_'.$item];
+        if(isset($this->_items[$this->_request->get('controller').'_'.
+                        $this->_request->get('action').'_'.$item])) {
+            return $this->_items[$this->_request->get('controller').'_'.
+                    $this->_request->get('action').'_'.$item];
         }
         // find item in default mode
         else if(isset($this->_items[$item])) {
             return $this->_items[$item];
         }
         // find item by resource_action
-        else if(isset($this->_items[$this->_input->get('resource').'_'.
-                        trim($this->_input->get('action'), '_').'_'.$item])) {
-            return $this->_items[$this->_input->get('resource').'_'.
-                    trim($this->_input->get('action'), '_').'_'.$item];
+        else if(isset($this->_items[$this->_request->get('resource').'_'.
+                        trim($this->_request->get('action'), '_').'_'.$item])) {
+            return $this->_items[$this->_request->get('resource').'_'.
+                    trim($this->_request->get('action'), '_').'_'.$item];
         }
         return false;
     }
@@ -110,7 +111,7 @@ class Language
             $file = 'language'.DS.$language.DS.$lang_file.'.lang.php';
 
             // find the current module
-            $module = $this->_input->get('module').DS;
+            $module = $this->_request->get('module').DS;
             if(empty($module))
                 $module = '';
 
