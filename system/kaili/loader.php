@@ -51,7 +51,7 @@ class Loader
      *
      * @var array
      */
-    private $_internal_autoload = array('input', 'output');
+    private $_internal_autoload = array('request', 'output');
 
     /**
      * Create the Loader
