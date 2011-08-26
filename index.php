@@ -27,4 +27,9 @@ $post_call = function() {
 //            Logger::get('log1')->info($elapsed);
         };
 
-Loader::get_instance()->start($pre_call, $post_call);
+$loader = Loader::get_instance();
+$loader->register();
+
+$loader->load('request')->handle($pre_call, $post_call);
+
+$loader->load('output')->display();
