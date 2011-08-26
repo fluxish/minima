@@ -22,8 +22,8 @@ class Paginator
     {
         $paginator = array();
 
-        // load input library
-        $input = Loader::get_instance()->load('input');
+        // load request library
+        $request = Loader::get_instance()->load('request');
 
         // load config library
         $config = Loader::get_instance()->load('config');
@@ -44,7 +44,7 @@ class Paginator
 
 
         // get current page and range limits (default 1)
-        if($paginator['current'] = $input->get($config->item('paginator_route'))) {
+        if($paginator['current'] = $request->get($config->item('paginator_route'))) {
             if($paginator['current'] == 1) {
                 $paginator['next'] = abs(array($route => $paginator['current'] + 1), false);
             }
@@ -92,10 +92,10 @@ class Paginator
         $route = $config->item('paginator_route');
         $max_items = $config->item('paginator_max_items');
 
-        // load input library
-        $input = Loader::get_instance()->load('input');
+        // load request library
+        $request = Loader::get_instance()->load('request');
 
-        $page = $input->get($route);
+        $page = $request->get($route);
         if(!$page)
             $page = 1;
 

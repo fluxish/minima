@@ -25,8 +25,8 @@ class Sorter
         $asc = $config->item('sorter_asc_route');
         $desc = $config->item('sorter_desc_route');
 
-        // load input library
-        $input = Loader::get_instance()->load('input');
+        // load request library
+        $request = Loader::get_instance()->load('request');
 
         // create links for all fields
         $sorter['fields'] = array();
@@ -35,12 +35,12 @@ class Sorter
         }
 
         // set current field
-        if($curr_field = $input->get($asc)) {
+        if($curr_field = $request->get($asc)) {
             $sorter['fields'][$curr_field] = abs(array($desc => $curr_field, $asc => ''), false);
             $sorter['current_field'] = $curr_field;
             $sorter['current_order'] = $asc;
         }
-        else if($curr_field = $input->get($desc)) {
+        else if($curr_field = $request->get($desc)) {
             $sorter['fields'][$curr_field] = abs(array($asc => $curr_field, $desc => ''), false);
             $sorter['current_field'] = $curr_field;
             $sorter['current_order'] = $desc;
@@ -62,13 +62,13 @@ class Sorter
         $asc = $config->item('sorter_asc_route');
         $desc = $config->item('sorter_desc_route');
 
-        // load input library
-        $input = Loader::get_instance()->load('input');
+        // load request library
+        $request = Loader::get_instance()->load('request');
 
-        if($curr_field = $input->get($asc)) {
+        if($curr_field = $request->get($asc)) {
             $curr_order = $asc;
         }
-        else if($curr_field = $input->get($desc)) {
+        else if($curr_field = $request->get($desc)) {
             $curr_order = $desc;
         } else
             return array();

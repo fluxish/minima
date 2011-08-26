@@ -70,11 +70,11 @@ class Validation
      */
     public function validate()
     {
-        $input = Loader::get_instance()->load('input');
+        $request = Loader::get_instance()->load('request');
         $valid = true;
 
         foreach($this->_fields as $field_name => &$field) {
-            $value = $input->post($field['name']);
+            $value = $request->post($field['name']);
             foreach($field['rules'] as $rule => $param) {
                 if(!call_user_func(array($this, $rule), $value, $param)) {
                     $field['errors'][] = $rule;
@@ -312,7 +312,7 @@ class Validation
      */
     public function matches($str, $field)
     {
-        $field = Loader::get_instance()->load('input')->post($field);
+        $field = Loader::get_instance()->load('request')->post($field);
         if($field && $str === $field)
             return true;
         return false;
