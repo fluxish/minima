@@ -20,11 +20,11 @@ class Request
 
         $router = new Router();
         $this->_params = $router->parse_route($this->get('url'));
-        //unset($_GET['url']);
     }
 
     /**
-     * Return a GET parameter
+     * Returns a GET parameter.
+     * 
      * @param string parameter name
      * @return string parameter value
      */
@@ -34,7 +34,8 @@ class Request
     }
 
     /**
-     * Return a POST parameter
+     * Returns a POST parameter.
+     * 
      * @param string parameter name
      * @return string parameter value
      */
@@ -44,7 +45,8 @@ class Request
     }
 
     /**
-     * Return a parameter (GET or POST)
+     * Returns a parameter (GET or POST).
+     * 
      * @param string parameter name
      * @return string parameter value
      */
@@ -58,7 +60,8 @@ class Request
     }
 
     /**
-     * Return a variable from SERVER array
+     * Returns a variable from SERVER array.
+     * 
      * @param string parameter name
      * @return string parameter value
      */
@@ -68,7 +71,8 @@ class Request
     }
 
     /**
-     * Return a variable from COOKIE array
+     * Returns a variable from COOKIE array.
+     * 
      * @param string parameter name
      * @return string parameter value
      */
@@ -78,7 +82,8 @@ class Request
     }
 
     /**
-     * Clean a string from various types of cross site scripting attempts
+     * Cleans a string from various types of cross site scripting attempts.
+     * 
      * @param string
      * @return string
      */
@@ -94,32 +99,66 @@ class Request
         }
         return $value;
     }
-
+    
+    /**
+     * Returns the http address of the host
+     * It's an alias for $_SERVER['HTTP_HOST']
+     * 
+     * @return string 
+     */
     public function user_host()
     {
         return $this->server('HTTP_HOST');
     }
-
+    
+    /**
+     * Returns the user agent of that have made the request.
+     * It's an alias for $_SERVER['HTTP_USER_AGENT'].
+     * 
+     * @return string the user agent
+     */
     public function user_agent()
     {
         return $this->server('HTTP_USER_AGENT');
     }
-
+    
+    /**
+     * Returns the ip address of the user that has made the request.
+     * It's an alias for $_SERVER['REMOTE_ADDR].
+     * 
+     * @return string the remote ip address 
+     */
     public function ip_address()
     {
         return $this->server('REMOTE_ADDR');
     }
-
+    
+    /**
+     * Return the URL of the page from where the request has been made.
+     * It's an alias for $_SERVER['HTTP_REFERER'].
+     * 
+     * @return string the http referer
+     */
     public function referer()
     {
         return $this->server('HTTP_REFERER');
     }
-
+    
+    /**
+     * Return the current URL
+     * 
+     * @return string the current URL
+     */
     public function current_url()
     {
         return trim($this->get('url'), '/');
     }
-
+    
+    /**
+     * Return an array af all parameters in the current URL
+     * 
+     * @return array of paramaters in the current URL
+     */
     public function url_parameters()
     {
         return $this->_params;
@@ -127,6 +166,7 @@ class Request
 
     /**
      * Get a value from an array
+     * 
      * @param array
      * @param string key within key-value pair
      * @param boolean true if need to clean value from xss before to return it, 
