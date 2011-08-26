@@ -60,6 +60,8 @@ class Loader
     {
         spl_autoload_register('Kaili\Loader::_autoload');
         $this->_config = $this->load('config');
+        
+        $this->_preload();
     }
 
     /**
@@ -111,52 +113,7 @@ class Loader
             call_user_func_array(array($controller, $action_name), array_values($url_segments));
         }
     }
-
-    /**
-     * Check if environment is development and display errors 
-     */
-    public function set_reporting()
-    {
-        if($this->_config->item('development_environment') == true) {
-            error_reporting(E_ALL);
-            ini_set('display_errors', 'On');
-            ini_set('html_errors', 'On');
-        }
-        else {
-            error_reporting(E_ALL & ~E_DEPRECATED);
-            ini_set('display_errors', 'Off');
-            ini_set('log_errors', 'On');
-            ini_set('error_log', ROOT.DS.'system'.DS.'tmp'.DS.'logs'.DS.'error.log');
-        }
-    }
-
-    /**
-     * Prepare the framework to the requests
-     * @param function $pre_controller a closure to call before controller
-     * @param function $post_controller a closure to call after controller
-     */
-    public function start($pre_controller = null, $post_controller = null)
-    {
-        $this->set_reporting();
-        $this->_preload();
-
-        // execute a pre-controller call function
-        if(is_callable($pre_controller))
-            $pre_controller();
-
-        // call requested controller
-        $controller = $this->load('input')->get('controller');
-        $action = $this->load('input')->get('action');
-        $this->controller($controller, $action, $this->load('input')->get());
-
-        // execute a post-controller call function
-        if(is_callable($post_controller))
-            $post_controller();
-
-        // output all buffer
-        $this->load('output')->display();
-    }
-
+    
     /**
      * Autoload any classes that are required
      *

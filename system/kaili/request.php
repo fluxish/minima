@@ -10,16 +10,47 @@ namespace Kaili;
  */
 class Request
 {
-
+    /**
+     * Loader instance;
+     * @var Kaili\Loader 
+     */
+    private $_loader;
+    /**
+     * Array of all parameters of a requested URL
+     * @var array
+     */
     private $_params;
 
     public function __construct()
     {
+        $this->_loader = Loader::get_instance();
+        
         $this->_remove_magic_quotes();
         $this->_unregister_globals();
 
         $router = new Router();
         $this->_params = $router->parse_route($this->get('url'));
+    }
+    
+    /**
+     * Prepare the framework to the requests
+     * @param function $pre_controller a closure to call before controller
+     * @param function $post_controller a closure to call after controller
+     */
+    public function handle($pre_controller = null, $post_controller = null)
+    {
+        // execute a pre-controller call function
+        if(is_callable($pre_controller))
+            $pre_controller();
+
+        // call requested controller
+        $controller = $this->get('controller');
+        $action = $this->get('action');
+        $this->controller($controller, $action, $this->get());
+
+        // execute a post-controller call function
+        if(is_callable($post_controller))
+            $post_controller();
     }
 
     /**
