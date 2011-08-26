@@ -57,14 +57,18 @@ class Loader
      * Create the Loader
      */
     private function __construct()
-    {    
+    {
+        
     }
-    
+
+    /**
+     * Register the autoloader of this class loader
+     */
     public function register()
     {
         spl_autoload_register('Kaili\Loader::_autoload');
         $this->_config = $this->load('config');
-        
+
         $this->_preload();
     }
 
@@ -91,7 +95,7 @@ class Loader
             }
             return $this->_loaded_classes[$class];
         }
-        else{
+        else {
             $this->_autoload($class);
         }
     }
@@ -117,7 +121,7 @@ class Loader
             call_user_func_array(array($controller, $action_name), array_values($url_segments));
         }
     }
-    
+
     /**
      * Autoload any classes that are required
      *
@@ -127,14 +131,14 @@ class Loader
     {
         // create the path from the name of the class
         $class = strtolower(str_replace('\\', DS, $class));
-        
+
         if(file_exists(SYSTEM.DS.$class.EXT)) {
             // namespaced classes
             require_once(SYSTEM.DS.$class.EXT);
         }
         else if(file_exists(SYSTEM.DS.'kaili'.DS.$class.EXT)) {
             require_once(SYSTEM.DS.'kaili'.DS.$class.EXT);
-            
+
             $class_name = ucfirst($class);
             class_alias('\\Kaili\\'.$class_name, $class_name);
         }
