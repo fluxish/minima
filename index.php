@@ -40,8 +40,6 @@ $post_call = function() {
         };
 
 $loader = Loader::get_instance();
-$loader->register();
-
 $loader->load('request')->handle($pre_call, $post_call);
 
 $loader->load('output')->display();

@@ -44,9 +44,7 @@ class Request
             $pre_controller();
 
         // call requested controller
-        $controller = $this->get('controller');
-        $action = $this->get('action');
-        $this->controller($controller, $action, $this->get());
+        $this->_loader->controller($this->get('controller'), $this->get('action'), $this->get());
 
         // execute a post-controller call function
         if(is_callable($post_controller))
