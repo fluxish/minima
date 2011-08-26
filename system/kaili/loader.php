@@ -57,6 +57,10 @@ class Loader
      * Create the Loader
      */
     private function __construct()
+    {    
+    }
+    
+    public function register()
     {
         spl_autoload_register('Kaili\Loader::_autoload');
         $this->_config = $this->load('config');

@@ -26,6 +26,7 @@ $post_call = function() {
 
 // Initialize the Loader
 $loader = Loader::get_instance();
+$loader->register();
 
 // error reporting (temporary here)
 if($loader->load('config')->item('development_environment') == true) {
