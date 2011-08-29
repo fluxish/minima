@@ -72,7 +72,7 @@ class Output
 
     public function redirect_to_referer()
     {
-        $this->set_header('Location: '.Loader::get_instance()->load('input')->referer());
+        $this->set_header('Location: '.Loader::get_instance()->load('request')->referer());
     }
 
 }

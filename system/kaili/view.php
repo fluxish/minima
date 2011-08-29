@@ -33,9 +33,9 @@ class View
     private $_rendered = false;
 
     /**
-     * @var Input
+     * @var Request
      */
-    private $_input;
+    private $_request;
 
     /**
      * @var Output
@@ -50,11 +50,11 @@ class View
      */
     public function __construct($with_template = true)
     {
-        $this->_input = Loader::get_instance()->load('input');
+        $this->_request = Loader::get_instance()->load('request');
         $this->_output = Loader::get_instance()->load('output');
 
-        $this->_controller = $this->_input->get('controller');
-        $this->_action = $this->_input->get('action');
+        $this->_controller = $this->_request->get('controller');
+        $this->_action = $this->_request->get('action');
         if($with_template) {
             $this->_template = Loader::get_instance()->load('template');
         }
@@ -72,7 +72,7 @@ class View
      */
     public function render($vars = array(), $view = null, $as_data = false, $with_template = true)
     {
-        $format = $this->_input->get('format');
+        $format = $this->_request->get('format');
 
         // set view to render
         if(!$format || $format == 'html') {

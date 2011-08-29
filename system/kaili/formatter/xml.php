@@ -27,7 +27,7 @@ class Xml
             $xml = $data;
         }
         else{
-            $root_name = Loader::get_instance()->load('input')->get('action');
+            $root_name = Loader::get_instance()->load('request')->get('action');
             $xml = simplexml_load_string("<?xml version='1.0'?><$root_name></$root_name>");
             $this->_scan_obj($xml, $data);
         }
