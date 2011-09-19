@@ -69,7 +69,7 @@ namespace Kaili;
             throw new Exception('Config file "'.$file.'" not found.');
         
         $config = array();
-        include_once($file);
+        include($file);
         $this->_config = array_merge((array)$this->_config, (array)$config);
         unset($config);
     }
