@@ -33,13 +33,6 @@ class Loader
     }
 
     /**
-     * Array of loaded libraries
-     *
-     * @var array
-     */
-    private $_loaded_classes = array();
-
-    /**
      * Instance of Config class
      *
      * @var Config
@@ -90,10 +83,7 @@ class Loader
         // namespaced
         $class = '\\Kaili\\'.ucfirst($class);
         if(class_exists($class)) {
-            if(!array_key_exists($class, $this->_loaded_classes)) {
-                $this->_loaded_classes[$class] = new $class();
-            }
-            return $this->_loaded_classes[$class];
+            return new $class;
         }
         else {
             $this->_autoload($class);
