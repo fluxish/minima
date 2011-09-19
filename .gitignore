@@ -1,0 +1,22 @@
+
+# Application paths and files
+
+/application/controllers/
+/application/language/
+/application/logs/
+/application/models/
+/application/tmp
+/application/views/
+
+
+# Other files
+
+*~
+*.bak
+Thumbs.db
+.DS_Store
+.buildpath
+.project
+.settings
+.nbproject/
+/assets/
