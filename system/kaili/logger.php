@@ -95,13 +95,14 @@ abstract class Logger
      */
     public static function add($name, Logger_Interface $logger = null)
     {
-        Loader::get_instance()->load('config')->load('logger');
+        $config = Loader::get_instance()->load('config');
+        $config->load('logger');
         
         if($logger != null)
             $this->_loggers[$name] = $logger;
         else{
             // create a new logger
-            $loggers = Loader::get_instance()->load('config')->item('loggers');
+            $loggers = $config->item('loggers');
             $logger = 'Kaili\\Logger\\'.ucwords($loggers[$name]['type']);
             self::$_loggers[$name] = new $logger($loggers[$name]);
         }
