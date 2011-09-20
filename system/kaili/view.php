@@ -69,8 +69,11 @@ class View
     {
         if($with_template) {
             $this->_template = Loader::get_instance()->load('template');
+            $this->render($data, $file);
         }
-        $this->render($file, $data);
+        else{
+            $this->render_no_template($data, $file);
+        }
     }
 
     /**
