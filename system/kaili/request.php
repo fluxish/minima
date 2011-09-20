@@ -72,11 +72,11 @@ class Request
 
         // create the new controller
         $controller = ucfirst($controller);
-        $controller_obj = new $controller();
+        $controller_obj = new $controller($this);
 
         // call action of the controller
         if((int) method_exists($controller, $action)) {
-            call_user_func_array(array($controller_obj, $action), array_values($url_segments));
+            call_user_func_array(array($controller_obj, $action), array_values($this->get()));
         }
 
         // execute a post-controller call function
