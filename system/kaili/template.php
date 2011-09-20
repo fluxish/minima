@@ -54,8 +54,8 @@ class Template
         $this->_load = Loader::get_instance();
         $this->_config = $this->_load->load('config');
         
-        $this->_controller = $this->_load->load('request')->get('controller');
-        $this->_action = $this->_load->load('request')->get('action');
+        $this->_controller = Request::current()->get('controller');
+        $this->_action = Request::current()->get('action');
     }
     
 
@@ -136,7 +136,7 @@ class Template
      */
     public function place_action($place_name, $path = array())
     {
-        if(Loader::get_instance()->load('request')->get('format') == 'html'){
+        if(Request::current()->get('format') == 'html'){
             $route = array();
             include(APPLICATION.DS.'config'.DS.'routes.php');
             

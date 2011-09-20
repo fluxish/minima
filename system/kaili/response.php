@@ -82,7 +82,7 @@ class Response
      */
     public function redirect_to_referer()
     {
-        $this->set_header('Location: '.Loader::get_instance()->load('request')->referer());
+        $this->set_header('Location: '.Request::current()->referer());
     }
 
 }
