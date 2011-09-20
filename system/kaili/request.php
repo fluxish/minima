@@ -10,28 +10,51 @@ namespace Kaili;
  */
 class Request
 {
+
+    /**
+     * The current Request object
+     * @var Kaili\Request
+     */
+    private static $_current;
+    
+    
+   /**
+    * Returns the current 
+    * @return Kaili\Request
+    */
+    public static function current()
+    {
+        return static::$_current;
+    }
+
     /**
      * Loader instance;
      * @var Kaili\Loader 
      */
     private $_loader;
+
     /**
      * Array of all parameters of a requested URL
      * @var array
      */
     private $_params;
 
+    
+    /**
+     * Create a new Request object
+     */
     public function __construct()
     {
+        static::$_current = $this;
         $this->_loader = Loader::get_instance();
-        
+
         $this->_remove_magic_quotes();
         $this->_unregister_globals();
 
         $router = new Router();
         $this->_params = $router->parse_route($this->get('url'));
     }
-    
+
     /**
      * Prepare the framework to the requests
      * @param function $pre_controller a closure to call before controller
@@ -128,7 +151,7 @@ class Request
         }
         return $value;
     }
-    
+
     /**
      * Returns the http address of the host
      * It's an alias for $_SERVER['HTTP_HOST']
@@ -139,7 +162,7 @@ class Request
     {
         return $this->server('HTTP_HOST');
     }
-    
+
     /**
      * Returns the user agent of that have made the request.
      * It's an alias for $_SERVER['HTTP_USER_AGENT'].
@@ -150,7 +173,7 @@ class Request
     {
         return $this->server('HTTP_USER_AGENT');
     }
-    
+
     /**
      * Returns the ip address of the user that has made the request.
      * It's an alias for $_SERVER['REMOTE_ADDR].
@@ -161,7 +184,7 @@ class Request
     {
         return $this->server('REMOTE_ADDR');
     }
-    
+
     /**
      * Return the URL of the page from where the request has been made.
      * It's an alias for $_SERVER['HTTP_REFERER'].
@@ -172,7 +195,7 @@ class Request
     {
         return $this->server('HTTP_REFERER');
     }
-    
+
     /**
      * Return the current URL
      * 
@@ -182,7 +205,7 @@ class Request
     {
         return trim($this->get('url'), '/');
     }
-    
+
     /**
      * Return an array af all parameters in the current URL
      * 
