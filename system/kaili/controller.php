@@ -29,11 +29,6 @@ class Controller
      * @var View
      */
     protected $view;
-
-    /**
-     * @var Loader
-     */
-    protected $load;
     
     /**
      *
@@ -41,7 +36,6 @@ class Controller
      */
     function __construct(Kaili\Request $request)
     {
-        $this->load = Loader::get_instance();
         $this->view = new View();
         
         $this->request = $request;
