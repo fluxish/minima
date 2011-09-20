@@ -72,7 +72,7 @@ class Request
 
         // create the new controller
         $controller = ucfirst($controller);
-        $controller_obj = new $controller($this);
+        $controller_obj = new $controller();
 
         // call action of the controller
         if((int) method_exists($controller, $action)) {

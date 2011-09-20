@@ -25,14 +25,12 @@ class Controller
     private $response;
     
     /**
-     *
-     * @param Kaili\Request $request the request object 
+     * Create a new Controller object
      */
-    function __construct(\Kaili\Request $request)
+    function __construct()
     {
-        
-        $this->request = $request;
-        $this->response = new Kaili\Response();
+        $this->request = Request::current();
+        $this->response = new \Kaili\Response();
     }
 
     function __destruct()
@@ -45,7 +43,7 @@ class Controller
      */
     function __get($lib)
     {
-        return $this->load->load($lib);
+        return Loader::get_instance()->load($lib);
     }
 
 }
