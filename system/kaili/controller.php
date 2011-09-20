@@ -22,8 +22,12 @@ class Controller
      */
     protected $load;
     protected $_load;
-
-    function __construct()
+    
+    /**
+     *
+     * @param Kaili\Request $request the request object 
+     */
+    function __construct(Kaili\Request $request)
     {
         $this->load = Loader::get_instance();
         $this->_load = $this->load;

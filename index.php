@@ -45,4 +45,4 @@ else {
 $loader->load('request')->handle($pre_call, $post_call);
 
 // Initialize Output object to handle the response
-$loader->load('output')->display();
+$loader->load('output')->flush();

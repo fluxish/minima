@@ -3,36 +3,33 @@
 namespace Kaili;
 
 /**
- * Kaili Output Class
+ * Kaili Response Class
  *
- * Manage output processes
+ * Manage the response process
  *
- * @package		Kaili
+ * @package Kaili
  */
-class Output
+class Response
 {
 
     /**
+     * The body of the response
      * @var string
      */
-    private $_output;
+    private $_body;
 
     /**
+     * Array of headers
      * @var array
      */
     private $_headers;
-
+    
     /**
-     * @var Loader
+     * Create a new Response object
      */
-    private $_load;
-
     public function __construct()
     {
-        $this->_load = Loader::get_instance();
         $this->_headers = array();
-
-        $this->_load->helper('url');
     }
 
     /**
@@ -41,35 +38,46 @@ class Output
      */
     public function append($buff)
     {
-        if(empty($this->_output)) {
-            $this->_output = $buff;
+        if(empty($this->_body)) {
+            $this->_body = $buff;
         }
         else {
-            $this->_output .= $buff;
+            $this->_body .= $buff;
         }
     }
 
     /**
-     * Display the final output
+     * Flush all response buffer
      */
-    public function display()
+    public function flush()
     {
         foreach($this->_headers as $header) {
             header($header, true);
         }
-        echo $this->_output;
+        echo $this->_body;
     }
-
+    
+    /**
+     * Add a new header
+     * @param string $header 
+     */
     public function set_header($header)
     {
         $this->_headers[] = $header;
     }
-
+    
+    /**
+     * Redirect the response to specific URL
+     * @param string $url 
+     */
     public function redirect_to($url)
     {
-        $this->set_header('Location: '.abs($url));
+        $this->set_header('Location: '. Kaili\Url::abs($url));
     }
-
+    
+    /**
+     * Redirect the response to the referer URL
+     */
     public function redirect_to_referer()
     {
         $this->set_header('Location: '.Loader::get_instance()->load('request')->referer());
