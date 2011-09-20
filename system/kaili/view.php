@@ -13,7 +13,11 @@ class View
 {
     /**
      * Returns a new View object
-     * @param string $view 
+     * 
+     * @param string $view the name of the view
+     * @param array $data the array of data to send to the view
+     * @param boolean $with_template set a template for this view (default: true)
+     * @return Kaili\View
      */
     public static function factory($view = null, array $data = null, $with_template = true)
     {
@@ -46,55 +50,36 @@ class View
      * @var Template
      */
     public $_template = null;
-
-    /**
-     * @var string
-     */
-    private $_controller;
-
-    /**
-     * @var string
-     */
-    private $_action;
-
     /**
      * @var boolean
      */
     private $_rendered = false;
 
     /**
-     * @var Kaili\Request
+     * Create a new View
+     * 
+     * @param string $file the file of the view
+     * @param array $data the array of data to send to the view
+     * @param boolean $with_template set a template for this view (default: true)
+     * @return Kaili\View
      */
-    private $_request;
-
-    /**
-     * Create new view
-     * @param string $controller the name of the controller
-     * @param string $action the name of the action
-     * @param string $template the name of the page template
-     */
-    public function __construct($with_template = true)
+    public function __construct($file = null, array $data = null, $with_template = true)
     {
-        $this->_request = Request::current();
-
-        $this->_controller = $this->_request->get('controller');
-        $this->_action = $this->_request->get('action');
         if($with_template) {
             $this->_template = Loader::get_instance()->load('template');
         }
+       $this->render($file, $data);
     }
 
     /**
      * Render an action view
      * 
-     * @param array $vars an array of variables to extract and use into action view
-     * @param string $view the name of the view to render
-     * @param boolean $as_data true if want return the content as data
-     * @param boolean $with_template true (default) if view is rendered with template
+     * @param string $file the name of the view to render
+     * @param array $data an array of variables to extract and use into action view
      * @return mixed if the second paramater is true, returns the content as data, 
      *      else returns null.
      */
-    public function render($vars = array(), $view = null, $as_data = false, $with_template = true)
+    public function render($vars = array(), $view = null)
     {
         // if template is null or with_template is false, render view without template
         if($this->_template != null && $with_template) {
