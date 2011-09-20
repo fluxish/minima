@@ -24,19 +24,12 @@ class Controller
      */
     private $response;
     
-    
-    /**
-     * @var View
-     */
-    protected $view;
-    
     /**
      *
      * @param Kaili\Request $request the request object 
      */
     function __construct(Kaili\Request $request)
     {
-        $this->view = new View();
         
         $this->request = $request;
         $this->response = new Kaili\Response();
@@ -44,17 +37,6 @@ class Controller
 
     function __destruct()
     {
-        if(!$this->view->is_rendered())
-            $this->view->render();
-    }
-
-    /**
-     * Set a view object
-     * @param string $view a View object
-     */
-    function set_view($view)
-    {
-        $this->view = $view;
     }
 
     /**
