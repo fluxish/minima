@@ -7,10 +7,11 @@ namespace Kaili;
  *
  * This class display an action view
  *
- * @package		Kaili
+ * @package Kaili
  */
 class View
 {
+
     /**
      * Returns a new View object
      * 
@@ -24,7 +25,7 @@ class View
         $request = Request::current();
         $controller = $request->get('controller');
         $action = $request->get('action');
-        
+
         if($view === null) {
             // if view is null and format is html, set view to default action view
             $view = APPLICATION.DS.'views'.DS.$controller.DS.$action;
@@ -42,14 +43,15 @@ class View
             $theme = Loader::get_instance()->load('config')->item('interface_theme');
             $view = ASSETS.DS.'themes'.DS.$theme.DS.'tp'.DS.$view;
         }
-        
+
         return new static($view, $data, $with_template);
     }
-    
+
     /**
      * @var Template
      */
     public $_template = null;
+
     /**
      * @var boolean
      */
@@ -68,44 +70,34 @@ class View
         if($with_template) {
             $this->_template = Loader::get_instance()->load('template');
         }
-       $this->render($file, $data);
+        $this->render($file, $data);
     }
 
     /**
      * Render an action view
      * 
-     * @param string $file the name of the view to render
-     * @param array $data an array of variables to extract and use into action view
-     * @return mixed if the second paramater is true, returns the content as data, 
-     *      else returns null.
+     * @param string $file the file of the view
+     * @param array $data the array of data to send to the view
+     * @return string the code of the view
      */
-    public function render($vars = array(), $view = null)
+    public function render($file = null, array $data = null)
     {
         // if template is null or with_template is false, render view without template
-        if($this->_template != null && $with_template) {
-            $this->_output->set_header('Content-Type: text/html');
+        if($this->_template) {
             ob_start();
-            $this->_template->place_view('content', $vars, $view);
+            $this->_template->place_view('content', $data, $file);
             $this->_template->render();
-            $this->_output->append(ob_get_contents());
+            $code = ob_get_contents();
             ob_end_clean();
         }
         else {
-            $this->_output->set_header('Content-Type: text/html');
-            extract($vars);
-            include($view.EXT);
-        }
-
-        // if as_data is true, save rendered view in a variable and return it
-        if($as_data) {
             ob_start();
             extract($vars);
             include($view.EXT);
-            $data = ob_get_contents();
+            $code = ob_get_contents();
             ob_end_clean();
-
-            return $data;
         }
+
 //        else {
 //            // other formats
 //            $this->_output->set_header('Content-Type: text/'.$format);
@@ -113,6 +105,7 @@ class View
 //            $this->_output->append($formatter->format($vars));
 //        }
         $this->_rendered = true;
+        return $code;
     }
 
     /**
