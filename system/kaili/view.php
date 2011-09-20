@@ -11,7 +11,37 @@ namespace Kaili;
  */
 class View
 {
-
+    /**
+     * Returns a new View object
+     * @param string $view 
+     */
+    public static function factory($view = null, array $data = null, $with_template = true)
+    {
+        $request = Request::current();
+        $controller = $request->get('controller');
+        $action = $request->get('action');
+        
+        if($view === null) {
+            // if view is null and format is html, set view to default action view
+            $view = APPLICATION.DS.'views'.DS.$controller.DS.$action;
+        }
+        else if(file_exists(APPLICATION.DS.'views'.DS.$controller.DS.$view.EXT)) {
+            // else, set view to another view of the same controller, if this view exists
+            $view = APPLICATION.DS.'views'.DS.$controller.DS.$view;
+        }
+        else if(file_exists(APPLICATION.DS.'views'.DS.$view.EXT)) {
+            // else, set view to another view, if exists
+            $view = APPLICATION.DS.'views'.DS.$view;
+        }
+        else {
+            // else, search the view in the tp directory of default theme, and render it
+            $theme = Loader::get_instance()->load('config')->item('interface_theme');
+            $view = ASSETS.DS.'themes'.DS.$theme.DS.'tp'.DS.$view;
+        }
+        
+        return new static($view, $data, $with_template);
+    }
+    
     /**
      * @var Template
      */
@@ -33,14 +63,9 @@ class View
     private $_rendered = false;
 
     /**
-     * @var Request
+     * @var Kaili\Request
      */
     private $_request;
-
-    /**
-     * @var Output
-     */
-    private $_output;
 
     /**
      * Create new view
@@ -50,8 +75,7 @@ class View
      */
     public function __construct($with_template = true)
     {
-        $this->_request = Loader::get_instance()->load('request');
-        $this->_output = Loader::get_instance()->load('output');
+        $this->_request = Request::current();
 
         $this->_controller = $this->_request->get('controller');
         $this->_action = $this->_request->get('action');
@@ -72,60 +96,37 @@ class View
      */
     public function render($vars = array(), $view = null, $as_data = false, $with_template = true)
     {
-        $format = $this->_request->get('format');
-
-        // set view to render
-        if(!$format || $format == 'html') {
-            if($view == null) {
-                // if view is null and format is html, set view to default action view
-                $view = APPLICATION.DS.'views'.DS.$this->_controller.DS.$this->_action;
-            }
-            else if(file_exists(APPLICATION.DS.'views'.DS.$this->_controller.DS.$view.EXT)) {
-                // else, set view to another view of the same controller, if this view exists
-                $view = APPLICATION.DS.'views'.DS.$this->_controller.DS.$view;
-            }
-            else if(file_exists(APPLICATION.DS.'views'.DS.$view.EXT)) {
-                // else, set view to another view, if exists
-                $view = APPLICATION.DS.'views'.DS.$view;
-            }
-            else {
-                // else, search the view in the tp directory of default theme, and render it
-                $theme = Loader::get_instance()->load('config')->item('interface_theme');
-                $view = ASSETS.DS.'themes'.DS.$theme.DS.'tp'.DS.$view;
-            }
-
-            // if template is null or with_template is false, render view without template
-            if($this->_template != null && $with_template) {
-                $this->_output->set_header('Content-Type: text/html');
-                ob_start();
-                $this->_template->place_view('content', $vars, $view);
-                $this->_template->render();
-                $this->_output->append(ob_get_contents());
-                ob_end_clean();
-            }
-            else {
-                $this->_output->set_header('Content-Type: text/html');
-                extract($vars);
-                include($view.EXT);
-            }
-
-            // if as_data is true, save rendered view in a variable and return it
-            if($as_data) {
-                ob_start();
-                extract($vars);
-                include($view.EXT);
-                $data = ob_get_contents();
-                ob_end_clean();
-
-                return $data;
-            }
+        // if template is null or with_template is false, render view without template
+        if($this->_template != null && $with_template) {
+            $this->_output->set_header('Content-Type: text/html');
+            ob_start();
+            $this->_template->place_view('content', $vars, $view);
+            $this->_template->render();
+            $this->_output->append(ob_get_contents());
+            ob_end_clean();
         }
         else {
-            // other formats
-            $this->_output->set_header('Content-Type: text/'.$format);
-            $formatter = new Formatter($format);
-            $this->_output->append($formatter->format($vars));
+            $this->_output->set_header('Content-Type: text/html');
+            extract($vars);
+            include($view.EXT);
         }
+
+        // if as_data is true, save rendered view in a variable and return it
+        if($as_data) {
+            ob_start();
+            extract($vars);
+            include($view.EXT);
+            $data = ob_get_contents();
+            ob_end_clean();
+
+            return $data;
+        }
+//        else {
+//            // other formats
+//            $this->_output->set_header('Content-Type: text/'.$format);
+//            $formatter = new Formatter($format);
+//            $this->_output->append($formatter->format($vars));
+//        }
         $this->_rendered = true;
     }
 
