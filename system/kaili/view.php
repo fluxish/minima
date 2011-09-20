@@ -15,12 +15,12 @@ class View
     /**
      * Returns a new View object
      * 
-     * @param string $view the name of the view
      * @param array $data the array of data to send to the view
+     * @param string $view the name of the view
      * @param boolean $with_template set a template for this view (default: true)
      * @return Kaili\View
      */
-    public static function factory($view = null, array $data = null, $with_template = true)
+    public static function factory(array $data = null, $view = null, $with_template = true)
     {
         $request = Request::current();
         $controller = $request->get('controller');
@@ -44,7 +44,7 @@ class View
             $view = ASSETS.DS.'themes'.DS.$theme.DS.'tp'.DS.$view;
         }
 
-        return new static($view, $data, $with_template);
+        return new static($data, $view, $with_template);
     }
 
     /**
@@ -60,12 +60,12 @@ class View
     /**
      * Create a new View
      * 
-     * @param string $file the file of the view
      * @param array $data the array of data to send to the view
+     * @param string $file the file of the view
      * @param boolean $with_template set a template for this view (default: true)
      * @return Kaili\View
      */
-    public function __construct($file = null, array $data = null, $with_template = true)
+    public function __construct(array $data = null, $file = null, $with_template = true)
     {
         if($with_template) {
             $this->_template = Loader::get_instance()->load('template');
@@ -76,27 +76,17 @@ class View
     /**
      * Render an action view
      * 
-     * @param string $file the file of the view
      * @param array $data the array of data to send to the view
+     * @param string $file the file of the view
      * @return string the code of the view
      */
-    public function render($file = null, array $data = null)
+    public function render(array $data = null, $file = null)
     {
-        // if template is null or with_template is false, render view without template
-        if($this->_template !== null) {
-            ob_start();
-            $this->_template->place_view('content', $data, $file);
-            $this->_template->render();
-            $code = ob_get_contents();
-            ob_end_clean();
-        }
-        else {
-            ob_start();
-            extract($vars);
-            include($view.EXT);
-            $code = ob_get_contents();
-            ob_end_clean();
-        }
+        ob_start();
+        $this->_template->place_view('content', $data, $file);
+        $this->_template->render();
+        $code = ob_get_contents();
+        ob_end_clean();
 
 //        else {
 //            // other formats
@@ -107,6 +97,24 @@ class View
         $this->_rendered = true;
         return $code;
     }
+    
+    /**
+     * Render an action view without a template
+     * 
+     * @param array $data the array of data to send to the view
+     * @param string $file the file of the view
+     * @return string the code of the view
+     */
+    public function render_no_template(array $data = null, $file = null)
+    {
+        ob_start();
+        extract($vars);
+        include($view.EXT);
+        $code = ob_get_contents();
+        ob_end_clean();
+        
+        return $code;
+    }
 
     /**
      * Check if the action view is rendered.
@@ -115,14 +123,6 @@ class View
     public function is_rendered()
     {
         return $this->_rendered;
-    }
-
-    /**
-     * Force the view to no render itself
-     */
-    public function no_render()
-    {
-        $this->_rendered = true;
     }
 
     /**
