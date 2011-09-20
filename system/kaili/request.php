@@ -15,7 +15,7 @@ class Request
      * The current Request object
      * @var Kaili\Request
      */
-    private static $_current;
+    private static $_current = null;
     
     
    /**
@@ -24,15 +24,16 @@ class Request
     */
     public static function current()
     {
-        return static::$_current;
+        return self::$_current;
     }
-
-    /**
-     * Loader instance;
-     * @var Kaili\Loader 
-     */
-    private $_loader;
-
+    
+    public static function factory()
+    {
+        $request = new Request();
+        static::$_current = $request;
+        return $request;
+    }
+    
     /**
      * Array of all parameters of a requested URL
      * @var array
@@ -45,9 +46,6 @@ class Request
      */
     public function __construct()
     {
-        static::$_current = $this;
-        $this->_loader = Loader::get_instance();
-
         $this->_remove_magic_quotes();
         $this->_unregister_globals();
 
@@ -76,7 +74,7 @@ class Request
 
         // call action of the controller
         if((int) method_exists($controller, $action)) {
-            call_user_func_array(array($controller_obj, $action), array_values($this->get()));
+            $controller_obj->{$action}(array_values($this->get()));
         }
 
         // execute a post-controller call function

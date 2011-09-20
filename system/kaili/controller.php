@@ -16,13 +16,13 @@ class Controller
      * The Request object
      * @var Kaili\Request
      */
-    private $request;
+    protected $request;
     
     /**
      * The Response object
      * @var Kaili\Response
      */
-    private $response;
+    protected $response;
     
     /**
      * Create a new Controller object
@@ -35,15 +35,7 @@ class Controller
 
     function __destruct()
     {
-    }
-
-    /**
-     * Return a loaded library (if exists) as attribute of this controller.
-     * @param string $lib the name of the loaded library (with lower capital letter)
-     */
-    function __get($lib)
-    {
-        return Loader::get_instance()->load($lib);
+        $this->response->flush();
     }
 
 }

@@ -62,13 +62,13 @@ class View
      */
     public function __construct(array $data = null, $file = null, $with_template = true)
     {
-        if($with_template) {
-            $this->_template = Loader::get_instance()->load('template');
-            $this->render($data, $file);
-        }
-        else{
-            $this->render_no_template($data, $file);
-        }
+//        if($with_template) {
+//            $this->_template = Loader::get_instance()->load('template');
+//            $this->render($data, $file);
+//        }
+//        else{
+//            $this->render_no_template($data, $file);
+//        }
     }
 
     /**
@@ -80,6 +80,7 @@ class View
      */
     public function render(array $data = null, $file = null)
     {
+        $this->_template = Loader::get_instance()->load('template');
         ob_start();
         $this->_template->place_view('content', $data, $file);
         $this->_template->render();
