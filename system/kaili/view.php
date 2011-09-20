@@ -53,11 +53,6 @@ class View
     public $_template = null;
 
     /**
-     * @var boolean
-     */
-    private $_rendered = false;
-
-    /**
      * Create a new View
      * 
      * @param array $data the array of data to send to the view
@@ -117,15 +112,6 @@ class View
         ob_end_clean();
         
         return $code;
-    }
-
-    /**
-     * Check if the action view is rendered.
-     * @return boolean true if the action view is really rendered, false otherwise.
-     */
-    public function is_rendered()
-    {
-        return $this->_rendered;
     }
 
     /**
