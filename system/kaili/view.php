@@ -83,7 +83,7 @@ class View
     public function render($file = null, array $data = null)
     {
         // if template is null or with_template is false, render view without template
-        if($this->_template) {
+        if($this->_template !== null) {
             ob_start();
             $this->_template->place_view('content', $data, $file);
             $this->_template->render();
