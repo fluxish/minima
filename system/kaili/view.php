@@ -92,7 +92,6 @@ class View
 //            $formatter = new Formatter($format);
 //            $this->_output->append($formatter->format($vars));
 //        }
-        $this->_rendered = true;
         return $code;
     }
     

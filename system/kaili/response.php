@@ -50,6 +50,9 @@ class Response
      */
     public function flush()
     {
+        // TODO: manage various content types
+        $this->set_header('Content-Type: text/html');
+        
         foreach($this->_headers as $header) {
             header($header, true);
         }
