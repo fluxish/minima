@@ -3,9 +3,8 @@
 namespace Kaili;
 
 /**
- * Kaili Response Class
- *
- * Manage the response process
+ * Response Class
+ * The Response class manage the response process
  *
  * @package Kaili
  */
@@ -33,8 +32,8 @@ class Response
     }
 
     /**
-     * Append a buffer to final output
-     * @param string a buffer
+     * Append content to response body
+     * @param string $buff the content to add
      */
     public function append($buff)
     {

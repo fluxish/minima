@@ -13,6 +13,19 @@ class Controller
 {
 
     /**
+     * The Request object
+     * @var Kaili\Request
+     */
+    private $request;
+    
+    /**
+     * The Response object
+     * @var Kaili\Response
+     */
+    private $response;
+    
+    
+    /**
      * @var View
      */
     protected $view;
@@ -21,7 +34,6 @@ class Controller
      * @var Loader
      */
     protected $load;
-    protected $_load;
     
     /**
      *
@@ -30,9 +42,10 @@ class Controller
     function __construct(Kaili\Request $request)
     {
         $this->load = Loader::get_instance();
-        $this->_load = $this->load;
-
         $this->view = new View();
+        
+        $this->request = $request;
+        $this->response = new Kaili\Response();
     }
 
     function __destruct()
