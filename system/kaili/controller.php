@@ -28,7 +28,7 @@ class Controller
      *
      * @param Kaili\Request $request the request object 
      */
-    function __construct(Kaili\Request $request)
+    function __construct(\Kaili\Request $request)
     {
         
         $this->request = $request;

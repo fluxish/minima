@@ -66,8 +66,18 @@ class Request
         if(is_callable($pre_controller))
             $pre_controller();
 
-        // call requested controller
-        $this->_loader->controller($this->get('controller'), $this->get('action'), $this->get());
+        // get controller and action names
+        $controller = $this->get('controller');
+        $action = strtolower($this->get('action'));
+
+        // create the new controller
+        $controller = ucfirst($controller);
+        $controller_obj = new $controller();
+
+        // call action of the controller
+        if((int) method_exists($controller, $action)) {
+            call_user_func_array(array($controller_obj, $action), array_values($url_segments));
+        }
 
         // execute a post-controller call function
         if(is_callable($post_controller))
