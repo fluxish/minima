@@ -28,23 +28,23 @@ class View
 
         if($view === null) {
             // if view is null and format is html, set view to default action view
-            $view = APPLICATION.DS.'views'.DS.$controller.DS.$action;
+            $file = APPLICATION.DS.'views'.DS.$controller.DS.$action.EXT;
         }
         else if(file_exists(APPLICATION.DS.'views'.DS.$controller.DS.$view.EXT)) {
             // else, set view to another view of the same controller, if this view exists
-            $view = APPLICATION.DS.'views'.DS.$controller.DS.$view;
+            $file = APPLICATION.DS.'views'.DS.$controller.DS.$view.EXT;
         }
         else if(file_exists(APPLICATION.DS.'views'.DS.$view.EXT)) {
             // else, set view to another view, if exists
-            $view = APPLICATION.DS.'views'.DS.$view;
+            $file = APPLICATION.DS.'views'.DS.$view.EXT;
         }
         else {
             // else, search the view in the tp directory of default theme, and render it
             $theme = Loader::get_instance()->load('config')->item('interface_theme');
-            $view = ASSETS.DS.'themes'.DS.$theme.DS.'tp'.DS.$view;
+            $file = ASSETS.DS.'themes'.DS.$theme.DS.'tp'.DS.$view.EXT;
         }
 
-        return new static($data, $view, $with_template);
+        return new static($data, $file, $with_template);
     }
     
     
@@ -80,14 +80,13 @@ class View
      * Render an action view
      * 
      * @param array $data the array of data to send to the view
-     * @param string $file the file of the view
      * @return string the code of the view
      */
-    public function render(array $data = null, $file = null)
+    public function render(array $data = null)
     {
         $this->_template = Loader::get_instance()->load('template');
         ob_start();
-        $this->_template->place_view('content', $data, $file);
+        $this->_template->place_view('content', $data, $this->_file);
         $this->_template->render();
         $code = ob_get_contents();
         ob_end_clean();
@@ -108,11 +107,11 @@ class View
      * @param string $file the file of the view
      * @return string the code of the view
      */
-    public function render_no_template(array $data = null, $file = null)
+    public function render_no_template(array $data = null)
     {
         ob_start();
-        extract($vars);
-        include($view.EXT);
+        if($data !== null) extract($vars);
+        include($this->_file);
         $code = ob_get_contents();
         ob_end_clean();
         
