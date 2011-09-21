@@ -74,17 +74,10 @@ class View
      * @param boolean $with_template set a template for this view (default: true)
      * @return Kaili\View
      */
-    public function __construct(array $data = null, $file = null, $with_template = true)
+    public function __construct(array $data = null, $file = null)
     {
         $this->_data = $data;
         $this->_file = $file;
-        if($with_template) {
-            $this->_template = Loader::get_instance()->load('template');
-//            $this->render($data, $file);
-        }
-//        else{
-//            $this->render_no_template($data, $file);
-//        }
     }
 
     /**
@@ -95,7 +88,10 @@ class View
      */
     public function render()
     {
-        $this->_template = Loader::get_instance()->load('template');
+        // associates a Template object
+        if($this->_template === null)
+            $this->_template = Loader::get_instance()->load('template');
+        
         ob_start();
         $this->_template->place_view('content', $this->_data, $this->_file);
         $this->_template->render();
