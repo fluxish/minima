@@ -48,6 +48,17 @@ class View
     }
     
     
+    /**
+     * The path of the view
+     * @var string
+     */
+    private $_file = null;
+    
+    /**
+     * An array of data to extract in the view
+     * @var array
+     */
+    private $_data = null;
 
     /**
      * The Template object associated to this view
@@ -82,11 +93,11 @@ class View
      * @param array $data the array of data to send to the view
      * @return string the code of the view
      */
-    public function render(array $data = null)
+    public function render()
     {
         $this->_template = Loader::get_instance()->load('template');
         ob_start();
-        $this->_template->place_view('content', $data, $this->_file);
+        $this->_template->place_view('content', $this->_data, $this->_file);
         $this->_template->render();
         $code = ob_get_contents();
         ob_end_clean();
@@ -107,10 +118,10 @@ class View
      * @param string $file the file of the view
      * @return string the code of the view
      */
-    public function render_no_template(array $data = null)
+    public function render_no_template()
     {
         ob_start();
-        if($data !== null) extract($vars);
+        if($this->_data !== null) extract($this->_data);
         include($this->_file);
         $code = ob_get_contents();
         ob_end_clean();
@@ -120,9 +131,9 @@ class View
 
     /**
      * Set a template object
-     * @param Template $template a Template object
+     * @param Kaili\Template $template a Template object
      */
-    function set_template($template)
+    function set_template(\Kaili\Template $template)
     {
         $this->_template = $template;
     }
