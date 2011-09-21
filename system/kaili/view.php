@@ -46,8 +46,11 @@ class View
 
         return new static($data, $view, $with_template);
     }
+    
+    
 
     /**
+     * The Template object associated to this view
      * @var Template
      */
     public $_template = null;
@@ -62,10 +65,12 @@ class View
      */
     public function __construct(array $data = null, $file = null, $with_template = true)
     {
-//        if($with_template) {
-//            $this->_template = Loader::get_instance()->load('template');
+        $this->_data = $data;
+        $this->_file = $file;
+        if($with_template) {
+            $this->_template = Loader::get_instance()->load('template');
 //            $this->render($data, $file);
-//        }
+        }
 //        else{
 //            $this->render_no_template($data, $file);
 //        }
