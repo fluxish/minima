@@ -128,6 +128,24 @@ class View
         
         return $code;
     }
+    
+    /**
+     * Set the file of the view
+     * @param string $file 
+     */
+    public function set_file($file)
+    {
+        $this->_file = $file;
+    }
+    
+    /**
+     * Set the data of the view
+     * @param array $data 
+     */
+    public function set_data(array $data)
+    {
+        $this->_data = $data;
+    }
 
     /**
      * Set a template object
