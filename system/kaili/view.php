@@ -20,7 +20,7 @@ class View
      * @param boolean $with_template set a template for this view (default: true)
      * @return Kaili\View
      */
-    public static function factory(array $data = null, $view = null, $with_template = true)
+    public static function factory(array $data = null, $view = null)
     {
         $request = Request::current();
         $controller = $request->get('controller');
@@ -47,7 +47,6 @@ class View
         return new static($data, $file);
     }
     
-    
     /**
      * The path of the view
      * @var string
@@ -73,8 +72,8 @@ class View
     private $_place_prefix = 'place_';
 
     /**
-     * The Template object associated to this view
-     * @var Template
+     * A view object tha behaves as template
+     * @var Kaili\View
      */
     public $_template = null;
 
@@ -91,6 +90,10 @@ class View
         $this->_data = $data;
         $this->_file = $file;
         $this->_places = array();
+        
+        // TEMPORARY VARIABLES
+        $this->config = Loader::get_instance()->load('config');
+        $this->session = Loader::get_instance()->load('session');
     }
 
     /**
@@ -103,11 +106,14 @@ class View
     {
         // associates a Template object
         if($this->_template === null)
-            $this->_template = Loader::get_instance()->load('template');
+            $this->_template = View::factory(null, Loader::get_instance()->load('config')->item('main_template'));
         
         ob_start();
+        
+        if(count($this->_places) !== 0) extract($this->_places);
         $this->_template->place_view('content', $this->_data, $this->_file);
-        $this->_template->render();
+        
+        echo $this->_template->render_no_template();
         $code = ob_get_contents();
         ob_end_clean();
 
@@ -131,6 +137,7 @@ class View
     {
         ob_start();
         if($this->_data !== null) extract($this->_data);
+        if(count($this->_places) !== 0) extract($this->_places);
         include($this->_file);
         $code = ob_get_contents();
         ob_end_clean();
@@ -147,6 +154,23 @@ class View
     public function place($name, $code)
     {
         $this->_places[$this->_place_prefix.$name] = $code;
+    }
+    
+    public function place_view($name, $view, $data = null)
+    {
+        // temporary rendering without a template
+        if($view instanceof Kaili\View){
+            $code = $view->render_no_template();
+        }
+        else{
+            $code = View::factory($view, $data)->render_no_template();
+        }
+        $this->place($name, $code);
+    }
+    
+    public function place_template($view, $data = null)
+    {
+        echo View::factory($data, $view)->render_no_template();
     }
     
     /**
