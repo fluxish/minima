@@ -86,20 +86,20 @@ class Template
         // set view to render
         if(file_exists(APPLICATION.DS.'views'.DS.$view.EXT)){
             // if null, set view to default action view
-            $view = APPLICATION.DS.'views'.DS.$view;
+            $view = APPLICATION.DS.'views'.DS.$view.EXT;
         }
         else if(file_exists(APPLICATION.DS.'views'.DS.$this->_controller.$view.EXT)){
             // else, set view to another view of the same controller, if this view exists
-            $view = APPLICATION.DS.'views'.DS.$this->_controller.$view;
+            $view = APPLICATION.DS.'views'.DS.$this->_controller.$view.EXT;
         }
         else if(file_exists(APPLICATION.DS.'views'.DS.$view.EXT)){
             // else, set view to another view, if exists
-            $view = APPLICATION.DS.'views'.DS.$view;
+            $view = APPLICATION.DS.'views'.DS.$view.EXT;
         }
         else{
             // else, search the view in the tp directory of default theme, and render founded view
             $theme = Loader::get_instance()->load('config')->item('interface_theme');
-            $view = ASSETS.DS.'themes'.DS.$theme.DS.'tp'.DS.$view;
+            $view = ASSETS.DS.'themes'.DS.$theme.DS.'tp'.DS.$view.EXT;
         }
         $this->_render_place($place_name, $vars, $view);
     }
@@ -184,12 +184,12 @@ class Template
         
         if($place_name != null){
             ob_start();
-            include($view.EXT);
+            include($view);
             $this->_places['place_'.$place_name] .= ob_get_contents() . "\n";
             ob_end_clean();
         }
         else{
-            include($view.EXT);
+            include($view);
         }
     }
 }
