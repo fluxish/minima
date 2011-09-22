@@ -22,13 +22,14 @@ class Response
      * @var array
      */
     private $_headers;
-    
+
     /**
      * Create a new Response object
      */
     public function __construct()
     {
         $this->_headers = array();
+        $this->_body = '';
     }
 
     /**
@@ -37,12 +38,10 @@ class Response
      */
     public function append($buff)
     {
-        if(empty($this->_body)) {
-            $this->_body = $buff;
+        if($buff instanceof Kaili\View) {
+            $buff = $buff->render();
         }
-        else {
-            $this->_body .= $buff;
-        }
+        $this->_body .= $buff;
     }
 
     /**
@@ -52,13 +51,13 @@ class Response
     {
         // TODO: manage various content types
         $this->set_header('Content-Type: text/html');
-        
+
         foreach($this->_headers as $header) {
             header($header, true);
         }
         echo $this->_body;
     }
-    
+
     /**
      * Add a new header
      * @param string $header 
@@ -67,16 +66,16 @@ class Response
     {
         $this->_headers[] = $header;
     }
-    
+
     /**
      * Redirect the response to specific URL
      * @param string $url 
      */
     public function redirect_to($url)
     {
-        $this->set_header('Location: '. Kaili\Url::abs($url));
+        $this->set_header('Location: '.Kaili\Url::abs($url));
     }
-    
+
     /**
      * Redirect the response to the referer URL
      */

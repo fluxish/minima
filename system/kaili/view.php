@@ -44,7 +44,7 @@ class View
             $file = ASSETS.DS.'themes'.DS.$theme.DS.'tp'.DS.$view.EXT;
         }
 
-        return new static($data, $file, $with_template);
+        return new static($data, $file);
     }
     
     
