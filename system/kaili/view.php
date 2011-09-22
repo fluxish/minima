@@ -15,13 +15,20 @@ class View
     /**
      * Returns a new View object
      * 
+     * @param string|array $view the name of the view or the array of data to pass 
+     *      a default view
      * @param array $data the array of data to send to the view
-     * @param string $view the name of the view
-     * @param boolean $with_template set a template for this view (default: true)
-     * @return Kaili\View
+     * @return View
      */
-    public static function factory(array $data = null, $view = null)
+    public static function factory($view = null, array $data = null)
     {
+        // check if the first argument is an array
+        if(is_array($view)){
+            $data = $view;
+            $view = null;
+        }
+        
+        // create the View
         $request = Request::current();
         $controller = $request->get('controller');
         $action = $request->get('action');
@@ -44,8 +51,9 @@ class View
             $file = ASSETS.DS.'themes'.DS.$theme.DS.'tp'.DS.$view.EXT;
         }
 
-        return new static($data, $file);
+        return new static($file, $data);
     }
+    
     
     /**
      * The path of the view
@@ -72,23 +80,16 @@ class View
     private $_place_prefix = 'place_';
 
     /**
-     * A view object tha behaves as template
-     * @var Kaili\View
-     */
-    public $_template = null;
-
-    /**
      * Create a new View
      * 
      * @param array $data the array of data to send to the view
      * @param string $file the file of the view
-     * @param boolean $with_template set a template for this view (default: true)
      * @return Kaili\View
      */
-    public function __construct(array $data = null, $file = null)
+    public function __construct($file = null, array $data = null)
     {
-        $this->_data = $data;
         $this->_file = $file;
+        $this->_data = $data;
         $this->_places = array();
         
         // TEMPORARY VARIABLES
@@ -104,18 +105,9 @@ class View
      */
     public function render()
     {
-        // associates a Template object
-        if($this->_template === null)
-            $this->_template = View::factory(null, Loader::get_instance()->load('config')->item('main_template'));
-        
-        ob_start();
-        
-        if(count($this->_places) !== 0) extract($this->_places);
-        $this->_template->place_view('content', $this->_data, $this->_file);
-        
-        echo $this->_template->render_no_template();
-        $code = ob_get_contents();
-        ob_end_clean();
+        $template = View::factory(Loader::get_instance()->load('config')->item('main_template'));
+        $template->place('content', $this->render_no_template());
+        $code = $template->render_no_template();
 
 //        else {
 //            // other formats
@@ -146,7 +138,7 @@ class View
     }
     
     /**
-     * Add html code in a "place" and assign content to place_[nameplace] variable.
+     * Add html code in a "place" and assign content to place_[name_place] variable
      * 
      * @param string $name the name of the place
      * @param string $code the html code to include in the place
@@ -156,9 +148,14 @@ class View
         $this->_places[$this->_place_prefix.$name] = $code;
     }
     
+    /**
+     * Add a rendered view in a "place" and assign content to plac_[place_name] variable
+     * @param $name the name of the place
+     * @param string|View $view the name of the view or a View object 
+     * @param array $data the array of data to send to the view
+     */
     public function place_view($name, $view, $data = null)
     {
-        // temporary rendering without a template
         if($view instanceof Kaili\View){
             $code = $view->render_no_template();
         }
@@ -168,9 +165,14 @@ class View
         $this->place($name, $code);
     }
     
-    public function place_template($view, $data = null)
+    /**
+     * Place a template and render it
+     * @param string $template the name of the template
+     * @param array $data the array of data to send to the view
+     */
+    public function place_template($template, $data = null)
     {
-        echo View::factory($data, $view)->render_no_template();
+        echo View::factory($template, $data)->render_no_template();
     }
     
     /**
@@ -199,6 +201,32 @@ class View
     {
         $this->_template = $template;
     }
+    
+//     /**
+//     * Executes an action and add the view in a "place" and assign content 
+//     * to place_nameplace variable.
+//     * 
+//     * @param string $place_name the name of the place
+//     * @param array $path an array with controller and action
+//     */
+//    public function place_action($place_name, $path = array())
+//    {
+//        if(Request::current()->get('format') == 'html'){
+//            $route = array();
+//            include(APPLICATION.DS.'config'.DS.'routes.php');
+//            
+//            if(isset($path['controller'])) $controller = $path['controller'];
+//            else $controller = $route['default_controller'];
+//            
+//            if(isset($path['action'])) $action = $path['action'];
+//            else $action = $route['default_action'];
+//            
+//            ob_start();
+//            Loader::get_instance()->controller($controller, $action, array());
+//            $this->_places['place_'.$place_name] = ob_get_contents();
+//            ob_end_clean();
+//        }
+//    }
 
 }
 
