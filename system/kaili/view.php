@@ -59,6 +59,18 @@ class View
      * @var array
      */
     private $_data = null;
+    
+    /**
+     * Array of all places in the view
+     * @var array
+     */
+    private $_places = null;
+    
+    /**
+     * The prefix of place's name
+     * @var string
+     */
+    private $_place_prefix = 'place_';
 
     /**
      * The Template object associated to this view
@@ -78,6 +90,7 @@ class View
     {
         $this->_data = $data;
         $this->_file = $file;
+        $this->_places = array();
     }
 
     /**
@@ -123,6 +136,17 @@ class View
         ob_end_clean();
         
         return $code;
+    }
+    
+    /**
+     * Add html code in a "place" and assign content to place_[nameplace] variable.
+     * 
+     * @param string $name the name of the place
+     * @param string $code the html code to include in the place
+     */
+    public function place($name, $code)
+    {
+        $this->_places[$this->_place_prefix.$name] = $code;
     }
     
     /**

@@ -74,14 +74,14 @@ class Template
     }
     
     /**
-     * Add a view in a "place" and assign content to place_nameplace variable.
+     * Add html code in a "place" and assign content to place_[nameplace] variable.
      * 
      * @param string $place_name the name of the place, or null to include 
      *      in place of function call
      * @param array $vars an array of variables to extract in the view
      * @param string $view the path of the view
      */
-    public function place($place_name = null, $vars = null, $view = null)
+    public function place($place_name = null, $code = null)
     {
         // set view to render
         if(file_exists(APPLICATION.DS.'views'.DS.$view.EXT)){
