@@ -27,6 +27,10 @@ class Request
         return self::$_current;
     }
     
+    /**
+     * Create a new Request object
+     * @return Kaili\Request 
+     */
     public static function factory()
     {
         $request = new Request();

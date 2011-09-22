@@ -24,9 +24,8 @@ $post_call = function() {
 //            Logger::get('log1')->info($elapsed);
         };
 
-// Initialize the Loader
-$loader = Loader::get_instance();
-$loader->register();
+// Initialize the Loader and register autoloader
+Loader::get_instance()->register();
 
 // Initialize Request object to handle the request
 \Kaili\Request::factory()->handle($pre_call, $post_call);

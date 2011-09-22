@@ -50,7 +50,7 @@ class Response
     public function flush()
     {
         // TODO: manage various content types
-        $this->set_header('Content-Type: text/html');
+        $this->set_content_type('text/html');
 
         foreach($this->_headers as $header) {
             header($header, true);
@@ -66,7 +66,16 @@ class Response
     {
         $this->_headers[] = $header;
     }
-
+    
+    /**
+     * Set the content-type of the response
+     * @param string $content_type
+     */
+    public function set_content_type($content_type)
+    {
+        $this->_headers[] = 'Content-Type: '.$content_type;
+    }
+    
     /**
      * Redirect the response to specific URL
      * @param string $url 
