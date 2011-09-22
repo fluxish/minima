@@ -13,46 +13,29 @@ class Controller
 {
 
     /**
-     * @var View
+     * The Request object
+     * @var Kaili\Request
      */
-    protected $view;
-
+    protected $request;
+    
     /**
-     * @var Loader
+     * The Response object
+     * @var Kaili\Response
      */
-    protected $load;
-    protected $_load;
-
+    protected $response;
+    
+    /**
+     * Create a new Controller object
+     */
     function __construct()
     {
-        $this->load = Loader::get_instance();
-        $this->_load = $this->load;
-
-        $this->view = new View();
+        $this->request = Request::current();
+        $this->response = new \Kaili\Response();
     }
 
     function __destruct()
     {
-        if(!$this->view->is_rendered())
-            $this->view->render();
-    }
-
-    /**
-     * Set a view object
-     * @param string $view a View object
-     */
-    function set_view($view)
-    {
-        $this->view = $view;
-    }
-
-    /**
-     * Return a loaded library (if exists) as attribute of this controller.
-     * @param string $lib the name of the loaded library (with lower capital letter)
-     */
-    function __get($lib)
-    {
-        return $this->load->load($lib);
+        $this->response->flush();
     }
 
 }

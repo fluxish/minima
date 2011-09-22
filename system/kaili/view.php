@@ -7,150 +7,147 @@ namespace Kaili;
  *
  * This class display an action view
  *
- * @package		Kaili
+ * @package Kaili
  */
 class View
 {
 
     /**
+     * Returns a new View object
+     * 
+     * @param array $data the array of data to send to the view
+     * @param string $view the name of the view
+     * @param boolean $with_template set a template for this view (default: true)
+     * @return Kaili\View
+     */
+    public static function factory(array $data = null, $view = null, $with_template = true)
+    {
+        $request = Request::current();
+        $controller = $request->get('controller');
+        $action = $request->get('action');
+
+        if($view === null) {
+            // if view is null and format is html, set view to default action view
+            $file = APPLICATION.DS.'views'.DS.$controller.DS.$action.EXT;
+        }
+        else if(file_exists(APPLICATION.DS.'views'.DS.$controller.DS.$view.EXT)) {
+            // else, set view to another view of the same controller, if this view exists
+            $file = APPLICATION.DS.'views'.DS.$controller.DS.$view.EXT;
+        }
+        else if(file_exists(APPLICATION.DS.'views'.DS.$view.EXT)) {
+            // else, set view to another view, if exists
+            $file = APPLICATION.DS.'views'.DS.$view.EXT;
+        }
+        else {
+            // else, search the view in the tp directory of default theme, and render it
+            $theme = Loader::get_instance()->load('config')->item('interface_theme');
+            $file = ASSETS.DS.'themes'.DS.$theme.DS.'tp'.DS.$view.EXT;
+        }
+
+        return new static($data, $file);
+    }
+    
+    
+    /**
+     * The path of the view
+     * @var string
+     */
+    private $_file = null;
+    
+    /**
+     * An array of data to extract in the view
+     * @var array
+     */
+    private $_data = null;
+
+    /**
+     * The Template object associated to this view
      * @var Template
      */
     public $_template = null;
 
     /**
-     * @var string
+     * Create a new View
+     * 
+     * @param array $data the array of data to send to the view
+     * @param string $file the file of the view
+     * @param boolean $with_template set a template for this view (default: true)
+     * @return Kaili\View
      */
-    private $_controller;
-
-    /**
-     * @var string
-     */
-    private $_action;
-
-    /**
-     * @var boolean
-     */
-    private $_rendered = false;
-
-    /**
-     * @var Request
-     */
-    private $_request;
-
-    /**
-     * @var Output
-     */
-    private $_output;
-
-    /**
-     * Create new view
-     * @param string $controller the name of the controller
-     * @param string $action the name of the action
-     * @param string $template the name of the page template
-     */
-    public function __construct($with_template = true)
+    public function __construct(array $data = null, $file = null)
     {
-        $this->_request = Loader::get_instance()->load('request');
-        $this->_output = Loader::get_instance()->load('output');
-
-        $this->_controller = $this->_request->get('controller');
-        $this->_action = $this->_request->get('action');
-        if($with_template) {
-            $this->_template = Loader::get_instance()->load('template');
-        }
+        $this->_data = $data;
+        $this->_file = $file;
     }
 
     /**
      * Render an action view
      * 
-     * @param array $vars an array of variables to extract and use into action view
-     * @param string $view the name of the view to render
-     * @param boolean $as_data true if want return the content as data
-     * @param boolean $with_template true (default) if view is rendered with template
-     * @return mixed if the second paramater is true, returns the content as data, 
-     *      else returns null.
+     * @param array $data the array of data to send to the view
+     * @return string the code of the view
      */
-    public function render($vars = array(), $view = null, $as_data = false, $with_template = true)
+    public function render()
     {
-        $format = $this->_request->get('format');
+        // associates a Template object
+        if($this->_template === null)
+            $this->_template = Loader::get_instance()->load('template');
+        
+        ob_start();
+        $this->_template->place_view('content', $this->_data, $this->_file);
+        $this->_template->render();
+        $code = ob_get_contents();
+        ob_end_clean();
 
-        // set view to render
-        if(!$format || $format == 'html') {
-            if($view == null) {
-                // if view is null and format is html, set view to default action view
-                $view = APPLICATION.DS.'views'.DS.$this->_controller.DS.$this->_action;
-            }
-            else if(file_exists(APPLICATION.DS.'views'.DS.$this->_controller.DS.$view.EXT)) {
-                // else, set view to another view of the same controller, if this view exists
-                $view = APPLICATION.DS.'views'.DS.$this->_controller.DS.$view;
-            }
-            else if(file_exists(APPLICATION.DS.'views'.DS.$view.EXT)) {
-                // else, set view to another view, if exists
-                $view = APPLICATION.DS.'views'.DS.$view;
-            }
-            else {
-                // else, search the view in the tp directory of default theme, and render it
-                $theme = Loader::get_instance()->load('config')->item('interface_theme');
-                $view = ASSETS.DS.'themes'.DS.$theme.DS.'tp'.DS.$view;
-            }
-
-            // if template is null or with_template is false, render view without template
-            if($this->_template != null && $with_template) {
-                $this->_output->set_header('Content-Type: text/html');
-                ob_start();
-                $this->_template->place_view('content', $vars, $view);
-                $this->_template->render();
-                $this->_output->append(ob_get_contents());
-                ob_end_clean();
-            }
-            else {
-                $this->_output->set_header('Content-Type: text/html');
-                extract($vars);
-                include($view.EXT);
-            }
-
-            // if as_data is true, save rendered view in a variable and return it
-            if($as_data) {
-                ob_start();
-                extract($vars);
-                include($view.EXT);
-                $data = ob_get_contents();
-                ob_end_clean();
-
-                return $data;
-            }
-        }
-        else {
-            // other formats
-            $this->_output->set_header('Content-Type: text/'.$format);
-            $formatter = new Formatter($format);
-            $this->_output->append($formatter->format($vars));
-        }
-        $this->_rendered = true;
+//        else {
+//            // other formats
+//            $this->_output->set_header('Content-Type: text/'.$format);
+//            $formatter = new Formatter($format);
+//            $this->_output->append($formatter->format($vars));
+//        }
+        return $code;
     }
-
+    
     /**
-     * Check if the action view is rendered.
-     * @return boolean true if the action view is really rendered, false otherwise.
+     * Render an action view without a template
+     * 
+     * @param array $data the array of data to send to the view
+     * @param string $file the file of the view
+     * @return string the code of the view
      */
-    public function is_rendered()
+    public function render_no_template()
     {
-        return $this->_rendered;
+        ob_start();
+        if($this->_data !== null) extract($this->_data);
+        include($this->_file);
+        $code = ob_get_contents();
+        ob_end_clean();
+        
+        return $code;
     }
-
+    
     /**
-     * Force the view to no render itself
+     * Set the file of the view
+     * @param string $file 
      */
-    public function no_render()
+    public function set_file($file)
     {
-        $this->_rendered = true;
+        $this->_file = $file;
+    }
+    
+    /**
+     * Set the data of the view
+     * @param array $data 
+     */
+    public function set_data(array $data)
+    {
+        $this->_data = $data;
     }
 
     /**
      * Set a template object
-     * @param Template $template a Template object
+     * @param Kaili\Template $template a Template object
      */
-    function set_template($template)
+    function set_template(\Kaili\Template $template)
     {
         $this->_template = $template;
     }

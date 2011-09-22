@@ -44,7 +44,7 @@ class Loader
      *
      * @var array
      */
-    private $_internal_autoload = array('request', 'output');
+    private $_internal_autoload = array();
 
     /**
      * Create the Loader
@@ -60,18 +60,9 @@ class Loader
     public function register()
     {
         spl_autoload_register('Kaili\Loader::_autoload');
-        $this->_config = $this->load('config');
+        //$this->_config = $this->load('config');
 
-        $this->_preload();
-    }
-
-    /**
-     * Load an helper
-     * @param string $helper the unique name of the helper 
-     */
-    public function helper($helper)
-    {
-        include_once(SYSTEM.DS.'kaili'.DS.$helper.EXT);
+        //$this->_preload();
     }
 
     /**
@@ -87,28 +78,6 @@ class Loader
         }
         else {
             $this->_autoload($class);
-        }
-    }
-
-    /**
-     * Load an MVC controller
-     * @param string $controller the name of the controller (for convention,
-     *        in plural form)  
-     * @param string $action the name of controller's action called 
-     * @param array $url_segments an array of parameters give from the url
-     */
-    public function controller($controller, $action, $url_segments = array())
-    {
-        $controller_name = $controller;
-        $action_name = strtolower($action);
-
-        // creation of controller
-        $controller = ucfirst($controller_name);
-        $controller = new $controller();
-
-        // call action of the controller
-        if((int) method_exists($controller_name, $action_name)) {
-            call_user_func_array(array($controller, $action_name), array_values($url_segments));
         }
     }
 
@@ -141,24 +110,24 @@ class Loader
             require_once(APPLICATION.DS.'models'.DS.$class.EXT);
         }
     }
-
-    /**
-     * Autoload all classes selected in the config file autoload.php
-     */
-    private function _preload()
-    {
-        // autoload internal libraries
-        foreach($this->_internal_autoload as $lib) {
-            $this->load($lib);
-        }
-
-        // autoload libraries in autoload config file
-        $libraries = $this->_config->item('libraries');
-        foreach($libraries as $lib) {
-            $this->load($lib);
-        }
-        unset($libraries, $lib);
-    }
+//
+//    /**
+//     * Autoload all classes selected in the config file autoload.php
+//     */
+//    private function _preload()
+//    {
+//        // autoload internal libraries
+//        foreach($this->_internal_autoload as $lib) {
+//            $this->load($lib);
+//        }
+//
+//        // autoload libraries in autoload config file
+//        $libraries = $this->_config->item('libraries');
+//        foreach($libraries as $lib) {
+//            $this->load($lib);
+//        }
+//        unset($libraries, $lib);
+//    }
 
 }
 

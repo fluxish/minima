@@ -19,9 +19,9 @@ class Url
     public static function abs($url, $reset = true)
     {
         if(is_array($url)) {
-            $request = Loader::get_instance()->load('request');
+            $request = Request::current();
             $params = $request->url_parameters();
-
+            
             if($reset) {
                 $vars = array_merge($params['route'], $url);
             }

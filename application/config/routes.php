@@ -11,7 +11,7 @@
  * default_controller
  * Set the controller class, if it is not explicit
  */
-$route['default_controller'] = 'core';
+$route['default_controller'] = 'hello';
 
 /**
  * default_action

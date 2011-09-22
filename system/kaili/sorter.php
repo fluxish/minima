@@ -26,7 +26,7 @@ class Sorter
         $desc = $config->item('sorter_desc_route');
 
         // load request library
-        $request = Loader::get_instance()->load('request');
+        $request = Request::current();
 
         // create links for all fields
         $sorter['fields'] = array();
@@ -63,7 +63,7 @@ class Sorter
         $desc = $config->item('sorter_desc_route');
 
         // load request library
-        $request = Loader::get_instance()->load('request');
+        $request = Request::current();
 
         if($curr_field = $request->get($asc)) {
             $curr_order = $asc;

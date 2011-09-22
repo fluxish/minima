@@ -24,25 +24,21 @@ $post_call = function() {
 //            Logger::get('log1')->info($elapsed);
         };
 
-// Initialize the Loader
-$loader = Loader::get_instance();
-$loader->register();
-
-// error reporting (temporary here)
-if($loader->load('config')->item('development_environment') == true) {
-    error_reporting(E_ALL);
-    ini_set('display_errors', 'On');
-    ini_set('html_errors', 'On');
-}
-else {
-    error_reporting(E_ALL & ~E_DEPRECATED);
-    ini_set('display_errors', 'Off');
-    ini_set('log_errors', 'On');
-    ini_set('error_log', ROOT.DS.'system'.DS.'tmp'.DS.'logs'.DS.'error.log');
-}
+// Initialize the Loader and register autoloader
+Loader::get_instance()->register();
 
 // Initialize Request object to handle the request
-$loader->load('request')->handle($pre_call, $post_call);
+\Kaili\Request::factory()->handle($pre_call, $post_call);
 
-// Initialize Output object to handle the response
-$loader->load('output')->display();
+//// error reporting (temporary here)
+//if($loader->load('config')->item('development_environment') == true) {
+//    error_reporting(E_ALL);
+//    ini_set('display_errors', 'On');
+//    ini_set('html_errors', 'On');
+//}
+//else {
+//    error_reporting(E_ALL & ~E_DEPRECATED);
+//    ini_set('display_errors', 'Off');
+//    ini_set('log_errors', 'On');
+//    ini_set('error_log', ROOT.DS.'system'.DS.'tmp'.DS.'logs'.DS.'error.log');
+//}
