@@ -26,7 +26,7 @@ class Url
                 $vars = array_merge($params['route'], $url);
             }
             else {
-                $vars = array_merge($params['route'], $params['others'], $url);
+                $vars = array_merge($params['route'], $params['segments'], $url);
             }
 
             $url = '';

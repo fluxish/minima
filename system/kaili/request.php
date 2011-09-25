@@ -54,7 +54,7 @@ class Request
         $this->_unregister_globals();
 
         $router = new Router();
-        $this->_params = $router->parse_route($this->get('url'));
+        $this->_params = $router->parse($this->get('url'));
     }
 
     /**
