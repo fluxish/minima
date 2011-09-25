@@ -10,11 +10,31 @@ namespace Kaili;
  * @package Kaili
  */
 class Router
-{
-
+{ 
+    /**
+     * Create a new Router object
+     * @return Router
+     */
+    public static function factory()
+    {
+        return new static();
+    }
+    
+    
+    /**
+     * Routes 
+     * @var array
+     */
+    private $_routes;
+    
     public function __construct()
     {
         
+        $routes = array();
+        include(APPLICATION.DS.'config'.DS.'routes.php');
+        
+        $this->_routes = array();
+        $this->_routes = array_merge($this->_routes, $routes);
     }
 
     /**
@@ -24,11 +44,8 @@ class Router
      */
     public function parse($uri)
     {
-        $route = array();
-        include(APPLICATION.DS.'config'.DS.'routes.php');
-        
         // extract format output (html default)
-        foreach($route as $patt => $vars) {
+        foreach($this->_routes as $patt => $vars) {
             $params = array('route' => array(), 'segments' => array());
             
             $param_names = $this->_get_param_names($patt);
@@ -45,14 +62,10 @@ class Router
 
                 // set controller and action with normal routing
                 if(empty($vars['controller'])) {
-                    $vars['controller'] = $route['default_controller'];
+                    $vars['controller'] = $this->_routes['default_controller'];
                 }
-//                else if(!class_exists(ucwords($vars['controller']))) {
-//                    $vars['action'] = $vars['controller'];
-//                    $vars['controller'] = $route['default_controller'];
-//                }
                 if(empty($vars['action'])) {
-                    $vars['action'] = $route['default_action'];
+                    $vars['action'] = $this->_routes['default_action'];
                 }
 
                 $params['route'] = $vars;
@@ -70,7 +83,6 @@ class Router
                 }
 
                 $_GET = array_merge($_GET, $vars);
-                var_dump($vars);
                 return $params;
             }
         }

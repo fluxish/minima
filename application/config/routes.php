@@ -11,13 +11,13 @@
  * default_controller
  * Set the controller class, if it is not explicit
  */
-$route['default_controller'] = 'hello';
+$routes['default_controller'] = 'hello';
 
 /**
  * default_action
  * Set the action method, if it is not explicit
  */
-$route['default_action'] = 'index';
+$routes['default_action'] = 'index';
 
 
 /**
@@ -31,7 +31,7 @@ $route['default_action'] = 'index';
  */
 
 //$route[':controller/:action'] = array();
-$route[':controller/:action.:format'] = array();
+$routes[':controller/:action.:format'] = array();
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

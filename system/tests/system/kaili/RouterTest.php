@@ -91,6 +91,27 @@ class RouterTest extends \PHPUnit_Framework_TestCase
      */
     public function test_parse_default_controller()
     {
+        $input = '';
+        
+        $output = array(
+            'route' => array(
+                'controller' => 'hello',
+                'action' => 'index'
+            ),
+            'segments' => array()
+        );
+
+        $result = $this->object->parse($input);
+        $this->assertEquals($output, $result);
+    }
+    
+    /**
+     * Test for Router::parse()
+     * Uri with only segments
+     * @test
+     */
+    public function test_parse_segments()
+    {
         $input = 'param_string/value/param_number/2';
         
         $output = array(

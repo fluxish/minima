@@ -53,8 +53,7 @@ class Request
         $this->_remove_magic_quotes();
         $this->_unregister_globals();
 
-        $router = new Router();
-        $this->_params = $router->parse($this->get('url'));
+        $this->_params = Router::factory()->parse($this->get('url'));
     }
 
     /**
