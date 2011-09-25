@@ -7,30 +7,34 @@ namespace Kaili;
  *
  * The class manage the routing of urls
  *
- * @package		Kaili
+ * @package Kaili
  */
 class Router
-{
-
+{ 
     /**
-     * Array of routes in routes.php config file
+     * Create a new Router object
+     * @return Router
+     */
+    public static function factory()
+    {
+        return new static();
+    }
+    
+    
+    /**
+     * Routes 
      * @var array
      */
-    private $_route;
-
-    /**
-     * Array of all paramaters in the url
-     * @var array
-     */
-    private $_params;
-
+    private $_routes;
+    
     public function __construct()
     {
-        $route = array();
-        include_once(APPLICATION.DS.'config'.DS.'routes.php');
-        $this->_route = $route;
-
-        $this->_params = array('route' => array(), 'others' => array());
+        
+        $routes = array();
+        include(APPLICATION.DS.'config'.DS.'routes.php');
+        
+        $this->_routes = array();
+        $this->_routes = array_merge($this->_routes, $routes);
     }
 
     /**
@@ -38,10 +42,12 @@ class Router
      * @param string $uri
      * @return array of route's and others detected params
      */
-    public function parse_route($uri)
+    public function parse($uri)
     {
         // extract format output (html default)
-        foreach($this->_route as $patt => $vars) {
+        foreach($this->_routes as $patt => $vars) {
+            $params = array('route' => array(), 'segments' => array());
+            
             $param_names = $this->_get_param_names($patt);
             $patt = strtr($patt, array('/' => '\/?', '.' => '\.?'));
             $patt = preg_replace('/'.Router::ROUTE_WILDCARD.'/', Router::ROUTE_SEGMENT, $patt);
@@ -56,17 +62,13 @@ class Router
 
                 // set controller and action with normal routing
                 if(empty($vars['controller'])) {
-                    $vars['controller'] = $this->_route['default_controller'];
-                }
-                else if(!class_exists(ucwords($vars['controller']))) {
-                    $vars['action'] = $vars['controller'];
-                    $vars['controller'] = $this->_route['default_controller'];
+                    $vars['controller'] = $this->_routes['default_controller'];
                 }
                 if(empty($vars['action'])) {
-                    $vars['action'] = $this->_route['default_action'];
+                    $vars['action'] = $this->_routes['default_action'];
                 }
 
-                $this->_params['route'] = $vars;
+                $params['route'] = $vars;
 
                 // parse other variables in the url
                 $other = substr($uri, strlen($matches[0]) + 1);
@@ -76,13 +78,12 @@ class Router
                     for($i = 0; $i < count($matches[2]); $i++) {
                         if(!isset($vars[$matches[1][$i]]))
                             $vars[$matches[1][$i]] = $matches[2][$i];
-                        $this->_params['others'][$matches[1][$i]] = $matches[2][$i];
+                        $params['segments'][$matches[1][$i]] = $matches[2][$i];
                     }
                 }
 
                 $_GET = array_merge($_GET, $vars);
-                //var_dump($vars);
-                return $this->_params;
+                return $params;
             }
         }
     }
