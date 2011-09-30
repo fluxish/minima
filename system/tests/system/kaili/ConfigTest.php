@@ -22,7 +22,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new Config;
+        global $_SERVER;
+        $_SERVER = array('HTTP_HOST'=>'http://www.example.com');
     }
 
     /**
@@ -31,7 +32,34 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        
+        unset($_SERVER);
+    }
+    
+    /**
+     * Test creation of new Config object by the factory
+     * @test
+     */
+    public function test_factory()
+    {
+        $object = Config::factory();
+        // check if Config has loaded base config class
+        $this->assertNotEmpty($object->item('base_url'));
+    }
+    
+    /**
+     * Test creation of new Config object by the factory with a config file
+     * @test
+     */
+    public function test_factory_with_file()
+    {
+        $object = Config::factory('config');
+        // check if Config has loaded base config class but not autoloaded config files
+        $this->assertNotEmpty($object->item('base_url'));
+        try{
+            $object->item('configs');
+        } catch (\InvalidArgumentException $ex){
+           return;
+        }
     }
 
     /**
@@ -40,10 +68,9 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
      */
     public function test_item()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $object = Config::factory('autoload');
+        // check if Config has loaded base config class
+        $this->assertNotEmpty($object->item('configs'));
     }
 
     /**
@@ -52,10 +79,14 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
      */
     public function test_set()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $object = Config::factory();
+        $object->set('item_string','string');
+        $object->set('item_number',1);
+        $object->set('item_bool',false);
+        // check if Config has loaded base config class
+        $this->assertEquals('string', $object->item('item_string'));
+        $this->assertEquals(1, $object->item('item_number'));
+        $this->assertEquals(false, $object->item('item_bool'));
     }
 
     /**
@@ -64,10 +95,10 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
      */
     public function test_load()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $object = Config::factory('autoload');
+        $object->load('config');
+        // check if Config has loaded base config class
+        $this->assertNotEmpty($object->item('base_url'));
     }
 
 }

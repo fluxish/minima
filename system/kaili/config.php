@@ -54,22 +54,15 @@ class Config
     /**
      * Returns a config item
      * 
-     * @param string the item's name.
+     * @param string $item the item's name.
      * @return the value of the provided item
      */
-    function item()
+    function item($item)
     {
-        if(func_num_args() != 0) {
-            $config = $this->_config;
-            $args = func_get_args();
-            foreach($args as $item) {
-                $config = $config[$item];
-            }
-            unset($args);
-            return $config;
-        }
+        if(isset($this->_config[$item]))
+            return $this->_config[$item];
         else
-            throw new InvalidArgumentException('Undefined item "'.$item.'" in configuration files.');
+            throw new \InvalidArgumentException('Undefined item "'.$item.'" in configuration files.');
     }
 
     /**
