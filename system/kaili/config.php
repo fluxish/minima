@@ -11,13 +11,29 @@ namespace Kaili;
  */
 class Config
 {
-
-    public static function factory(){
+    /**
+     * Create a Config object
+     * @param string $file the name of the config file to load at the creation
+     * @return Config
+     */
+    public static function factory($file = null)
+    {
+        // Create a new empty Config object
+        $config = new static();
         
-    }
-    
-    public static function open(){
+        if($file === null){
+            // load main config file (APPLICATION/config/config.php)
+            $config->load('config');
+            
+            //load other autoloaded config files (in APPLICATION/config/autoload.php)
+            $config->load('autoload');
+            $config->_autoload();
+        }
+        else{
+            $config->load($file);
+        }
         
+        return $config;
     }
     
     
@@ -33,10 +49,6 @@ class Config
     function __construct()
     {
         $this->_config = array();
-        // load main config file (application/config/config.php)
-        $this->load('config');
-        $this->load('autoload');
-        $this->_autoload();
     }
 
     /**
@@ -74,7 +86,7 @@ class Config
     /**
      * Load a config file
      * 
-     * @param the path of the config file
+     * @param the name of the config file
      */
     function load($file)
     {
