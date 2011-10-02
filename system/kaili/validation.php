@@ -21,18 +21,12 @@ class Validation
      */
     private $_fields;
 
-    /**
-     * @var Config
-     */
-    private $_config;
-
     public function __construct()
     {
         // Load validation.lang
         Loader::get_instance()->load('language')->load('validation');
         Loader::get_instance()->helper('validation');
-
-        $this->_config = Loader::get_instance()->load('config');
+        
         $this->_fields = array();
     }
 

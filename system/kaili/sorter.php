@@ -20,8 +20,7 @@ class Sorter
         $sorter = array();
 
         // load config library
-        $config = Loader::get_instance()->load('config');
-        $config->load('sorter');
+        $config = Config::factory('sorter');
         $asc = $config->item('sorter_asc_route');
         $desc = $config->item('sorter_desc_route');
 
@@ -57,8 +56,7 @@ class Sorter
     public static function sorter_params()
     {
         // load config library
-        $config = Loader::get_instance()->load('config');
-        $config->load('sorter');
+        $config = Config::factory('sorter');
         $asc = $config->item('sorter_asc_route');
         $desc = $config->item('sorter_desc_route');
 

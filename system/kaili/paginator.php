@@ -26,7 +26,7 @@ class Paginator
         $request = Request::current();
 
         // load config library
-        $config = Loader::get_instance()->load('config');
+        $config = Config::factory();
         $config->load('paginator');
         $route = $config->item('paginator_route');
         $max_items = $config->item('paginator_max_items');
@@ -87,7 +87,7 @@ class Paginator
     public static function paginator_params()
     {
         // load config library
-        $config = Loader::get_instance()->load('config');
+        $config = Config::factory();
         $config->load('paginator');
         $route = $config->item('paginator_route');
         $max_items = $config->item('paginator_max_items');

@@ -17,15 +17,13 @@ class Rss
 {
     /**
      * Required fields of rss channel
-     * @var _rss_fields
-     * @access private
+     * @var array
      */
     private $_rss_fields = array('title', 'link', 'description');
     
     /**
      * All fields of rss channel
-     * @var _rss_channel_fields_opt
-     * @access private
+     * @var array
      */
     private $_rss_channel_fields_opt = array('title', 'link', 'description', 'language', 'copyright', 'managingEditor',
         'webMaster', 'pubDate', 'lastBuildDate', 'category', 'generator', 'docs', 
@@ -33,51 +31,46 @@ class Rss
         
     /**
      * All fields of rss items
-     * @var _rss_item_fields_opt
-     * @access private
+     * @var array
      */
     private $_rss_item_fields_opt = array('title', 'link', 'description', 'author', 'category', 'comments', 
         'enclosure', 'guid', 'pubDate', 'source');
     
     /**
      * Reference docs for RSS 2.0 Specification
-     * @var _docs
-     * @access private
+     * @var string
      */
     private $_docs = 'http://blogs.law.harvard.edu/tech/rss';
     
     /**
      * Setted fields for rss channel
-     * @var _channel
-     * @access private
+     * @var array
      */
     private $_channel = array();
     
     /**
      * List of items
-     * @var _items
-     * @access private
+     * @var array
      */
     private $_items = array();
     
     /**
      * Map attribute/field for items
-     * @var _item_fields_map
-     * @access private
+     * @var array
      */
     private $_item_fields_map = array();
     
     /**
      * Config object to access to configuration variables
-     * @var _config
-     * @access private
+     * @var Config
      */
     private $_config;
     
     
     function __construct()
     {
-        $this->_config = Loader::get_instance()->load('config');
+        $this->_config = Config::factory();
+        $this->_config->load('site');
     }
     
     /**

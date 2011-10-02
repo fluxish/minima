@@ -28,7 +28,8 @@ class Javascript
     
     public function __construct()
     {
-        $this->_config = Loader::get_instance()->load('config');
+        $this->_config = Config::factory();
+        $this->_config->load('javascript');
     }
     
     /**
