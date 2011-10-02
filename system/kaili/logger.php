@@ -95,8 +95,7 @@ abstract class Logger
      */
     public static function add($name, Logger_Interface $logger = null)
     {
-        $config = Loader::get_instance()->load('config');
-        $config->load('logger');
+        $config = Config::factory('logger');
         
         if($logger != null)
             $this->_loggers[$name] = $logger;

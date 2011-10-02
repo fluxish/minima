@@ -47,7 +47,7 @@ class View
         }
         else {
             // else, search the view in the tp directory of default theme, and render it
-            $theme = Loader::get_instance()->load('config')->item('interface_theme');
+            $theme = Config::factory()->item('interface_theme');
             $file = ASSETS.DS.'themes'.DS.$theme.DS.'tp'.DS.$view.EXT;
         }
 
@@ -93,7 +93,7 @@ class View
         $this->_places = array();
         
         // TEMPORARY VARIABLES
-        $this->config = Loader::get_instance()->load('config');
+        $this->config = Config::factory();
         $this->session = Loader::get_instance()->load('session');
     }
 
@@ -105,7 +105,7 @@ class View
      */
     public function render()
     {
-        $template = View::factory(Loader::get_instance()->load('config')->item('main_template'));
+        $template = View::factory($this->config->item('main_template'));
         $template->place('content', $this->render_no_template());
         $code = $template->render_no_template();
 

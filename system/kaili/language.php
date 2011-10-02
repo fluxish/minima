@@ -42,7 +42,7 @@ class Language
      */
     function __construct()
     {
-        $this->_config = Loader::get_instance()->load('config');
+        $this->_config = Config::factory();
         $this->_request = Request::current();
 
         $this->_preload();

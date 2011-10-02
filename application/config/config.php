@@ -1,7 +1,5 @@
 <?php
 
-require_once(APPLICATION.DS.'config'.DS.'database.php');
-
 /**
  *  base_url
  *  URL to the framework root
