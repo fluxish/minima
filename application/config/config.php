@@ -59,6 +59,26 @@ $config['interface_theme'] = 'admin';
  */
 $config['main_template'] = 'main';
 
+/**
+ *  javascript_url
+ *  URL to the javascript assets directory 
+ *  @var string
+ */
+$config['javascript_url'] = $config['base_url'].'/application/assets/js';
+
+/**
+ *  images_url
+ *  URL to the images assets directory 
+ *  @var string
+ */
+$config['images_url'] = $config['base_url'].'/application/assets/images';
+
+/**
+ *  theme_url
+ *  URL to the theme assets directory 
+ *  @var string
+ */
+$config['theme_url'] = $config['base_url'].'/application/assets/themes/'.$config['interface_theme'];
 
 /**
  *  ENVIRONMENT
@@ -75,7 +95,7 @@ $config['development_environment'] = true;
  *  environment infos
  */
 $config['environment_name'] = 'Kaili Framework';
-$config['environment_version'] = '0.2';
+$config['environment_version'] = '0.5';
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */

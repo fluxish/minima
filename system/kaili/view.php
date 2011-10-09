@@ -91,9 +91,9 @@ class View
         $this->_file = $file;
         $this->_data = $data;
         $this->_places = array();
+        $this->config = Config::factory();
         
         // TEMPORARY VARIABLES
-        $this->config = Config::factory();
         $this->session = Loader::get_instance()->load('session');
     }
 
@@ -191,15 +191,6 @@ class View
     public function set_data(array $data)
     {
         $this->_data = $data;
-    }
-
-    /**
-     * Set a template object
-     * @param Kaili\Template $template a Template object
-     */
-    function set_template(\Kaili\Template $template)
-    {
-        $this->_template = $template;
     }
     
 //     /**
