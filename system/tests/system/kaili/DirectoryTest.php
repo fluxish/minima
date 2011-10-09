@@ -45,7 +45,8 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testScan_files().
+     * Test for Directory::scan_files()
+     * all extentions, ascending sort
      * @test
      */
     public function test_scan_files()
@@ -61,6 +62,50 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase
         );
         
         $this->assertEquals(array_keys($this->object->scan_files(Directory::TYPES_ALL, Directory::SORT_ASC)), $output);
+    }
+    
+    /**
+     * Test for Directory::scan_dirs()
+     * @test
+     */
+    public function test_scan_dirs()
+    {
+        $input = '/home/luigi/www/kaili/';
+        $this->object = new Directory($input);
+        
+        $output = array(
+            $input.'application', 
+            $input.'assets',
+            $input.'.git',
+            $input.'nbproject',
+            $input.'system'
+        );
+        
+        $this->assertEquals(array_keys($this->object->scan_dirs(Directory::SORT_ASC)), $output);
+    }
+    
+    /**
+     * Test for Directory::scan()
+     * @test
+     */
+    public function test_scan()
+    {
+        $input = '/home/luigi/www/kaili/';
+        $this->object = new Directory($input);
+        
+        $output = array(
+            $input.'application', 
+            $input.'assets',
+            $input.'.git',
+            $input.'.gitignore',
+            $input.'.htaccess',
+            $input.'index.php',
+            $input.'nbproject',
+            $input.'README',
+            $input.'system'
+        );
+        
+        $this->assertEquals(array_keys($this->object->scan(Directory::SORT_ASC)), $output);
     }
 
 }
