@@ -95,7 +95,7 @@ $config['development_environment'] = true;
  *  environment infos
  */
 $config['environment_name'] = 'Kaili Framework';
-$config['environment_version'] = '0.2';
+$config['environment_version'] = '0.5';
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */
