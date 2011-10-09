@@ -59,6 +59,26 @@ $config['interface_theme'] = 'admin';
  */
 $config['main_template'] = 'main';
 
+/**
+ *  javascript_url
+ *  URL to the javascript assets directory 
+ *  @var string
+ */
+$config['javascript_url'] = $config['base_url'].'/application/assets/js/';
+
+/**
+ *  images_url
+ *  URL to the images assets directory 
+ *  @var string
+ */
+$config['images_url'] = $config['base_url'].'/application/assets/images/';
+
+/**
+ *  theme_url
+ *  URL to the theme assets directory 
+ *  @var string
+ */
+$config['theme_url'] = $config['base_url'].'/application/assets/themes/'.$config['interface_theme'].'/';
 
 /**
  *  ENVIRONMENT
