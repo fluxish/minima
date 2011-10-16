@@ -2,6 +2,8 @@
 
 namespace Kaili;
 
+class FileException extends Exception{}
+
 /**
  * Kaili File Class
  *
@@ -20,7 +22,7 @@ class File
     public static function factory($path)
     {
         if(!file_exists($path))
-            throw new Exception('File "'.$path.'" doesn\'t exists' );
+            throw new FileException('File "'.$path.'" not found.');
         return new static($path);
     }
     
@@ -31,8 +33,11 @@ class File
      */
     public static function create($path)
     {
+        if(file_exists($path))
+            throw new FileException('File "'.$path.'" aleredy exists.');
         $fp = fopen($path, 'w');
         fclose($fp);
+        
         return new static($path);
     }
     
@@ -113,9 +118,11 @@ class File
      */
     public function rename($name)
     {
+        var_dump($this->_dir_name);
         $res = rename($this->_path, $this->_dir_name.DS.$name);
         if($res){
-            $this->_name = $name;
+            $this->_path = $this->_dir_name.DS.$name;
+            $this->_file_info();
             return $this;
         }
         return $res;
