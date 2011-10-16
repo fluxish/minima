@@ -13,12 +13,26 @@ class File
 {
 
     /**
-     * Create a Directory object
-     * @param string $file the name of the config file to load at the creation
-     * @return Config
+     * Create a File object
+     * @param string $path the path of the file
+     * @return File
      */
     public static function factory($path)
     {
+        if(!file_exists($path))
+            throw new Exception('File "'.$path.'" doesn\'t exists' );
+        return new static($path);
+    }
+    
+    /**
+     * Create a new file
+     * @param string $path the path of the new file
+     * @return File
+     */
+    public static function create($path)
+    {
+        $fp = fopen($path, 'w');
+        fclose($fp);
         return new static($path);
     }
     
@@ -36,7 +50,7 @@ class File
     
     /**
      * The name of the file, including extension
-     * @var type 
+     * @var string 
      */
     private $_base_name;
     
@@ -275,10 +289,10 @@ class File
         $lstat = lstat($this->_path);
         
         $this->_name = $pathinfo['filename'];
-        $this->_base_name = $pathinfo['base_name'];
+        $this->_base_name = $pathinfo['basename'];
         $this->_dir_name = $pathinfo['dirname'];
         $this->_ext = $pathinfo['extension'];
-        $this->_mime = mime_content_type($path);
+        $this->_mime = mime_content_type($this->_path);
         $this->_size = $lstat['size'];
         $this->_last_access = $lstat['atime'];
         $this->_last_modification = $lstat['mtime'];
