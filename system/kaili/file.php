@@ -22,31 +22,71 @@ class File
         return new static($path);
     }
     
+    /**
+     * The absolute path
+     * @var string
+     */
     private $_path;
     
+    /**
+     * The name of the file
+     * @var string
+     */
     private $_name;
     
     /**
-     * Path of directory
+     * The name of the file, including extension
+     * @var type 
+     */
+    private $_base_name;
+    
+    /**
+     * The direcotry part of the absolute path
      * @var string
      */
     private $_dir_name;
+    
+    /**
+     * The extension of the file
+     * @var string
+     */
     private $_ext;
+    
+    /**
+     * The mime type
+     * @var string
+     */
     private $_mime;
+    
+    /**
+     * The size, in bytes
+     * @var long
+     */
     private $_size;
+    
+    /**
+     * Time of the last access, in Unix timestamp format
+     * @var string
+     */
     private $_last_access;
+    
+    /**
+     * Time of the last modification, in Unix timestamp format
+     * @var string
+     */
     private $_last_modification;
 
     
     /**
      * Create a File object
-     * @param string $file the name of the config file to load at the creation
+     * @param string $path the name of the config file to load at the creation
      * @return Config
      */
-    public function __construct($file)
+    public function __construct($path)
     {
         if($file === null)
-            throw new \InvalidArgumentException('A valid file is required.');
+            throw new \InvalidArgumentException('A valid path is required.');
+        $this->_path = $path;
         
         // get file info
         $this->_file_info($file);
@@ -83,65 +123,113 @@ class File
         return $res;
     }
     
+    /**
+     * Remove this file from filesystem
+     * @return bool TRUE on success or FALSE on failure
+     */
     public function remove()
     {
         $res = unlink($this->_path);
         return $res;
     }
     
+    /**
+     * Returns the absolute path of this file.
+     * @return string
+     */
     public function get_path()
     {
         return $this->_path;
     }
     
+    /**
+     * Returns the name of this file, including extension.
+     * @return string
+     */
+    public function get_base_name()
+    {
+        return $this->_base_name;
+    }
+    
+    /**
+     * Returns the path of this file, excluding basename.
+     * @return string
+     */
     public function get_dir_name()
     {
         return $this->_dir_name;
     }
-
+    
+    /**
+     * Returns the name of the file.
+     * @return string
+     */
     public function get_name()
     {
         return $this->_name;
     }
-
+    
+    /**
+     * Return the extension
+     * @return string
+     */
     public function get_ext()
     {
         return $this->_ext;
     }
-
+    
+    /**
+     * Returns the mime type
+     * @return string
+     */
     public function get_mime()
     {
         return $this->_mime;
     }
-
+    
+    /**
+     * Returns the size of the file, in bytes
+     * @return long
+     */
     public function get_size()
     {
         return $this->_size;
     }
-
+    
+    /**
+     * Returns the time of the last access to the file, in Unix timestamp format
+     * @return string
+     */
     public function get_last_access()
     {
         return $this->_last_access;
     }
-
+    
+    /**
+     * Returns the time of the last modification of the file, in Unix timestamp format
+     * @return string
+     */
     public function get_last_modification()
     {
         return $this->_last_modification;
     }
     
-    private function _file_info($file)
+    /**
+     * Set the file informations
+     */
+    private function _file_info()
     {
-        $pathinfo = pathinfo($file);
+        $pathinfo = pathinfo($this->_path);
         if(!isset($pathinfo['extension']))
             $pathinfo['extension'] = '';
 
-        $lstat = lstat($file);
+        $lstat = lstat($this->_path);
         
-        $this->_path = $file;
-        $this->_name = $pathinfo['basename'];
+        $this->_name = $pathinfo['filename'];
+        $this->_base_name = $pathinfo['base_name'];
         $this->_dir_name = $pathinfo['dirname'];
         $this->_ext = $pathinfo['extension'];
-        $this->_mime = mime_content_type($file);
+        $this->_mime = mime_content_type($path);
         $this->_size = $lstat['size'];
         $this->_last_access = $lstat['atime'];
         $this->_last_modification = $lstat['mtime'];
