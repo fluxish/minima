@@ -84,12 +84,12 @@ class File
      */
     public function __construct($path)
     {
-        if($file === null)
+        if($path === null)
             throw new \InvalidArgumentException('A valid path is required.');
         $this->_path = $path;
         
         // get file info
-        $this->_file_info($file);
+        $this->_file_info();
     }
     
     /**
@@ -212,6 +212,15 @@ class File
     public function get_last_modification()
     {
         return $this->_last_modification;
+    }
+    
+    /**
+     * Returns entire content of the file in a string
+     * @return string
+     */
+    public function __toString()
+    {
+        return file_get_contents($this->_path);
     }
     
     /**
