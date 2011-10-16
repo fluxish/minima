@@ -18,4 +18,10 @@ define('APPLICATION', ROOT.DS.'application');
 define('ASSETS', ROOT.DS.'assets');
 define('EXT', '.php');
 
+
+
+// Initialize the Loader and register autoloader
+require_once(SYSTEM.DS.'kaili'.DS.'loader'.EXT);
+\Kaili\Loader::get_instance()->register();
+
 ?>
