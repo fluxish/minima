@@ -112,8 +112,13 @@ class File
      * @param strint $to path of the location in witch move the file
      * @return File 
      */
-    public function move($to)
+    public function move($to, $overwrite = true)
     {
+        // if overwriting is disabled, check if file exists
+        if(!$overwrite && file_exists($this->_path))
+            throw new Exception('File already exists.');
+        
+        // move the file
         $res = copy($this->_dir_name, $to);
         if($res){
             unlink($this->_dir_name.DS.$this->_name);
@@ -133,27 +138,39 @@ class File
         return $res;
     }
     
+    /**
+     * Returns the content of the file, in a string
+     * @return string
+     */
     public function read()
     {
         return $this->__toString();
     }
     
+    /**
+     * Writes the provided data to the file and overwrite all existent content
+     * @param mixed $data
+     * @return File|boolean 
+     */
     public function write($data)
     {
         $fp = fopen($this->_path, 'w');
-        $n = fprintf($fp, '%s', $data);
+        fprintf($fp, '%s', $data);
         fclose($fp);
-        if($n) return $this;
-        return false;
+        return $this;
     }
     
+    /**
+     * Appends the provided data at the end of the file
+     * @param mixed $data
+     * @return File 
+     */
     public function append($data)
     {
         $fp = fopen($this->_path, 'a');
-        $n = fprintf($fp, '%s', $data);
+        fprintf($fp, '%s', $data);
         fclose($fp);
-        if($n) return $this;
-        return false;
+        return $this;
     }
     
     /**
