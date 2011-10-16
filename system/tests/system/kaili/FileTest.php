@@ -33,7 +33,9 @@ class FileTest extends \PHPUnit_Framework_TestCase
     {
         $test_files = array(
             ROOT.DS.'test.txt',
-            ROOT.DS.'test_new.txt'
+            ROOT.DS.'test_new.txt',
+            ROOT.DS.'test.tx',
+            ROOT.DS.'test'
         );
         foreach($test_files as $f){
             file_exists($f) and unlink($f);
@@ -94,7 +96,48 @@ class FileTest extends \PHPUnit_Framework_TestCase
     {
         $object = File::create(ROOT.DS.'test.txt');
         $object->rename('test_new.txt');
-        $this->assertEquals($object->get_path(), ROOT.DS.'test_new.txt');
+        $this->assertEquals($object->get_base_name(), 'test_new.txt');
+    }
+    
+    /**
+     * Test for File::rename()
+     * Create a new file named test.txt and renames it with the same name.
+     * At the end of the test, remove the created file.
+     * @test
+     */
+    public function test_rename_same_name()
+    {
+        $object = File::create(ROOT.DS.'test.txt');
+        $object->rename('test.txt');
+        $this->assertEquals($object->get_base_name(), 'test.txt');
+    }
+    
+    /**
+     * Test for File::rename()
+     * Create a new file named test.txt and renames it changing extension to 'tx'.
+     * At the end of the test, remove the created file.
+     * @test
+     */
+    public function test_rename_ext()
+    {
+        $object = File::create(ROOT.DS.'test.txt');
+        $object->rename('test.tx');
+        $this->assertEquals($object->get_name(), 'test');
+        $this->assertEquals($object->get_extension(), 'tx');
+    }
+    
+    /**
+     * Test for File::rename()
+     * Create a new file named test.txt and renames it without extension.
+     * At the end of the test, remove the created file.
+     * @test
+     */
+    public function test_rename_no_ext()
+    {
+        $object = File::create(ROOT.DS.'test.txt');
+        $object->rename('test');
+        $this->assertEquals($object->get_name(), 'test');
+        $this->assertEquals($object->get_extension(), '');
     }
 
     /**

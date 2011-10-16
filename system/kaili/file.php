@@ -60,7 +60,7 @@ class File
     private $_base_name;
     
     /**
-     * The direcotry part of the absolute path
+     * The directory part of the absolute path
      * @var string
      */
     private $_dir_name;
@@ -69,7 +69,7 @@ class File
      * The extension of the file
      * @var string
      */
-    private $_ext;
+    private $_extension;
     
     /**
      * The mime type
@@ -234,9 +234,9 @@ class File
      * Return the extension
      * @return string
      */
-    public function get_ext()
+    public function get_extension()
     {
-        return $this->_ext;
+        return $this->_extension;
     }
     
     /**
@@ -298,7 +298,7 @@ class File
         $this->_name = $pathinfo['filename'];
         $this->_base_name = $pathinfo['basename'];
         $this->_dir_name = $pathinfo['dirname'];
-        $this->_ext = $pathinfo['extension'];
+        $this->_extension = $pathinfo['extension'];
         $this->_mime = mime_content_type($this->_path);
         $this->_size = $lstat['size'];
         $this->_last_access = $lstat['atime'];
