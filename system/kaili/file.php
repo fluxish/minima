@@ -133,6 +133,29 @@ class File
         return $res;
     }
     
+    public function read()
+    {
+        return $this->__toString();
+    }
+    
+    public function write($data)
+    {
+        $fp = fopen($this->_path, 'w');
+        $n = fprintf($fp, '%s', $data);
+        fclose($fp);
+        if($n) return $this;
+        return false;
+    }
+    
+    public function append($data)
+    {
+        $fp = fopen($this->_path, 'a');
+        $n = fprintf($fp, '%s', $data);
+        fclose($fp);
+        if($n) return $this;
+        return false;
+    }
+    
     /**
      * Returns the absolute path of this file.
      * @return string
