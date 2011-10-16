@@ -35,7 +35,8 @@ class FileTest extends \PHPUnit_Framework_TestCase
             ROOT.DS.'test.txt',
             ROOT.DS.'test_new.txt',
             ROOT.DS.'test.tx',
-            ROOT.DS.'test'
+            ROOT.DS.'test',
+            SYSTEM.'test.txt',
         );
         foreach($test_files as $f){
             file_exists($f) and unlink($f);
@@ -141,14 +142,43 @@ class FileTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testMove().
+     * Test for File::move()
+     * Create the file test.txt in [ROOT] and moves it to [SYSTEM]
+     * At the end of the test, remove the moved file.
+     * @test
      */
-    public function testMove()
+    public function test_move()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $object = File::create(ROOT.DS.'test.txt');
+        $object->move(SYSTEM);
+        $this->assertTrue(file_exists(SYSTEM.DS.'test.txt'));
+        $this->assertEquals($object->get_path(), SYSTEM.DS.'test.txt');
+    }
+    
+     /**
+     * Test for File::move()
+     * Attempts to move [ROOT]/test.txt to [ROOT] with overwriting disabled
+     * Throws \Kaili\FileException because file alredy exists
+     * @expectedException \Kaili\FileException
+     * @test
+     */
+    public function test_move_file_exists()
+    {
+        $object = File::create(ROOT.DS.'test.txt');
+        $object->move(ROOT, false);
+    }
+    
+    /**
+     * Test for File::move()
+     * Attempts to move [ROOT]/index.php to [ROOT]/not_exist
+     * Throws \Kaili\FileException because provided path doesn't exist
+     * @expectedException \Kaili\FileException
+     * @test
+     */
+    public function test_move_not_exists_dir()
+    {
+        $object = File::factory(ROOT.DS.'index.php');
+        $object->move(ROOT.DS.'not_exist');
     }
 
     /**

@@ -135,15 +135,22 @@ class File
      */
     public function move($to, $overwrite = true)
     {
+        $to_path = $to.DS.$this->_base_name;
+        
+        // check if directory exists
+        if(!is_dir($to))
+            throw new FileException('Directory "'.$to.'" not found.');
+        
         // if overwriting is disabled, check if file exists
-        if(!$overwrite && file_exists($this->_path))
-            throw new Exception('File already exists.');
+        if(!$overwrite && file_exists($to_path))
+            throw new FileException('File already exists.');
         
         // move the file
-        $res = copy($this->_dir_name, $to);
+        $res = copy($this->_path, $to_path);
         if($res){
-            unlink($this->_dir_name.DS.$this->_name);
-            $this->_file_info($to.DS.$this->_name);
+            $this->_path = $to_path;
+            unlink($this->_dir_name.DS.$this->_base_name);
+            $this->_file_info();
             return $this;
         }
         return $res;
