@@ -223,15 +223,19 @@ class FileTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testAppend().
+     * Test for File::append()
+     * Create a file [ROOT]/test.txt, write a string 'this is a test string' and
+     * append a string 'this is an append test string'.
+     * @test
      */
-    public function testAppend()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+    public function test_append()
+    {        
+        $object = File::create(ROOT.DS.'test.txt');
+        $object->write('this is a test string');
+        $object->append("\nthis is an appended test string");
+        $this->assertEquals($object->read(), "this is a test string\nthis is an appended test string");
     }
+
 
     /**
      * @todo Implement testGet_path().
