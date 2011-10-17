@@ -182,36 +182,44 @@ class FileTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testRemove().
+     * Test for File::remove()
+     * Create and remove [ROOT]/test.txt
+     * @test
      */
-    public function testRemove()
+    public function test_remove()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $path = ROOT.DS.'test.txt';
+        $object = File::create($path);
+        $object->remove($path);
+        $this->assertFalse(file_exists($path));
     }
 
     /**
-     * @todo Implement testRead().
+     * Test for File::read()
+     * Create a file [ROOT]/test.txt, write a string 'this is a test string' and read it.
+     * @test
      */
-    public function testRead()
+    public function test_read()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $fp = fopen(ROOT.DS.'test.txt', 'w');
+        fprintf($fp, '%s', 'this is a test string');
+        fclose($fp);
+        
+        $object = File::factory(ROOT.DS.'test.txt');
+        $str = $object->read();
+        $this->assertEquals($str, 'this is a test string');
     }
 
     /**
-     * @todo Implement testWrite().
+     * Test for File::write()
+     * Create a file [ROOT]/test.txt and write a string 'this is a test string'.
+     * @test
      */
-    public function testWrite()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+    public function test_write()
+    {        
+        $object = File::create(ROOT.DS.'test.txt');
+        $object->write('this is a test string');
+        $this->assertEquals($object->read(), 'this is a test string');
     }
 
     /**
