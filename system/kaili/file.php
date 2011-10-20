@@ -118,7 +118,6 @@ class File
      */
     public function rename($name)
     {
-        var_dump($this->_dir_name);
         $res = rename($this->_path, $this->_dir_name.DS.$name);
         if($res){
             $this->_path = $this->_dir_name.DS.$name;
