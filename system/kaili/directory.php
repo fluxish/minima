@@ -16,11 +16,27 @@ class Directory extends File
 
     /**
      * Create a Directory object
-     * @param string $file the name of the config file to load at the creation
-     * @return Config
+     * @param string $path the path of the directory
+     * @return File
      */
     public static function factory($path)
     {
+        if(!is_dir($path))
+            throw new DirectoryException('Directory "'.$path.'" not found.');
+        return new static($path);
+    }
+    
+    /**
+     * Create a new file
+     * @param string $path the path of the new file
+     * @return File
+     */
+    public static function create($path)
+    {
+        if(is_dir($path))
+            throw new FileException('Directory "'.$path.'" aleredy exists.');
+        mkdir($path);
+        
         return new static($path);
     }
     
@@ -45,7 +61,7 @@ class Directory extends File
         $this->_dir_info();
         
         
-        $this->_dir = array();
+        //$this->_dir = array();
     }
 
     public function scan($sort_order = self::SORT_NONE, $hidden = false)
