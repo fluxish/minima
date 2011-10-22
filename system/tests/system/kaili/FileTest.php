@@ -152,6 +152,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
         $object = File::create(ROOT.DS.'test.txt');
         $object->move(SYSTEM);
         $this->assertTrue(file_exists(SYSTEM.DS.'test.txt'));
+        $this->assertFalse(file_exists(ROOT.DS.'test.txt'));
         $this->assertEquals($object->get_path(), SYSTEM.DS.'test.txt');
     }
     

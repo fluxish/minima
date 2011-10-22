@@ -144,11 +144,10 @@ class File
         if(!$overwrite && file_exists($to_path))
             throw new FileException('File already exists.');
         
+        $res = rename($this->_path, $to_path);
         // move the file
-        $res = copy($this->_path, $to_path);
         if($res){
             $this->_path = $to_path;
-            unlink($this->_dir_name.DS.$this->_base_name);
             $this->_file_info();
             return $this;
         }
