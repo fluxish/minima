@@ -97,7 +97,7 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase
     
     /**
      * Test for Directory::rename()
-     * Create a new file named test_dir and renames it with the same name.
+     * Create a new Directory named test_dir and renames it with the same name.
      * At the end of the test, remove the created directory.
      * @test
      */
@@ -108,6 +108,46 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($object->get_base_name(), 'test_dir');
     }
     
+    /**
+     * Test for Directory::move()
+     * Create the Directory test_dir in [ROOT] and moves it to [SYSTEM]
+     * At the end of the test, remove the moved directory.
+     * @test
+     */
+    public function test_move()
+    {
+        $object = Directory::create(ROOT.DS.'test_dir');
+        $object->move(SYSTEM);
+        $this->assertTrue(is_dir(SYSTEM.DS.'test_dir'));
+        $this->assertFalse(is_dir(ROOT.DS.'test_dir'));
+        $this->assertEquals($object->get_path(), SYSTEM.DS.'test_dir');
+    }
+    
+     /**
+     * Test for Directory::move()
+     * Attempts to move [ROOT]/test.txt to [ROOT] with overwriting disabled
+     * Throws \Kaili\DirectoryException because Directory alredy exists
+     * @expectedException \Kaili\DirectoryException
+     * @test
+     */
+    public function test_move_directory_exists()
+    {
+        $object = Directory::create(ROOT.DS.'test_dir');
+        $object->move(ROOT, false);
+    }
+    
+    /**
+     * Test for Directory::move()
+     * Attempts to move [ROOT]/index.php to [ROOT]/not_exist
+     * Throws \InvalidArgumentException because provided path doesn't exist
+     * @expectedException \InvalidArgumentException
+     * @test
+     */
+    public function test_move_not_exists_dir()
+    {
+        $object = Directory::create(ROOT.DS.'test_dir');
+        $object->move(ROOT.DS.'not_exist');
+    }
 }
 
 ?>

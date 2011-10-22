@@ -58,12 +58,31 @@ class Directory extends File
         $this->_path = $path;
         
         // get directory info
-        $this->_dir_info();
+        $this->_info();
         
         
         //$this->_dir = array();
     }
-
+    
+    /**
+     * Move this directory to other location
+     * @param string $to path of the location in witch move the directory
+     * @return Directory
+     */
+    public function move($to, $overwrite = true)
+    {
+        try{
+            return parent::move($to, $overwrite);
+        }
+        catch(InvalidArgumentException $ex){
+            throw new \InvalidArgumentException('Directory "'.$to.'" not found.');
+        }
+        catch(FileException $ex)
+        {
+            throw new DirectoryException('Directory already exists.');
+        }
+    }
+    
     public function scan($sort_order = self::SORT_NONE, $hidden = false)
     {
         $res = array();
@@ -71,7 +90,7 @@ class Directory extends File
         foreach($arr as $f) {
             $file = $this->_path.$f;
             if(is_dir($file) && !($f == '.' || $f == '..')) {
-                $res[$file] = $this->_dir_info($file);
+                $res[$file] = $this->_info($file);
             }
             else if(is_file($file)) {
                 $res[$file] = $this->_file_info($file);
@@ -87,7 +106,7 @@ class Directory extends File
         foreach($arr as $d) {
             $dir = $this->_path.$d;
             if(is_dir($dir) && !($d == '.' || $d == '..')) {
-                $res[$dir] = $this->_dir_info($dir);
+                $res[$dir] = $this->_info($dir);
             }
         }
         return $res;
@@ -106,7 +125,7 @@ class Directory extends File
         return $res;
     }
 
-    private function _dir_info()
+    private function _info()
     {
         $pathinfo = pathinfo($this->_path);
         $lstat = lstat($this->_path);
