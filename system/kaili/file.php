@@ -131,7 +131,8 @@ class File
     
     /**
      * Move this file to other location
-     * @param strint $to path of the location in witch move the file
+     * @param string $to path of the location in witch move the file
+     * @param boolean $overwrite set if moving has to overwrite existing file
      * @return File 
      */
     public function move($to, $overwrite = true)
