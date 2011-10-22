@@ -83,6 +83,17 @@ class Directory extends File
         }
     }
     
+    /**
+     * Remove this directory from filesystem
+     * @param bool $recursive set if has to remove files and directories inside it
+     * @return bool TRUE on success or FALSE on failure
+     */
+    public function remove()
+    {
+        $res = rmdir($this->_path);
+        return $res;
+    }
+    
     public function scan($sort_order = self::SORT_NONE, $hidden = false)
     {
         $res = array();

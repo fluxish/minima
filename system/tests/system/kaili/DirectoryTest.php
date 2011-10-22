@@ -148,6 +148,21 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase
         $object = Directory::create(ROOT.DS.'test_dir');
         $object->move(ROOT.DS.'not_exist');
     }
+    
+    
+    /**
+     * Test for Directory::remove()
+     * Create and remove [ROOT]/test_dir
+     * @test
+     */
+    public function test_remove()
+    {
+        $path = ROOT.DS.'test_dir';
+        $object = Directory::create($path);
+        $object->remove($path);
+        $this->assertFalse(is_dir($path));
+    }
+    
 }
 
 ?>
