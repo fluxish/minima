@@ -108,7 +108,7 @@ class File
         $this->_path = $path;
         
         // get file info
-        $this->_file_info();
+        $this->_info();
     }
     
     /**
@@ -121,7 +121,7 @@ class File
         $res = rename($this->_path, $this->_dir_name.DS.$name);
         if($res){
             $this->_path = $this->_dir_name.DS.$name;
-            $this->_file_info();
+            $this->_info();
             return $this;
         }
         return $res;
@@ -148,7 +148,7 @@ class File
         // move the file
         if($res){
             $this->_path = $to_path;
-            $this->_file_info();
+            $this->_info();
             return $this;
         }
         return $res;
@@ -292,7 +292,7 @@ class File
     /**
      * Set the file informations
      */
-    private function _file_info()
+    private function _info()
     {
         $pathinfo = pathinfo($this->_path);
         if(!isset($pathinfo['extension']))
