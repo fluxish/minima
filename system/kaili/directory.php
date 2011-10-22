@@ -160,6 +160,13 @@ class Directory extends File
         return $res;
     }
     
+    /**
+     * Scan and returns files and directories inside this directory
+     * @param type $sort_order no order (SORT_NONE, default), ascending (SORT_ASC), descending (SORT_DESC)
+     * @param type $mode all (SCAN_ALL, default), directories (SCAN_DIRS), files (SCAN_FILES)
+     * @param type $hidden set if include hidden files/directories in the results
+     * @return type array
+     */
     public function scan($sort_order = self::SORT_NONE, $mode = self::SCAN_ALL, $hidden = false)
     {
         $res = array();
@@ -172,6 +179,28 @@ class Directory extends File
                 $res[$f] = Directory::factory($f);
         }
         return $res;
+    }
+    
+    /**
+     * Returns all directories inside this directory
+     * @param type $sort_order no order (SORT_NONE, default), ascending (SORT_ASC), descending (SORT_DESC)
+     * @param type $hidden set if include hidden directories in the results
+     * @return type array
+     */
+    public function scan_directories($sort_order = self::SORT_NONE, $hidden = false)
+    {
+        return $this->scan($sort_order, self::SCAN_DIRS, $hidden);
+    }
+    
+    /**
+     * Returns all files inside this directory
+     * @param type $sort_order no order (SORT_NONE, default), ascending (SORT_ASC), descending (SORT_DESC)
+     * @param type $hidden set if include hidden files in the results
+     * @return type array
+     */
+    public function scan_files($sort_order = self::SORT_NONE, $hidden = false)
+    {
+        return $this->scan($sort_order, self::SCAN_FILES, $hidden);
     }
     
     /**
