@@ -41,6 +41,48 @@ class Directory extends File
     }
     
     /**
+     * The absolute path
+     * @var string
+     */
+    private $_path;
+    
+    /**
+     * The name of the file
+     * @var string
+     */
+    private $_name;
+    
+    /**
+     * The name of the file, including extension
+     * @var string 
+     */
+    private $_base_name;
+    
+    /**
+     * The directory part of the absolute path
+     * @var string
+     */
+    private $_dir_name;
+    
+    /**
+     * The size, in bytes
+     * @var long
+     */
+    private $_size;
+    
+    /**
+     * Time of the last access, in Unix timestamp format
+     * @var string
+     */
+    private $_last_access;
+    
+    /**
+     * Time of the last modification, in Unix timestamp format
+     * @var string
+     */
+    private $_last_modification;
+    
+    /**
      * Array of content of the directory
      * @var array
      */
@@ -65,22 +107,46 @@ class Directory extends File
     }
     
     /**
+     * Rename this directory
+     * @param string $name the new name of this directory
+     * @return Directory 
+     */
+    public function rename($name)
+    {
+        $res = rename($this->_path, $this->_dir_name.DS.$name);
+        if($res){
+            $this->_path = $this->_dir_name.DS.$name;
+            $this->_info();
+            return $this;
+        }
+        return $res;
+    }
+    
+    /**
      * Move this directory to other location
      * @param string $to path of the location in witch move the directory
      * @return Directory
      */
     public function move($to, $overwrite = true)
     {
-        try{
-            return parent::move($to, $overwrite);
-        }
-        catch(InvalidArgumentException $ex){
+        $to_path = $to.DS.$this->_base_name;
+        
+        // check if directory exists
+        if(!is_dir($to))
             throw new \InvalidArgumentException('Directory "'.$to.'" not found.');
+        
+        // if overwriting is disabled, check if file exists
+        if(!$overwrite && is_dir($to_path))
+            throw new DirectoryException('Directory "'.$to_path.'" already exists.');
+        
+        $res = rename($this->_path, $to_path);
+        // move the file
+        if($res){
+            $this->_path = $to_path;
+            $this->_info();
+            return $this;
         }
-        catch(FileException $ex)
-        {
-            throw new DirectoryException('Directory already exists.');
-        }
+        return $res;
     }
     
     /**
@@ -135,7 +201,83 @@ class Directory extends File
         }
         return $res;
     }
-
+    
+    
+    /**
+     * Returns the absolute path of this directory.
+     * @return string
+     */
+    public function get_path()
+    {
+        return $this->_path;
+    }
+    
+    /**
+     * Returns the name of this directory
+     * @return string
+     */
+    public function get_base_name()
+    {
+        return $this->_base_name;
+    }
+    
+    /**
+     * Returns the path of this file, excluding basename.
+     * @return string
+     */
+    public function get_dir_name()
+    {
+        return $this->_dir_name;
+    }
+    
+    /**
+     * Returns the name of the file.
+     * @return string
+     */
+    public function get_name()
+    {
+        return $this->_name;
+    }
+    
+    /**
+     * Returns the size of the directory, in bytes
+     * @return long
+     */
+    public function get_size()
+    {
+        return $this->_size;
+    }
+    
+    /**
+     * Returns the time of the last access to the directory, in Unix timestamp format
+     * @return string
+     */
+    public function get_last_access()
+    {
+        return $this->_last_access;
+    }
+    
+    /**
+     * Returns the time of the last modification of the directory, in Unix timestamp format
+     * @return string
+     */
+    public function get_last_modification()
+    {
+        return $this->_last_modification;
+    }
+    
+    /**
+     * Returns entire content of the directory in a string
+     * @return string
+     */
+    public function __toString()
+    {
+        return file_get_contents($this->_path);
+    }
+    
+    /**
+     * Set the directory infos 
+     */
     private function _info()
     {
         $pathinfo = pathinfo($this->_path);
