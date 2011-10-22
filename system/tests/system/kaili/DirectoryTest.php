@@ -223,12 +223,39 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase
         $content = array('.gitignore','.htaccess','index.php','README');
         $object = Directory::factory(ROOT);
         $res = $object->scan(Directory::SORT_ASC, Directory::SCAN_FILES);
-        var_dump($res);
+        
         $this->assertEquals(count($content), count($res));
         foreach($res as $path=>$dir){
             $this->assertTrue(in_array($dir->get_base_name(), $content));
             $this->assertInstanceOf('\Kaili\File', $dir);
         }
+    }
+    
+    /**
+     * Test for Directory::search()
+     * Search file 'index.php' inside the ROOT directory
+     * @test
+     */
+    public function test_search()
+    {
+        $object = Directory::factory(ROOT);
+        $res = $object->search('/(index.php|.htaccess)/');
+        
+        $this->assertArrayHasKey(ROOT.DS.'index.php', $res);
+        $this->assertArrayHasKey(ROOT.DS.'.htaccess', $res);
+    }
+    
+    /**
+     * Test for Directory::search_by_name()
+     * Search file 'index.php' inside the ROOT directory
+     * @test
+     */
+    public function test_search_by_name()
+    {
+        $object = Directory::factory(ROOT);
+        $res = $object->search_by_name('index.php');
+        
+        $this->assertArrayHasKey(ROOT.DS.'index.php', $res);
     }
 }
 

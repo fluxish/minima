@@ -204,6 +204,45 @@ class Directory extends File
     }
     
     /**
+     * Search files or directoris inside this directory, by pattern
+     * @param string the pattern to search for
+     * @param type $sort_order no order (SORT_NONE, default), ascending (SORT_ASC), descending (SORT_DESC)
+     * @param type $mode all (SCAN_ALL, default), directories (SCAN_DIRS), files (SCAN_FILES)
+     * @param type $hidden set if include hidden files/directories in the results
+     * @return type array
+     */
+    public function search($pattern = '.*', $sort_order = self::SORT_NONE, $mode = self::SCAN_ALL, $hidden = false)
+    {
+        $res = array();
+        $arr = scandir($this->_path, $sort_order);
+        foreach($arr as $f) {
+            if(preg_match($pattern, $f) != 0){
+                var_dump($f);
+                $f = $this->_path.DS.$f;
+                if(is_file($f) and $mode != self::SCAN_DIRS)
+                    $res[$f] = File::factory($f);
+                else if(is_dir($f) and $mode != self::SCAN_FILES)
+                    $res[$f] = Directory::factory($f);
+            }
+        }
+        return $res;
+    }
+    
+    /**
+     * Search files or directoris inside this directory, by name
+     * @param string the name to search for
+     * @param type $sort_order no order (SORT_NONE, default), ascending (SORT_ASC), descending (SORT_DESC)
+     * @param type $mode all (SCAN_ALL, default), directories (SCAN_DIRS), files (SCAN_FILES)
+     * @param type $hidden set if include hidden files/directories in the results
+     * @return type array
+     */
+    public function search_by_name($name = '.*', $sort_order = self::SORT_NONE, $mode = self::SCAN_ALL, $hidden = false)
+    {
+        $pattern = '/('.preg_quote($name).')/';
+        return $this->search($pattern, $sort_order, $mode, $hidden);
+    }
+    
+    /**
      * Returns the absolute path of this directory.
      * @return string
      */
@@ -291,13 +330,40 @@ class Directory extends File
         $this->_last_modification = $lstat['mtime'];
     }
     
+    /**
+     * Directory scan mode
+     * @var string 
+     */
     const SCAN_DIRS = 'dirs';
+    
+    /**
+     * File scan mode
+     * @var string 
+     */
     const SCAN_FILES = 'files';
+    
+    /**
+     * All elements scan mode
+     * @var string 
+     */
     const SCAN_ALL = 'all';
-    const TYPES_ALL = '.*';
+    
+    /**
+     * Ascending sort
+     * @var int
+     */
     const SORT_ASC = 0;
+    
+    /**
+     * Descending sort
+     * @var int
+     */
     const SORT_DESC = 1;
+    
+    /**
+     * No sort
+     * @var int
+     */
     const SORT_NONE = 2;
-
 }
 
