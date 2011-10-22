@@ -4,6 +4,8 @@ namespace Kaili;
 
 class FileException extends Exception{}
 
+class FileNotFoundException extends FileException{}
+
 /**
  * Kaili File Class
  *
@@ -22,7 +24,7 @@ class File
     public static function factory($path)
     {
         if(!file_exists($path))
-            throw new FileException('File "'.$path.'" not found.');
+            throw new \InvalidArgumentException('File "'.$path.'" not found.');
         return new static($path);
     }
     
@@ -34,7 +36,7 @@ class File
     public static function create($path)
     {
         if(file_exists($path))
-            throw new FileException('File "'.$path.'" aleredy exists.');
+            throw new \InvalidArgumentException('File "'.$path.'" aleredy exists.');
         $fp = fopen($path, 'w');
         fclose($fp);
         
@@ -138,7 +140,7 @@ class File
         
         // check if directory exists
         if(!is_dir($to))
-            throw new FileException('Directory "'.$to.'" not found.');
+            throw new \InvalidArgumentException('Directory "'.$to.'" not found.');
         
         // if overwriting is disabled, check if file exists
         if(!$overwrite && file_exists($to_path))

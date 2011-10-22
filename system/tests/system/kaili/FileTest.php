@@ -56,9 +56,9 @@ class FileTest extends \PHPUnit_Framework_TestCase
     /**
      * Test for File::factory()
      * The file doesn't exist.
-     * Throws Kaili\Exception because the provided file doesn't exist.
+     * Throws \InvalidArgumentException because the provided file doesn't exist.
      * @test
-     * @expectedException \Kaili\FileException
+     * @expectedException \InvalidArgumentException
      */
     public function test_factory_not_exist()
     {
@@ -78,9 +78,9 @@ class FileTest extends \PHPUnit_Framework_TestCase
     /**
      * Test for File::create()
      * The file already exist.
-     * Throws Exception because provided path is an already existent file
+     * Throws \InvalidArgumentException because provided path is an already existent file
      * @test
-     * @expectedException \Kaili\FileException
+     * @expectedException \InvalidArgumentException
      */
     public function test_create_exists()
     {
@@ -172,8 +172,8 @@ class FileTest extends \PHPUnit_Framework_TestCase
     /**
      * Test for File::move()
      * Attempts to move [ROOT]/index.php to [ROOT]/not_exist
-     * Throws \Kaili\FileException because provided path doesn't exist
-     * @expectedException \Kaili\FileException
+     * Throws \InvalidArgumentException because provided path doesn't exist
+     * @expectedException \InvalidArgumentException
      * @test
      */
     public function test_move_not_exists_dir()
