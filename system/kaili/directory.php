@@ -9,7 +9,7 @@ namespace Kaili;
  *
  * @package Kaili
  */
-class Directory
+class Directory extends File
 {
 
     /**
@@ -21,12 +21,6 @@ class Directory
     {
         return new static($path);
     }
-
-    /**
-     * Path of directory
-     * @var string
-     */
-    private $_path;
     
     /**
      * Array of content of the directory
@@ -34,7 +28,6 @@ class Directory
      */
     private $_dir;
 
-    
     /**
      * Create a Directory object
      * @param string $file the name of the config file to load at the creation
@@ -45,9 +38,14 @@ class Directory
         if($path === null)
             throw new \InvalidArgumentException('A valid path is required.');
         $this->_path = $path;
+        
+        // get directory info
+        $this->_dir_info();
+        
+        
         $this->_dir = array();
     }
-    
+
     public function scan($sort_order = self::SORT_NONE, $hidden = false)
     {
         $res = array();
@@ -63,7 +61,7 @@ class Directory
         }
         return $res;
     }
-    
+
     public function scan_dirs($sort_order = self::SORT_NONE, $hidden = false)
     {
         $res = array();
@@ -76,7 +74,7 @@ class Directory
         }
         return $res;
     }
-    
+
     public function scan_files($file_types = self::TYPES_ALL, $sort_order = self::SORT_NONE, $hidden = false)
     {
         $res = array();
@@ -90,41 +88,21 @@ class Directory
         return $res;
     }
 
-    private function _file_info($file)
+    private function _dir_info()
     {
-        $pathinfo = pathinfo($file);
-        if(!isset($pathinfo['extension']))
-            $pathinfo['extension'] = '';
+        $pathinfo = pathinfo($this->_path);
+        $lstat = lstat($this->_path);
 
-        $lstat = lstat($file);
-
-        return array(
-            'name' => $pathinfo['basename'],
-            'path' => $pathinfo['dirname'],
-            'ext' => $pathinfo['extension'],
-            'mime' => mime_content_type($file),
-            'size' => $lstat['size'],
-            'last_access' => $lstat['atime'],
-            'last_modification' => $lstat['mtime']
-        );
+        $this->_name = $pathinfo['filename'];
+        $this->_base_name = $pathinfo['basename'];
+        $this->_dir_name = $pathinfo['dirname'];
+        $this->_extension = null;
+        $this->_mime = mime_content_type($this->_path);
+        $this->_size = $lstat['size'];
+        $this->_last_access = $lstat['atime'];
+        $this->_last_modification = $lstat['mtime'];
     }
     
-    private function _dir_info($dir)
-    {
-        $pathinfo = pathinfo($dir);
-        if(!isset($pathinfo['extension']))
-            $pathinfo['extension'] = '';
-
-        $lstat = lstat($dir);
-
-        return array(
-            'name' => $pathinfo['basename'],
-            'path' => $pathinfo['dirname'],
-            'last_access' => $lstat['atime'],
-            'last_modification' => $lstat['mtime']
-        );
-    }
-
     const SCAN_DIRS = 'dirs';
     const SCAN_FILES = 'files';
     const SCAN_ALL = 'all';
@@ -132,5 +110,6 @@ class Directory
     const SORT_ASC = 0;
     const SORT_DESC = 1;
     const SORT_NONE = 2;
+
 }
 
