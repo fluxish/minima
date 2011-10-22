@@ -163,6 +163,73 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(is_dir($path));
     }
     
+    /**
+     * Test for Directory::scan()
+     * Scan the content of ROOT directory
+     * @test
+     */
+    public function test_scan()
+    {
+        $content = array('.','..','application','.git','.gitignore','.htaccess','index.php','nbproject','README','system');
+        $object = Directory::factory(ROOT);
+        $res = $object->scan(Directory::SORT_ASC);
+        
+        $output = array();
+        foreach($res as $f) $output[] = $f->get_base_name();
+        $this->assertEquals($content, $output);
+    }
+    
+    /**
+     * Test for Directory::scan()
+     * Scan the content of ROOT directory in descending order
+     * @test
+     */
+    public function test_scan_sort_desc()
+    {
+        $content = array('.','..','application','.git','.gitignore','.htaccess','index.php','nbproject','README','system');
+        $object = Directory::factory(ROOT);
+        $res = $object->scan(Directory::SORT_DESC);
+        
+        $output = array();
+        foreach($res as $f) $output[] = $f->get_base_name();
+        $this->assertEquals(array_reverse($content), $output);
+    }
+    
+    /**
+     * Test for Directory::scan()
+     * Scan only the directories inside ROOT directory
+     * @test
+     */
+    public function test_scan_directories()
+    {
+        $content = array('.','..','application','.git','nbproject','system');
+        $object = Directory::factory(ROOT);
+        $res = $object->scan(Directory::SORT_ASC, Directory::SCAN_DIRS);
+        
+        $this->assertEquals(count($content), count($res));
+        foreach($res as $path=>$dir){
+            $this->assertTrue(in_array($dir->get_base_name(), $content));
+            $this->assertInstanceOf('\Kaili\Directory', $dir);
+        }
+    }
+    
+    /**
+     * Test for Directory::scan()
+     * Scan only the files inside ROOT directory
+     * @test
+     */
+    public function test_scan_files()
+    {
+        $content = array('.gitignore','.htaccess','index.php','README');
+        $object = Directory::factory(ROOT);
+        $res = $object->scan(Directory::SORT_ASC, Directory::SCAN_FILES);
+        var_dump($res);
+        $this->assertEquals(count($content), count($res));
+        foreach($res as $path=>$dir){
+            $this->assertTrue(in_array($dir->get_base_name(), $content));
+            $this->assertInstanceOf('\Kaili\File', $dir);
+        }
+    }
 }
 
 ?>
