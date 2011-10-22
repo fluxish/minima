@@ -160,48 +160,19 @@ class Directory extends File
         return $res;
     }
     
-    public function scan($sort_order = self::SORT_NONE, $hidden = false)
+    public function scan($sort_order = self::SORT_NONE, $mode = self::SCAN_ALL, $hidden = false)
     {
         $res = array();
         $arr = scandir($this->_path, $sort_order);
         foreach($arr as $f) {
-            $file = $this->_path.$f;
-            if(is_dir($file) && !($f == '.' || $f == '..')) {
-                $res[$file] = $this->_info($file);
-            }
-            else if(is_file($file)) {
-                $res[$file] = $this->_file_info($file);
-            }
+            $f = $this->_path.DS.$f;
+            if(is_file($f) and $mode != self::SCAN_DIRS)
+                $res[$f] = File::factory($f);
+            else if(is_dir($f) and $mode != self::SCAN_FILES)
+                $res[$f] = Directory::factory($f);
         }
         return $res;
     }
-
-    public function scan_dirs($sort_order = self::SORT_NONE, $hidden = false)
-    {
-        $res = array();
-        $arr = scandir($this->_path, $sort_order);
-        foreach($arr as $d) {
-            $dir = $this->_path.$d;
-            if(is_dir($dir) && !($d == '.' || $d == '..')) {
-                $res[$dir] = $this->_info($dir);
-            }
-        }
-        return $res;
-    }
-
-    public function scan_files($file_types = self::TYPES_ALL, $sort_order = self::SORT_NONE, $hidden = false)
-    {
-        $res = array();
-        $arr = scandir($this->_path, $sort_order);
-        foreach($arr as $f) {
-            $f = $this->_path.$f;
-            if(is_file($f)) {
-                $res[$f] = $this->_file_info($f);
-            }
-        }
-        return $res;
-    }
-    
     
     /**
      * Returns the absolute path of this directory.
@@ -286,8 +257,6 @@ class Directory extends File
         $this->_name = $pathinfo['filename'];
         $this->_base_name = $pathinfo['basename'];
         $this->_dir_name = $pathinfo['dirname'];
-        $this->_extension = null;
-        $this->_mime = mime_content_type($this->_path);
         $this->_size = $lstat['size'];
         $this->_last_access = $lstat['atime'];
         $this->_last_modification = $lstat['mtime'];
