@@ -2,6 +2,8 @@
 
 namespace Kaili;
 
+class DirectoryException extends Exception{};
+
 /**
  * Kaili Directory Class
  *
