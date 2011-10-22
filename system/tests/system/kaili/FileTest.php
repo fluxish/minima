@@ -36,7 +36,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
             ROOT.DS.'test_new.txt',
             ROOT.DS.'test.tx',
             ROOT.DS.'test',
-            SYSTEM.'test.txt',
+            SYSTEM.DS.'test.txt',
         );
         foreach($test_files as $f){
             file_exists($f) and unlink($f);

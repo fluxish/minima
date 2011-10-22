@@ -34,7 +34,7 @@ class Directory extends File
     public static function create($path)
     {
         if(is_dir($path))
-            throw new FileException('Directory "'.$path.'" aleredy exists.');
+            throw new DirectoryException('Directory "'.$path.'" aleredy exists.');
         mkdir($path);
         
         return new static($path);
