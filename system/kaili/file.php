@@ -45,37 +45,37 @@ class File
      * The absolute path
      * @var string
      */
-    private $_path;
+    protected $_path;
     
     /**
      * The name of the file
      * @var string
      */
-    private $_name;
+    protected $_name;
     
     /**
      * The name of the file, including extension
      * @var string 
      */
-    private $_base_name;
+    protected $_base_name;
     
     /**
      * The directory part of the absolute path
      * @var string
      */
-    private $_dir_name;
+    protected $_dir_name;
     
     /**
      * The extension of the file
      * @var string
      */
-    private $_extension;
+    protected $_extension;
     
     /**
      * The mime type
      * @var string
      */
-    private $_mime;
+    protected $_mime;
     
     /**
      * The size, in bytes
@@ -87,13 +87,13 @@ class File
      * Time of the last access, in Unix timestamp format
      * @var string
      */
-    private $_last_access;
+    protected $_last_access;
     
     /**
      * Time of the last modification, in Unix timestamp format
      * @var string
      */
-    private $_last_modification;
+    protected $_last_modification;
 
     
     /**
