@@ -19,6 +19,14 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase
      * This method is called before a test is executed.
      */
     protected function setUp()
+    {    
+    }
+
+    /**
+     * Tears down the fixture, for example, closes a network connection.
+     * This method is called after a test is executed.
+     */
+    protected function tearDown()
     {
         $test_dirs = array(
             ROOT.DS.'test_dir',
@@ -28,15 +36,6 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase
         foreach($test_dirs as $f){
             is_dir($f) and rmdir($f);
         }
-    }
-
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-        
     }
     
     /**
@@ -81,6 +80,32 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase
     public function test_create_exists()
     {
         Directory::create(ROOT.DS.'application');
+    }
+    
+    /**
+     * Test for Directory::rename()
+     * Create a new directory named test_dir and renames it as test_new_dir.
+     * At the end of the test, remove the created directory.
+     * @test
+     */
+    public function test_rename()
+    {
+        $object = Directory::create(ROOT.DS.'test_dir');
+        $object->rename('test_new_dir');
+        $this->assertEquals($object->get_base_name(), 'test_new_dir');
+    }
+    
+    /**
+     * Test for Directory::rename()
+     * Create a new file named test_dir and renames it with the same name.
+     * At the end of the test, remove the created directory.
+     * @test
+     */
+    public function test_rename_same_name()
+    {
+        $object = Directory::create(ROOT.DS.'test_dir');
+        $object->rename('test_dir');
+        $this->assertEquals($object->get_base_name(), 'test_dir');
     }
     
 }
