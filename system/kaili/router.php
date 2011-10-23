@@ -31,7 +31,7 @@ class Router
     {
         
         $routes = array();
-        include(APPLICATION.DS.'config'.DS.'routes.php');
+        include(CONFIG.DS.'routes.php');
         
         $this->_routes = array();
         $this->_routes = array_merge($this->_routes, $routes);

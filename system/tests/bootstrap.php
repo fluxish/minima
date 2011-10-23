@@ -15,7 +15,8 @@ define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(__FILE__).'/../..');
 define('SYSTEM', ROOT.DS.'system');
 define('APPLICATION', ROOT.DS.'application');
-define('ASSETS', ROOT.DS.'assets');
+define('ASSETS', APPLICATION.DS.'assets');
+define('CONFIG', APPLICATION.DS.'config');
 define('EXT', '.php');
 
 ?>
