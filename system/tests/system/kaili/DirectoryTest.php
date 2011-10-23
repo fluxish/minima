@@ -257,6 +257,19 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase
         
         $this->assertArrayHasKey(ROOT.DS.'index.php', $res);
     }
+    
+    /**
+     * Test for Directory::search_by_extension()
+     * Search files with 'php' extension inside the ROOT directory
+     * @test
+     */
+    public function test_search_by_extension()
+    {
+        $object = Directory::factory(ROOT);
+        $res = $object->search_by_extension(array('php'));
+        
+        $this->assertArrayHasKey(ROOT.DS.'index.php', $res);
+    }
 }
 
 ?>
