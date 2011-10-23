@@ -21,7 +21,7 @@ class Html
         global $doctypes;
 
         if(!is_array($doctypes)) {
-            if(!require_once(APPLICATION.DS.'config'.DS.'doctypes.php'))
+            if(!require_once(CONFIG.DS.'doctypes.php'))
                 return false;
         }
 

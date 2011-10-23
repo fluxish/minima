@@ -5,6 +5,7 @@ define('ROOT', dirname(__FILE__));
 define('SYSTEM', ROOT.DS.'system');
 define('APPLICATION', ROOT.DS.'application');
 define('ASSETS', APPLICATION.DS.'assets');
+define('CONFIG', APPLICATION.DS.'config');
 define('EXT', '.php');
 
 require_once(SYSTEM.DS.'kaili'.DS.'loader'.EXT);

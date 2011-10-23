@@ -204,7 +204,7 @@ class View
 //    {
 //        if(Request::current()->get('format') == 'html'){
 //            $route = array();
-//            include(APPLICATION.DS.'config'.DS.'routes.php');
+//            include(CONFIG.DS.'routes.php');
 //            
 //            if(isset($path['controller'])) $controller = $path['controller'];
 //            else $controller = $route['default_controller'];

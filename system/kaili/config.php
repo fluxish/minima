@@ -22,10 +22,10 @@ class Config
         $config = new static();
         
         if($file === null){
-            // load main config file (APPLICATION/config/config.php)
+            // load main config file (CONFIG/config.php)
             $config->load('config');
             
-            //load other autoloaded config files (in APPLICATION/config/autoload.php)
+            //load other autoloaded config files (in CONFIG/autoload.php)
             $config->load('autoload');
             $config->_autoload();
         }
@@ -84,7 +84,7 @@ class Config
     function load($file)
     {
         // check in application dir
-        $file = APPLICATION.DS.'config'.DS.$file.EXT;
+        $file = CONFIG.DS.$file.EXT;
         if(!file_exists($file))
             throw new Exception('Config file "'.$file.'" not found.');
 
