@@ -150,7 +150,7 @@ class Session
      */
     private function _load_session()
     {
-        $cookie = $this->_load->load('request')->cookie($this->_cookie_name);
+        $cookie = Request::current()->cookie($this->_cookie_name);
              
         // if there isn't a cookie...
         if(!$cookie) return false;
@@ -177,13 +177,13 @@ class Session
         }
         
         // if ip address is different... destroy it!
-        if($cookie['ip_address'] !== $this->_load->load('request')->ip_address()){
+        if($cookie['ip_address'] !== Request::current()->ip_address()){
             $this->_destroy_session();
             return false;
         }
         
         // if user_agent is different... destroy it!
-        if($cookie['user_agent'] !== $this->_load->load('request')->user_agent()){
+        if($cookie['user_agent'] !== Request::current()->user_agent()){
             $this->_destroy_session();
             return false;
         }
@@ -199,8 +199,8 @@ class Session
     {
         $this->_session = array(
             'session_id' => md5(uniqid(mt_rand(0, mt_getrandmax()), true)),
-            'ip_address' => $this->_load->load('request')->ip_address(),
-            'user_agent' => $this->_load->load('request')->user_agent(),
+            'ip_address' => Request::current()->ip_address(),
+            'user_agent' => Request::current()->user_agent(),
             'updated_at' => $this->_now,
             $this->_weak_data_key => array()
         );

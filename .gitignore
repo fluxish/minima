@@ -1,6 +1,7 @@
 
 # Application paths and files
 
+/application/assets
 /application/controllers/
 /application/language/
 /application/logs/
@@ -18,5 +19,5 @@ Thumbs.db
 .buildpath
 .project
 .settings
-.nbproject/
-/assets/
+/nbproject
+/assets

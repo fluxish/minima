@@ -42,8 +42,8 @@ class Language
      */
     function __construct()
     {
-        $this->_config = Loader::get_instance()->load('config');
-        $this->_request = Loader::get_instance()->load('request');
+        $this->_config = Config::factory();
+        $this->_request = Request::current();
 
         $this->_preload();
         $lang = $this->_request->get('l');

@@ -19,14 +19,14 @@ class Url
     public static function abs($url, $reset = true)
     {
         if(is_array($url)) {
-            $request = Loader::get_instance()->load('request');
+            $request = Request::current();
             $params = $request->url_parameters();
-
+            
             if($reset) {
                 $vars = array_merge($params['route'], $url);
             }
             else {
-                $vars = array_merge($params['route'], $params['others'], $url);
+                $vars = array_merge($params['route'], $params['segments'], $url);
             }
 
             $url = '';
@@ -40,7 +40,7 @@ class Url
             }
             unset($vars, $params);
         }
-        $base = Loader::get_instance()->load('config')->item('base_url');
+        $base = Config::factory()->item('base_url');
         return ltrim($base.'/'.$url, '/');
     }
 
@@ -81,7 +81,7 @@ class Url
      */
     public static function from_path($path)
     {
-        $base_url = Loader::get_instance()->load('config')->item('base_url');
+        $base_url = Config::factory()->item('base_url');
         return str_replace($_SERVER['DOCUMENT_ROOT'].$_SERVER['PHP_SELF'], $base_url, $path);
     }
 

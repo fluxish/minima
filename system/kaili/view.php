@@ -7,153 +7,217 @@ namespace Kaili;
  *
  * This class display an action view
  *
- * @package		Kaili
+ * @package Kaili
  */
 class View
 {
 
     /**
-     * @var Template
+     * Returns a new View object
+     * 
+     * @param string|array $view the name of the view or the array of data to pass 
+     *      a default view
+     * @param array $data the array of data to send to the view
+     * @return View
      */
-    public $_template = null;
-
-    /**
-     * @var string
-     */
-    private $_controller;
-
-    /**
-     * @var string
-     */
-    private $_action;
-
-    /**
-     * @var boolean
-     */
-    private $_rendered = false;
-
-    /**
-     * @var Request
-     */
-    private $_request;
-
-    /**
-     * @var Output
-     */
-    private $_output;
-
-    /**
-     * Create new view
-     * @param string $controller the name of the controller
-     * @param string $action the name of the action
-     * @param string $template the name of the page template
-     */
-    public function __construct($with_template = true)
+    public static function factory($view = null, array $data = null)
     {
-        $this->_request = Loader::get_instance()->load('request');
-        $this->_output = Loader::get_instance()->load('output');
-
-        $this->_controller = $this->_request->get('controller');
-        $this->_action = $this->_request->get('action');
-        if($with_template) {
-            $this->_template = Loader::get_instance()->load('template');
+        // check if the first argument is an array
+        if(is_array($view)){
+            $data = $view;
+            $view = null;
         }
+        
+        // create the View
+        $request = Request::current();
+        $controller = $request->get('controller');
+        $action = $request->get('action');
+
+        if($view === null) {
+            // if view is null and format is html, set view to default action view
+            $file = APPLICATION.DS.'views'.DS.$controller.DS.$action.EXT;
+        }
+        else if(file_exists(APPLICATION.DS.'views'.DS.$controller.DS.$view.EXT)) {
+            // else, set view to another view of the same controller, if this view exists
+            $file = APPLICATION.DS.'views'.DS.$controller.DS.$view.EXT;
+        }
+        else if(file_exists(APPLICATION.DS.'views'.DS.$view.EXT)) {
+            // else, set view to another view, if exists
+            $file = APPLICATION.DS.'views'.DS.$view.EXT;
+        }
+        else {
+            // else, search the view in the tp directory of default theme, and render it
+            $theme = Config::factory()->item('interface_theme');
+            $file = ASSETS.DS.'themes'.DS.$theme.DS.'tp'.DS.$view.EXT;
+        }
+
+        return new static($file, $data);
+    }
+    
+    
+    /**
+     * The path of the view
+     * @var string
+     */
+    private $_file = null;
+    
+    /**
+     * An array of data to extract in the view
+     * @var array
+     */
+    private $_data = null;
+    
+    /**
+     * Array of all places in the view
+     * @var array
+     */
+    private $_places = null;
+    
+    /**
+     * The prefix of place's name
+     * @var string
+     */
+    private $_place_prefix = 'place_';
+
+    /**
+     * Create a new View
+     * 
+     * @param array $data the array of data to send to the view
+     * @param string $file the file of the view
+     * @return Kaili\View
+     */
+    public function __construct($file = null, array $data = null)
+    {
+        $this->_file = $file;
+        $this->_data = $data;
+        $this->_places = array();
+        $this->config = Config::factory();
+        
+        // TEMPORARY VARIABLES
+        $this->session = Loader::get_instance()->load('session');
     }
 
     /**
      * Render an action view
      * 
-     * @param array $vars an array of variables to extract and use into action view
-     * @param string $view the name of the view to render
-     * @param boolean $as_data true if want return the content as data
-     * @param boolean $with_template true (default) if view is rendered with template
-     * @return mixed if the second paramater is true, returns the content as data, 
-     *      else returns null.
+     * @param array $data the array of data to send to the view
+     * @return string the code of the view
      */
-    public function render($vars = array(), $view = null, $as_data = false, $with_template = true)
+    public function render()
     {
-        $format = $this->_request->get('format');
+        $template = View::factory($this->config->item('main_template'));
+        $template->place('content', $this->render_no_template());
+        $code = $template->render_no_template();
 
-        // set view to render
-        if(!$format || $format == 'html') {
-            if($view == null) {
-                // if view is null and format is html, set view to default action view
-                $view = APPLICATION.DS.'views'.DS.$this->_controller.DS.$this->_action;
-            }
-            else if(file_exists(APPLICATION.DS.'views'.DS.$this->_controller.DS.$view.EXT)) {
-                // else, set view to another view of the same controller, if this view exists
-                $view = APPLICATION.DS.'views'.DS.$this->_controller.DS.$view;
-            }
-            else if(file_exists(APPLICATION.DS.'views'.DS.$view.EXT)) {
-                // else, set view to another view, if exists
-                $view = APPLICATION.DS.'views'.DS.$view;
-            }
-            else {
-                // else, search the view in the tp directory of default theme, and render it
-                $theme = Loader::get_instance()->load('config')->item('interface_theme');
-                $view = ASSETS.DS.'themes'.DS.$theme.DS.'tp'.DS.$view;
-            }
-
-            // if template is null or with_template is false, render view without template
-            if($this->_template != null && $with_template) {
-                $this->_output->set_header('Content-Type: text/html');
-                ob_start();
-                $this->_template->place_view('content', $vars, $view);
-                $this->_template->render();
-                $this->_output->append(ob_get_contents());
-                ob_end_clean();
-            }
-            else {
-                $this->_output->set_header('Content-Type: text/html');
-                extract($vars);
-                include($view.EXT);
-            }
-
-            // if as_data is true, save rendered view in a variable and return it
-            if($as_data) {
-                ob_start();
-                extract($vars);
-                include($view.EXT);
-                $data = ob_get_contents();
-                ob_end_clean();
-
-                return $data;
-            }
+//        else {
+//            // other formats
+//            $this->_output->set_header('Content-Type: text/'.$format);
+//            $formatter = new Formatter($format);
+//            $this->_output->append($formatter->format($vars));
+//        }
+        return $code;
+    }
+    
+    /**
+     * Render an action view without a template
+     * 
+     * @param array $data the array of data to send to the view
+     * @param string $file the file of the view
+     * @return string the code of the view
+     */
+    public function render_no_template()
+    {
+        ob_start();
+        if($this->_data !== null) extract($this->_data);
+        if(count($this->_places) !== 0) extract($this->_places);
+        include($this->_file);
+        $code = ob_get_contents();
+        ob_end_clean();
+        
+        return $code;
+    }
+    
+    /**
+     * Add html code in a "place" and assign content to place_[name_place] variable
+     * 
+     * @param string $name the name of the place
+     * @param string $code the html code to include in the place
+     */
+    public function place($name, $code)
+    {
+        $this->_places[$this->_place_prefix.$name] = $code;
+    }
+    
+    /**
+     * Add a rendered view in a "place" and assign content to plac_[place_name] variable
+     * @param $name the name of the place
+     * @param string|View $view the name of the view or a View object 
+     * @param array $data the array of data to send to the view
+     */
+    public function place_view($name, $view, $data = null)
+    {
+        if($view instanceof Kaili\View){
+            $code = $view->render_no_template();
         }
-        else {
-            // other formats
-            $this->_output->set_header('Content-Type: text/'.$format);
-            $formatter = new Formatter($format);
-            $this->_output->append($formatter->format($vars));
+        else{
+            $code = View::factory($view, $data)->render_no_template();
         }
-        $this->_rendered = true;
+        $this->place($name, $code);
     }
-
+    
     /**
-     * Check if the action view is rendered.
-     * @return boolean true if the action view is really rendered, false otherwise.
+     * Place a template and render it
+     * @param string $template the name of the template
+     * @param array $data the array of data to send to the view
      */
-    public function is_rendered()
+    public function place_template($template, $data = null)
     {
-        return $this->_rendered;
+        echo View::factory($template, $data)->render_no_template();
     }
-
+    
     /**
-     * Force the view to no render itself
+     * Set the file of the view
+     * @param string $file 
      */
-    public function no_render()
+    public function set_file($file)
     {
-        $this->_rendered = true;
+        $this->_file = $file;
     }
-
+    
     /**
-     * Set a template object
-     * @param Template $template a Template object
+     * Set the data of the view
+     * @param array $data 
      */
-    function set_template($template)
+    public function set_data(array $data)
     {
-        $this->_template = $template;
+        $this->_data = $data;
     }
+    
+//     /**
+//     * Executes an action and add the view in a "place" and assign content 
+//     * to place_nameplace variable.
+//     * 
+//     * @param string $place_name the name of the place
+//     * @param array $path an array with controller and action
+//     */
+//    public function place_action($place_name, $path = array())
+//    {
+//        if(Request::current()->get('format') == 'html'){
+//            $route = array();
+//            include(CONFIG.DS.'routes.php');
+//            
+//            if(isset($path['controller'])) $controller = $path['controller'];
+//            else $controller = $route['default_controller'];
+//            
+//            if(isset($path['action'])) $action = $path['action'];
+//            else $action = $route['default_action'];
+//            
+//            ob_start();
+//            Loader::get_instance()->controller($controller, $action, array());
+//            $this->_places['place_'.$place_name] = ob_get_contents();
+//            ob_end_clean();
+//        }
+//    }
 
 }
 

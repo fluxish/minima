@@ -19,7 +19,7 @@ namespace Kaili;
     
     function __construct()
     {
-        $this->_config = Loader::get_instance()->load('config');
+        $this->_config = Config::factory();
     }   
     /**
      * Crop an image

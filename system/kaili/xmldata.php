@@ -31,17 +31,10 @@ class Xmldata
     private $_element_name;
     
     /**
-     * @var Loader
-     */
-    private $_load;
-    
-    /**
      * Create new XmlData object
      */
     public function __construct()
     {
-        $this->_load = Loader::get_instance();
-        $this->_load->helper('utils');
     }
     
     public function __destruct()

@@ -13,5 +13,5 @@ and open the template in the editor.
          stopOnFailure="true">
 </phpunit-->
 
-<phpunit colors="true" stopOnFailure="false">
+<phpunit colors="true" stopOnFailure="true" bootstrap="bootstrap.php">
 </phpunit>

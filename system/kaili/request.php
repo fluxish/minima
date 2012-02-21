@@ -10,28 +10,52 @@ namespace Kaili;
  */
 class Request
 {
+
     /**
-     * Loader instance;
-     * @var Kaili\Loader 
+     * The current Request object
+     * @var Kaili\Request
      */
-    private $_loader;
+    private static $_current = null;
+    
+    
+   /**
+    * Returns the current 
+    * @return Kaili\Request
+    */
+    public static function current()
+    {
+        return self::$_current;
+    }
+    
+    /**
+     * Create a new Request object
+     * @return Kaili\Request 
+     */
+    public static function factory()
+    {
+        $request = new Request();
+        static::$_current = $request;
+        return $request;
+    }
+    
     /**
      * Array of all parameters of a requested URL
      * @var array
      */
     private $_params;
 
+    
+    /**
+     * Create a new Request object
+     */
     public function __construct()
     {
-        $this->_loader = Loader::get_instance();
-        
         $this->_remove_magic_quotes();
         $this->_unregister_globals();
 
-        $router = new Router();
-        $this->_params = $router->parse_route($this->get('url'));
+        $this->_params = Router::factory()->parse($this->get('url'));
     }
-    
+
     /**
      * Prepare the framework to the requests
      * @param function $pre_controller a closure to call before controller
@@ -43,8 +67,18 @@ class Request
         if(is_callable($pre_controller))
             $pre_controller();
 
-        // call requested controller
-        $this->_loader->controller($this->get('controller'), $this->get('action'), $this->get());
+        // get controller and action names
+        $controller = $this->get('controller');
+        $action = strtolower($this->get('action'));
+
+        // create the new controller
+        $controller = ucfirst($controller);
+        $controller_obj = new $controller();
+
+        // call action of the controller
+        if((int) method_exists($controller, $action)) {
+            $controller_obj->{$action}(array_values($this->get()));
+        }
 
         // execute a post-controller call function
         if(is_callable($post_controller))
@@ -128,7 +162,7 @@ class Request
         }
         return $value;
     }
-    
+
     /**
      * Returns the http address of the host
      * It's an alias for $_SERVER['HTTP_HOST']
@@ -139,7 +173,7 @@ class Request
     {
         return $this->server('HTTP_HOST');
     }
-    
+
     /**
      * Returns the user agent of that have made the request.
      * It's an alias for $_SERVER['HTTP_USER_AGENT'].
@@ -150,7 +184,7 @@ class Request
     {
         return $this->server('HTTP_USER_AGENT');
     }
-    
+
     /**
      * Returns the ip address of the user that has made the request.
      * It's an alias for $_SERVER['REMOTE_ADDR].
@@ -161,7 +195,7 @@ class Request
     {
         return $this->server('REMOTE_ADDR');
     }
-    
+
     /**
      * Return the URL of the page from where the request has been made.
      * It's an alias for $_SERVER['HTTP_REFERER'].
@@ -172,7 +206,7 @@ class Request
     {
         return $this->server('HTTP_REFERER');
     }
-    
+
     /**
      * Return the current URL
      * 
@@ -182,7 +216,7 @@ class Request
     {
         return trim($this->get('url'), '/');
     }
-    
+
     /**
      * Return an array af all parameters in the current URL
      * 

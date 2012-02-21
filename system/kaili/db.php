@@ -21,7 +21,7 @@ class Db extends PDO
     
     public function __construct()
     {
-        $this->_config = Loader::get_instance()->load('config');
+        $this->_config = Config::factory('database');
         
         $dbconnection = $this->_config->item('dbconnection');
         

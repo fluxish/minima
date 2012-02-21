@@ -21,18 +21,12 @@ class Validation
      */
     private $_fields;
 
-    /**
-     * @var Config
-     */
-    private $_config;
-
     public function __construct()
     {
         // Load validation.lang
         Loader::get_instance()->load('language')->load('validation');
         Loader::get_instance()->helper('validation');
-
-        $this->_config = Loader::get_instance()->load('config');
+        
         $this->_fields = array();
     }
 
@@ -70,7 +64,7 @@ class Validation
      */
     public function validate()
     {
-        $request = Loader::get_instance()->load('request');
+        $request = Request::current();
         $valid = true;
 
         foreach($this->_fields as $field_name => &$field) {
@@ -312,7 +306,7 @@ class Validation
      */
     public function matches($str, $field)
     {
-        $field = Loader::get_instance()->load('request')->post($field);
+        $field = Request::current()->post($field);
         if($field && $str === $field)
             return true;
         return false;
