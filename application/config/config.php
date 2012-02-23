@@ -5,7 +5,7 @@
  *  URL to the framework root
  *  @var string
  */
-$config['base_url'] = 'http://'.$_SERVER['HTTP_HOST'].'/kaili';
+$config['base_url'] = 'http://'.$_SERVER['HTTP_HOST'].'/minima';
 
 /**
  *  language
@@ -94,7 +94,7 @@ $config['development_environment'] = true;
 /**
  *  environment infos
  */
-$config['environment_name'] = 'Kaili Framework';
+$config['environment_name'] = 'Minima Framework';
 $config['environment_version'] = '0.5';
 
 /* End of file config.php */

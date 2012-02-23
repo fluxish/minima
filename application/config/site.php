@@ -1,7 +1,7 @@
 <?php
 
-$config['title'] = 'Kaili Framework';
-$config['subtitle'] = 'Kaili rocks!';
+$config['title'] = 'Minima Framework';
+$config['subtitle'] = 'Minima rocks!';
 
 $config['webmaster'] = 'Luigi Marco Simonetti';
 $config['webmaster_mail'] = 'luigimarco@gmail.com';

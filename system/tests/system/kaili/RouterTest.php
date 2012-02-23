@@ -1,8 +1,8 @@
 <?php
 
-namespace Kaili;
+namespace Minima;
 
-require_once dirname(__FILE__).'/../../../kaili/router.php';
+require_once dirname(__FILE__).'/../../../minima/router.php';
 
 /**
  * Test class for Router.

@@ -8,10 +8,10 @@ define('ASSETS', APPLICATION.DS.'assets');
 define('CONFIG', APPLICATION.DS.'config');
 define('EXT', '.php');
 
-require_once(SYSTEM.DS.'kaili'.DS.'loader'.EXT);
+require_once(SYSTEM.DS.'minima'.DS.'loader'.EXT);
 
-use Kaili\Loader;
-use Kaili\Logger;
+use Minima\Loader;
+use Minima\Logger;
 
 $pre_call = function() {
             $loader = Loader::get_instance();
@@ -29,7 +29,7 @@ $post_call = function() {
 Loader::get_instance()->register();
 
 // Initialize Request object to handle the request
-\Kaili\Request::factory()->handle($pre_call, $post_call);
+\Minima\Request::factory()->handle($pre_call, $post_call);
 
 //// error reporting (temporary here)
 //if($loader->load('config')->item('development_environment') == true) {

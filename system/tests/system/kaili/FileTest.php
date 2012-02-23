@@ -1,8 +1,8 @@
 <?php
 
-namespace Kaili;
+namespace Minima;
 
-require_once dirname(__FILE__).'/../../../kaili/file.php';
+require_once dirname(__FILE__).'/../../../minima/file.php';
 
 /**
  * Test class for File.
@@ -159,8 +159,8 @@ class FileTest extends \PHPUnit_Framework_TestCase
      /**
      * Test for File::move()
      * Attempts to move [ROOT]/test.txt to [ROOT] with overwriting disabled
-     * Throws \Kaili\FileException because file alredy exists
-     * @expectedException \Kaili\FileException
+     * Throws \Minima\FileException because file alredy exists
+     * @expectedException \Minima\FileException
      * @test
      */
     public function test_move_file_exists()

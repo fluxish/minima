@@ -1,8 +1,8 @@
 <?php
 
-namespace Kaili;
+namespace Minima;
 
-require_once dirname(__FILE__).'/../../../kaili/config.php';
+require_once dirname(__FILE__).'/../../../minima/config.php';
 
 /**
  * Test class for Config.

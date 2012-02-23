@@ -1,6 +1,6 @@
 <?php
 
-namespace Kaili;
+namespace Minima;
 
 /**
  * Test class for Directory.
@@ -51,9 +51,9 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase
     /**
      * Test for Directory::factory()
      * The directory doesn't exist.
-     * Throws Kaili\DirectoryException because the provided directory doesn't exist.
+     * Throws Minima\DirectoryException because the provided directory doesn't exist.
      * @test
-     * @expectedException \Kaili\DirectoryException
+     * @expectedException \Minima\DirectoryException
      */
     public function test_factory_not_exist()
     {
@@ -75,7 +75,7 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase
      * The Directory already exist.
      * Throws Exception because provided path is an already existent Directory
      * @test
-     * @expectedException \Kaili\DirectoryException
+     * @expectedException \Minima\DirectoryException
      */
     public function test_create_exists()
     {
@@ -126,8 +126,8 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase
      /**
      * Test for Directory::move()
      * Attempts to move [ROOT]/test.txt to [ROOT] with overwriting disabled
-     * Throws \Kaili\DirectoryException because Directory alredy exists
-     * @expectedException \Kaili\DirectoryException
+     * Throws \Minima\DirectoryException because Directory alredy exists
+     * @expectedException \Minima\DirectoryException
      * @test
      */
     public function test_move_directory_exists()
@@ -209,7 +209,7 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(count($content), count($res));
         foreach($res as $path=>$dir){
             $this->assertTrue(in_array($dir->get_base_name(), $content));
-            $this->assertInstanceOf('\Kaili\Directory', $dir);
+            $this->assertInstanceOf('\Minima\Directory', $dir);
         }
     }
     
@@ -227,7 +227,7 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(count($content), count($res));
         foreach($res as $path=>$dir){
             $this->assertTrue(in_array($dir->get_base_name(), $content));
-            $this->assertInstanceOf('\Kaili\File', $dir);
+            $this->assertInstanceOf('\Minima\File', $dir);
         }
     }
     

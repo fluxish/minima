@@ -22,7 +22,7 @@ define('EXT', '.php');
 
 
 // Initialize the Loader and register autoloader
-require_once(SYSTEM.DS.'kaili'.DS.'loader'.EXT);
-\Kaili\Loader::get_instance()->register();
+require_once(SYSTEM.DS.'minima'.DS.'loader'.EXT);
+\Minima\Loader::get_instance()->register();
 
 ?>
